@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import SampleComponent from './app/components/sampleComponent';
+import SampleComponent from './components/sampleComponent';
 
 
 ReactDOM.render(

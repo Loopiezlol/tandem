@@ -8,8 +8,8 @@ import webpack from 'webpack-stream';
 import webpackConfig from './webpack.config.babel';
 
 const paths = {
-  allSrcJs: '.app/**/*.js?(x)',
-  clientEntryPoint: 'app.jsx',
+  allSrcJs: './**/*.js?(x)',
+  clientEntryPoint: './app/app.jsx',
   gulpFile: 'gulpfile.babel.js',
   webpackFile: 'webpack.config.babel.js',
   distDir: './dist/',
@@ -26,7 +26,6 @@ gulp.task('server', () => connect.server({
 gulp.task('lint', () =>
   gulp.src([
     paths.allSrcJs,
-    paths.clientEntryPoint,
     paths.gulpFile,
     paths.webpackFile,
     '!dist/*.js',
@@ -46,7 +45,7 @@ gulp.task('main', ['lint', 'clean'], () =>
 );
 
 gulp.task('watch', () => {
-  gulp.watch([paths.allSrcJs, paths.clientEntryPoint], ['main']);
+  gulp.watch(paths.allSrcJs, ['main']);
 });
 
 gulp.task('default', ['server', 'watch', 'main']);
