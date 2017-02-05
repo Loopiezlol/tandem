@@ -1,0 +1,54 @@
+{
+  "name": "tandem",
+  "version": "0.1.0",
+  "description": "King's College London's 2017 SEG Group Project - Northen Lights - social medium for language learning",
+  "main": "index.js",
+  "repository": {},
+  "author": "loopiezlol",
+  "license": "MIT",
+  "scripts": {
+    "web-app": "cd client-web-app && gulp"
+  },
+  "devDependencies": {
+    "babel-loader": "^6.2.10",
+    "babel-preset-latest": "^6.22.0",
+    "del": "^2.2.2",
+    "eslint": "^3.15.0",
+    "eslint-config-airbnb": "^14.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.9.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-connect": "^5.0.0",
+    "gulp-eslint": "^3.0.1",
+    "gulp-watch": "^4.3.11",
+    "webpack-stream": "^3.2.0"
+  },
+  "eslintConfig": {
+    "extends": "airbnb",
+    "plugins": [
+      "import"
+    ],
+    "rules": {
+      "jsx-a11y/no-marquee": 0
+    },
+    "env": {
+      "browser": true
+    }
+  },
+  "babel": {
+    "presets": [
+      "react",
+      "latest"
+    ]
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.22.0",
+    "babel-preset-react": "^6.22.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-redux": "^5.0.2",
+    "redux": "^3.6.0"
+  }
+}
