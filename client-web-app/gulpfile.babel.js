@@ -4,6 +4,7 @@ import gulp from 'gulp';
 import eslint from 'gulp-eslint';
 import connect from 'gulp-connect';
 import del from 'del';
+import cors from 'cors';
 import webpack from 'webpack-stream';
 import webpackConfig from './webpack.config.babel';
 
@@ -21,6 +22,7 @@ gulp.task('server', () => connect.server({
   root: 'dist/',
   host: '0.0.0.0',
   livereload: true,
+  middleware: () => ([cors()]),
 }));
 
 gulp.task('lint', () =>
