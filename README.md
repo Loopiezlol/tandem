@@ -27,7 +27,7 @@ Uses:
 
 To run:
 ```
-yarn backedn
+yarn backend
 ```
 
 Uses:
