@@ -3,3 +3,4 @@ yarn-error.log
 node_modules/
 client-web-app/dist/client-bundle.js*
 **/node_modules/
+.localdb

@@ -9,17 +9,17 @@ class SampleComponent extends Reflux.Component {
     this.state = {};
     this.store = SampleStore;
   }
-
   render() {
     const { sampleSync, sampleAsync } = this.state;
     return (
       <div className="wrapper">
+        <p>Sample store actions</p>
         <div className="show-data">
           <p>Sync: {sampleSync}</p>
           <p>Async: {sampleAsync}</p>
         </div>
         <div className="update-data">
-          <button onClick={() => actions.sampleSyncAction('cartwoane')}>Sync</button>
+          <button onClick={() => actions.sampleSyncAction('instant')}>Sync</button>
           <button onClick={() => actions.sampleAsyncAction()}>Async</button>
         </div>
       </div>
