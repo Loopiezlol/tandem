@@ -28,6 +28,7 @@ class SampleStore extends Reflux.Store {
   }
 
   sampleAsyncActionFailed(err) {
+    console.log(err);
     this.setState({
       sampleAsync: 'error',
     });
