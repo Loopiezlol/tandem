@@ -11,17 +11,13 @@ After installing these, clone the repository. Within its contents run:
 yarn install
 ```
 
-### Website/Webapp 
+### Database
+Make a `.localdb` folder within the repository: `mkdir .localdb`.
 
-To run:
+Eeach time open the DB with:
 ```
-yarn web-app
+$ mongod --dbpath .localdb
 ```
-
-Uses:
-
-- ES6 syntax
-- React + Reflux
 
 ### Backend
 
@@ -34,3 +30,16 @@ Uses:
 
 - express
 - mongoose/mongo
+
+### Website/Webapp 
+
+To run:
+```
+yarn web-app
+```
+
+Uses:
+
+- ES6 syntax
+- React + Reflux
+
