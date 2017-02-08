@@ -1,12 +1,14 @@
 const router = require('express').Router();
+const wrap = require('co-express');
 const User = require('../models/user');
 
-function getUsers(req, res) {
-  User.find({}, (err, docs) => {
-    res.json(docs);
-  });
+// using co-express wraper -> note how we can store async values
+function* getUsers(req, res) {
+  const users = yield User.find({});
+  res.json(users);
 }
 
+// standard api method, using callbakcs
 function createUser(req, res) {
   const { username } = req.body;
   User.create({
@@ -16,7 +18,7 @@ function createUser(req, res) {
   });
 }
 
-router.get('/', getUsers);
+router.get('/', wrap(getUsers));
 router.put('/', createUser);
 
 module.exports = router;
