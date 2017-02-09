@@ -335,6 +335,13 @@ That should conclude our very basic prototype. Form here we can start adding mor
 
 -S 💯 🙌 ☝️
 
+### Links for Future Reference:
+
+- [SendBird React Native Tutorial (old SDK but still useful)](https://blog.sendbird.com/tutorial-build-a-messaging-app-using-react-native/)
+- [Official SendBird JS and React Native sample repo](https://github.com/smilefam/SendBird-Javascript)
+- [SendBird JS Documentation](https://docs.sendbird.com/javascript)
+- [SendBird Platform API documentation](https://docs.sendbird.com/platform)
+
 ---
 
 # Tandem
