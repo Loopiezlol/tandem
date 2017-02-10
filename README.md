@@ -331,7 +331,9 @@ Obviously, they're doing a lot more functionality than we need at this prototype
 
 At this stage all we really care about is updating the "UserConvo" react component's *state* to reflect the newly-received message using the `this.setState()` function. This will cause the component to be re-rendered and show the new message. Perfect.
 
-That should conclude our very basic prototype. Form here we can start adding more interesting features, like read receipts, images, group chats (proper ones), open chats, and more. Go team!
+That should conclude our very basic prototype. Form here we can start adding more interesting features, like read receipts, images, group chats (proper ones), open chats, and more. Go team! 
+
+In the next cycle we could look into integrating this with [Gifted Chat](https://github.com/FaridSafi/react-native-gifted-chat) so that we have a nice, familiar UI for our messages, and then customize to fit our UI from there. Only problem is this is exclusively for React Native so we will either need to reverse engineer it to make our web app UI similar, or find some other ways. There is the [React Chat UI](https://github.com/brandonmowat/react-chat-ui) which is super early in development but we could pick apart their code to maybe make our own, or we could use [Onsen UI](https://onsen.io/blog/onsenui-horizon-rethinkdb-chat/) which looks really good and is totally crossplatform, but we should check with the rest of the group before adopting any kind of proper UI. 
 
 -S 💯 🙌 ☝️
 
@@ -341,6 +343,7 @@ That should conclude our very basic prototype. Form here we can start adding mor
 - [Official SendBird JS and React Native sample repo](https://github.com/smilefam/SendBird-Javascript)
 - [SendBird JS Documentation](https://docs.sendbird.com/javascript)
 - [SendBird Platform API documentation](https://docs.sendbird.com/platform)
+- [Onsen UI for React](https://onsen.io/react/)
 
 ---
 
