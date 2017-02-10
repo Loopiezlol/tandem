@@ -1,6 +1,8 @@
 # SendBird for Tandem 👌
 ######TODO: Remove before/if we merge! 
 
+#### Our AppID is: 78A3DDF9-3396-4088-95C3-A5E8CBDF9AD3
+
 ## Prototype Basics - Initialization
 
 We want to be able to create a basic web chat app prototype. We won't worry about integrating it with the existing Users and Profiles which are being done in parallel. We will just worry about the sending and receiving of messages in a completely unformatted way-- *we will have no design or css at this point.* Where we can get away with it we will try to stay with unformatted HTML, but in some cases some basic boxes or something.
