@@ -1,12 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import SampleComponent from './components/sampleComponent';
-import UsersList from './components/userList';
+import PaneControl from './components/PaneControl';
 
 ReactDOM.render(
   <div className="view">
-    <SampleComponent />
-    <UsersList />
+    <PaneControl />
   </div>
   , document.querySelector('.app'),
 );

@@ -33,7 +33,8 @@
       "import"
     ],
     "rules": {
-      "jsx-a11y/no-marquee": 0
+      "jsx-a11y/no-marquee": 0,
+      "jsx-a11y/no-static-element-interactions": 0
     },
     "env": {
       "browser": true
@@ -53,6 +54,7 @@
     "cors": "^2.8.1",
     "express": "^4.14.1",
     "mongoose": "^4.8.1",
+    "morgan": "^1.8.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "reflux": "^6.0.0",
