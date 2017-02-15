@@ -3,40 +3,32 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const nev = require('email-verification')(mongoose);
-const bcrypt = require('bcryptjs')
 const session = require('client-sessions');
-const app = express();
-app.use('/users/', require('./api/users'));
-mongoose.connect('mongodb://localhost/auth');
 const User = require('./models/user');
 
+const app = express();
+
+mongoose.connect('mongodb://localhost/auth');
+
+// routers
+app.use('/users/', require('./api/users'));
+
+// needed to allow communication between different devices
 app.use(cors());
 
+// needed to get data from the body of requests
 app.use(bodyParser.json({ limit: '50mb' }));
 
-//COOOOOOKIES
+// COOOOOOKIES
 app.use(session({
-cookieName:'session',
-secret:"sjdnkjfndkjfnjdf143ujn48",
-duration: 30 *60*1000,
-activeDuration : 5*60*1000,
-httpOnly:true, //protects from bad stuff
-//secure: true //only uses cookies over https!
+  cookieName: 'session',
+  secret: 'sjdnkjfndkjfnjdf143ujn48',
+  duration: 30 * 60 * 1000,
+  activeDuration: 5 * 60 * 1000,
+  httpOnly: true, //protects from bad stuff
+  //secure: true //only uses cookies over https!
 }));
 
-var myHasher = function(password, tempUserData, insertTempUser, callback) {
-  var hash = bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-  return insertTempUser(hash, tempUserData, callback);
-};
-
-// async version of hashing function
-myHasher = function(password, tempUserData, insertTempUser, callback) {
-  bcrypt.genSalt(8, function(err, salt) {
-    bcrypt.hash(password, salt, function(err, hash) {
-      return insertTempUser(hash, tempUserData, callback);
-    });
-  });
-};
 
 //AUTH MIDDLEWARE
 app.use(function(req,res,next){
@@ -73,7 +65,7 @@ nev.configure({
   transportOptions: {
     service: 'Gmail',
     auth: {
-      user: '',                                     //ADD E-MAIL USERNAMER HERE 
+      user: '',                                     //ADD E-MAIL USERNAMER HERE
       pass: ''                                      //ADD PASSWORD HERE
     }
   },
@@ -116,7 +108,7 @@ app.post('/register', function (req, res) {
   	password: req.body.password
   });
   var password = req.body.password;
-  
+
   // SENDS EMAIL WHEN YOU REGISTER
   nev.createTempUser(user, function(err, existingPersistentUser, newTempUser) {
       if (err) {
