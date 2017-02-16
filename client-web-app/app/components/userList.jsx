@@ -3,6 +3,8 @@ import Reflux from 'reflux';
 import SampleStore from '../stores/sampleStore';
 import actions from '../actions';
 
+require('../styles/example.scss');
+
 class UsersList extends Reflux.Component {
   constructor(props) {
     super(props);

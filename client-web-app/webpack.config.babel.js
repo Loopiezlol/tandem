@@ -1,3 +1,5 @@
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
 export default {
   output: {
     filename: 'client-bundle.js',
@@ -10,8 +12,18 @@ export default {
         loader: 'babel-loader',
         exclude: [/node_modules/, /dist/],
       },
+      {
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract('css!sass'),
+        exclude: [/node_modules/, /dist/],
+      },
     ],
   },
+  plugins: [
+    new ExtractTextPlugin('./style.css', {
+      allChunks: true,
+    }),
+  ],
   resolve: {
     extensions: ['', '.js', '.jsx'],
   },

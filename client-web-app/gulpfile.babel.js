@@ -3,7 +3,7 @@ import gulp from 'gulp';
 // import babel from 'gulp-babel';
 import eslint from 'gulp-eslint';
 import connect from 'gulp-connect';
-import sass from 'gulp-sass';
+// import sass from 'gulp-sass';
 import del from 'del';
 import cors from 'cors';
 import webpack from 'webpack-stream';
@@ -41,13 +41,13 @@ gulp.task('lint', () =>
 
 gulp.task('clean', () => del(paths.clientBundle));
 
-gulp.task('styles', () =>
-  gulp.src(paths.styles)
-    .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest(paths.distDir)),
-);
+// gulp.task('styles', () =>
+//   gulp.src(paths.styles)
+//     .pipe(sass().on('error', sass.logError))
+//     .pipe(gulp.dest(paths.distDir)),
+// );
 
-gulp.task('main', ['styles', 'lint', 'clean'], () =>
+gulp.task('main', ['lint', 'clean'], () =>
   gulp.src(paths.clientEntryPoint)
     .pipe(webpack(webpackConfig))
     .pipe(gulp.dest(paths.distDir))
@@ -57,7 +57,6 @@ gulp.task('main', ['styles', 'lint', 'clean'], () =>
 gulp.task('watch', () => {
   gulp.watch([
     paths.allSrcJs,
-    paths.styles,
   ], ['main']);
 });
 

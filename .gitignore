@@ -2,6 +2,6 @@ npm-debug.log
 yarn-error.log
 node_modules/
 client-web-app/dist/client-bundle.js*
-client-web-app/dist/**/*.css
+client-web-app/dist/**/*.css*
 **/node_modules/
 .localdb
