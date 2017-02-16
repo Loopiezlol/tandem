@@ -14,17 +14,18 @@ export default {
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('css!sass'),
+        loader: ExtractTextPlugin.extract('style',
+          'css?sourceMap!sass?sourceMap'),
         exclude: [/node_modules/, /dist/],
       },
     ],
   },
   plugins: [
-    new ExtractTextPlugin('./style.css', {
+    new ExtractTextPlugin('style.css', {
       allChunks: true,
     }),
   ],
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['', '.js', '.jsx', 'scss'],
   },
 };
