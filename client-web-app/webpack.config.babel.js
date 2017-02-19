@@ -1,5 +1,9 @@
+import path from 'path';
+
 export default {
+  entry: path.resolve(__dirname, 'app/app.jsx'),
   output: {
+    path: path.resolve(__dirname, 'dist/'),
     filename: 'client-bundle.js',
   },
   devtool: 'source-map',
@@ -13,6 +17,6 @@ export default {
     ],
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['*', '.js', '.jsx'],
   },
 };
