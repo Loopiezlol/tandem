@@ -7,7 +7,7 @@
   "author": "loopiezlol",
   "license": "MIT",
   "scripts": {
-    "web-app": "cd client-web-app && gulp",
+    "web-app": "cd client-web-app && ../node_modules/webpack-dev-server/bin/webpack-dev-server.js --content-base ./dist/",
     "backend": "cd backend && nodemon app.js"
   },
   "devDependencies": {
