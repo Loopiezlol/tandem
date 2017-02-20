@@ -78,7 +78,7 @@ class sbStore extends Reflux.Store {
   sendMessageCompleted(res) {
     if (res.status === 200) {
       console.log('SendBird Message Sent: Server response 200 (OK)');
-      this.setState();
+      this.state.messagesSen.push(res);
     } else {
       console.log(`SendBird Message Send ERROR:
       Server response ${res.status} ${res.statusText}`);
@@ -146,8 +146,24 @@ sbactions.createChannel.listen((userID, otherUserID) => {
     });
 });
 
-sbactions.sendMessage.listen(() => {
-  // TODO: Send messages!
+sbactions.sendMessage.listen((channelType, channelUrl, userID, message) => {
+  request.post(`https://api.sendbird.com/v3/${channelType}/${channelUrl}/messages`)
+    .set('Content-Type', 'application/json', 'charset=utf8')
+    .set('Api-Token', API_TOKEN)
+    .send({
+      message_type: 'MESG',
+      user_id: userID,
+      message,
+    })
+    .end((err, res) => {
+      if (err || !res.ok) {
+        console.log(`Error sending SendBird message: ${JSON.stringify(err)}`);
+        sbactions.sendMessage.failed(err);
+      } else {
+        console.log(`SendBird message sent: ${JSON.stringify(res.body)}`);
+        sbactions.sendMessage.completed(res);
+      }
+    });
 });
 
 export default sbStore;
