@@ -7,11 +7,19 @@ export default {
     filename: 'client-bundle.js',
   },
   devtool: 'source-map',
+  devServer: {
+    inline: true,
+  },
   module: {
     loaders: [
       {
         test: /\.jsx?$/,
-        loader: 'babel-loader',
+        loader: ['react-hot-loader', 'babel-loader'],
+        exclude: [/node_modules/, /dist/],
+      },
+      {
+        test: /\.js?$/,
+        loader: ['babel-loader', 'eslint-loader'],
         exclude: [/node_modules/, /dist/],
       },
     ],
