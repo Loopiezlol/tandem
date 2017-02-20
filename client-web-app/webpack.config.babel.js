@@ -9,6 +9,7 @@ export default {
   devtool: 'source-map',
   devServer: {
     inline: true,
+    port: 3001,
   },
   module: {
     loaders: [

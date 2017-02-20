@@ -7,6 +7,5 @@ ReactDOM.render(
   <div className="view">
     <SampleComponent />
     <UsersList />
-  </div>
-  , document.querySelector('.app'),
+  </div>, document.querySelector('.app'),
 );
