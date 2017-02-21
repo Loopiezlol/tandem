@@ -17,7 +17,7 @@ class sbMessaging extends Reflux.Component {
     const { sbUser, sbNick } = this.state;
     return (
       <div className="wrapper-sb">
-        <h2>SendBird Chat Interface</h2>
+        <h1>SendBird Chat Interface</h1>
         <p>Select a unique UserID and nickname:</p>
         <div>
           <input
@@ -29,6 +29,14 @@ class sbMessaging extends Reflux.Component {
             value={sbNick} onChange={e => this.handleNickType(e)}
           />
           <button onClick={() => this.handleCreate()}>Create SendBird User</button>
+          <div>
+            <p>Or, log in to an existing userID: </p>
+            <input
+              type="text" placeholder="Existing UserID"
+              value={sbUser} onChange={e => this.handleEIDType(e)}
+            />
+            <button onClick={() => this.handleLogIn()}>Log in as SendBird User</button>
+          </div>
           <SBUserList />
         </div>
       </div>
@@ -42,7 +50,20 @@ class sbMessaging extends Reflux.Component {
       SBActions.createUser(sbUser, sbNick);
     }
   }
+  handleLogIn() {
+    const { sbUser } = this.state;
+    if (!sbUser.length) {
+      window.alert('Please insert an ID');
+    } else {
+      SBActions.loginUser(sbUser);
+    }
+  }
   handleIDType(e) {
+    this.setState({
+      sbUser: e.target.value,
+    });
+  }
+  handleEIDType(e) {
     this.setState({
       sbUser: e.target.value,
     });

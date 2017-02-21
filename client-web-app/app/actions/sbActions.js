@@ -6,6 +6,7 @@ const SBActions = Reflux.createActions({
   createChannel: { asyncResult: true },
   sendMessage: { asyncResult: true },
   openChat: {},
+  loginUser: { asyncResult: true },
 });
 
 export default SBActions;

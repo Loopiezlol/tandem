@@ -14,8 +14,6 @@ class sbStore extends Reflux.Store {
       userID: '',
       userNick: '',
       profileURL: '', // TODO: Implement!
-      messagesRec: [], // TODO: Implement!
-      messagesSen: [], // TODO: Implement!
       userList: [],
       currentChannel: {},
       chatOpen: false,
@@ -26,11 +24,39 @@ class sbStore extends Reflux.Store {
   }
 
   openChat(userid, userNick) {
-    console.log('Opening chat.');
     this.setState({
       chatOpen: true,
       otherUser: userid,
       otherUserNick: userNick,
+    });
+
+    // const channelListQuery = sb.GroupChannel.createMyGroupChannelListQuery();
+    // channelListQuery.includeEmpty = true;
+    // channelListQuery.limit = 20;
+    //
+    // if (channelListQuery.hasNext) {
+    //   channelListQuery.next((channelList, error) => {
+    //     if (error) {
+    //       console.error(error);
+    //       return;
+    //     }
+    //     console.log(channelList);
+    //   });
+    // }
+  }
+
+  loginUser(userid) {
+    sb.connect(userid, (user, error) => {
+      if (error) {
+        alert(`Could not log in as user ${userid}`);
+      } else {
+        console.log(`Logged in as user ${userid}`);
+        this.setState({
+          userID: user.user_id,
+          userNick: user.nickanme,
+          profileURL: user.profile_url,
+        });
+      }
     });
   }
 
