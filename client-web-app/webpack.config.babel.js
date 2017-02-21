@@ -1,5 +1,7 @@
 import path from 'path';
 
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
 export default {
   entry: path.resolve(__dirname, 'app/app.jsx'),
   output: {
@@ -23,9 +25,23 @@ export default {
         loader: ['babel-loader', 'eslint-loader'],
         exclude: [/node_modules/, /dist/],
       },
+      {
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: 'css-loader?sourceMap!sass-loader?sourceMap',
+        }),
+        exclude: [/node_modules/, /dist/],
+      },
     ],
   },
+  plugins: [
+    new ExtractTextPlugin({
+      filename: 'style.css',
+      allChunks: true,
+    }),
+  ],
   resolve: {
-    extensions: ['*', '.js', '.jsx'],
+    extensions: ['*', '.js', '.jsx', 'scss', 'css'],
   },
 };
