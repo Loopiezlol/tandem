@@ -16,10 +16,22 @@ class sbStore extends Reflux.Store {
       profileURL: '', // TODO: Implement!
       messagesRec: [], // TODO: Implement!
       messagesSen: [], // TODO: Implement!
-      latestUserList: {}, // TODO: Implement!
-      channelCreated: {},
+      userList: [],
+      currentChannel: {},
+      chatOpen: false,
+      otherUser: '',
+      otherUserNick: '',
     };
     this.listenables = sbactions;
+  }
+
+  openChat(userid, userNick) {
+    console.log('Opening chat.');
+    this.setState({
+      chatOpen: true,
+      otherUser: userid,
+      otherUserNick: userNick,
+    });
   }
 
   createUserCompleted(res) {
@@ -47,10 +59,14 @@ class sbStore extends Reflux.Store {
     console.log(`SendBird User Creation ERROR. ERROR: ${err}`);
   }
 
-  loadOnlineUsersListComplete(res) {
+  loadOnlineUsersListCompleted(res) {
     if (res.status === 200) {
       console.log('SendBird User List GET: Server response 200 (OK)');
-      this.setState({ latestUserList: res });
+      this.setState({
+        userList: res.body.users,
+      });
+      console.log('User List: ');
+      console.log(this.state.userList);
     } else {
       console.log(`SendBird User List GET ERROR:
       Server response ${res.status} ${res.statusText}`);
@@ -64,7 +80,7 @@ class sbStore extends Reflux.Store {
   createChannelCompleted(res) {
     if (res.status === 200) {
       console.log('SendBird Channel Creation: Server response 200 (OK)');
-      this.setState({ channelCreated: res });
+      this.setState({ currentChannel: res });
     } else {
       console.log(`SendBird Channel Creation ERROR:
       Server response ${res.status} ${res.statusText}`);
@@ -112,6 +128,8 @@ sbactions.createUser.listen((userid, nick) => {
 
 sbactions.loadOnlineUsersList.listen(() => {
   request.get('https://api.sendbird.com/v3/users?limit=10')
+    .set('Content-Type', 'application/json', 'charset=utf8')
+    .set('Api-Token', API_TOKEN)
     .end((err, res) => {
       if (err || !res.ok) {
         console.log(`Error getting user list: ${JSON.stringify(err)}`);

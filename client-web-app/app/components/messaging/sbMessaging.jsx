@@ -2,6 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import SBStore from '../../stores/sbStore';
 import SBActions from '../../actions/sbActions';
+import SBUserList from '../messaging/sbUserList';
 
 class sbMessaging extends Reflux.Component {
   constructor(props) {
@@ -28,6 +29,7 @@ class sbMessaging extends Reflux.Component {
             value={sbNick} onChange={e => this.handleNickType(e)}
           />
           <button onClick={() => this.handleCreate()}>Create SendBird User</button>
+          <SBUserList />
         </div>
       </div>
     );
