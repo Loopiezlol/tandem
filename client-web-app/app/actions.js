@@ -5,6 +5,10 @@ const actions = Reflux.createActions({
   sampleAsyncAction: { asyncResult: true },
   getUsers: { asyncResult: true },
   createUser: { asyncResult: true },
+  emailAction: {},
+  passwordAction: {},
+  repPA: {},
+  submitClick: { asyncResult: true },
 });
 
 export default actions;
