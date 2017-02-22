@@ -176,6 +176,11 @@ class sbStore extends Reflux.Store {
       }
       console.log(`message sent!! ${mess}`);
       console.log(mess);
+      const messagesState = this.state.messages;
+      messagesState.push(mess);
+      this.setState({
+        messages: messagesState,
+      });
     });
   }
 
