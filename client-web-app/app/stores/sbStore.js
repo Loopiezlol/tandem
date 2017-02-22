@@ -69,16 +69,17 @@ class sbStore extends Reflux.Store {
   createUserCompleted(res) {
     if (res.status === 200) {
       console.log('SendBird User Creation: Server response 200');
-      this.setState({
-        userID: res.body.user_id,
-        userNick: res.body.nickname,
-        profileURL: res.body.profile_url,
-      });
       sb.connect(res.body.user_id, (user, error) => {
         if (error) {
           console.log(`SendBird Connection error: ${error}`);
         } else {
           console.log(`SendBird should be connected! User is: ${this.state.userID}`);
+          this.setState({
+            userID: res.body.user_id,
+            userNick: res.body.nickname,
+            profileURL: res.body.profile_url,
+            loggedIn: true,
+          });
           sbactions.loadOnlineUsersList();
         }
       });

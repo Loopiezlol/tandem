@@ -14,12 +14,16 @@ class sbUserList extends Reflux.Component {
     return (
       <div className="wrapper-sb">
         <h2>SendBird User List</h2>
+        <p>Limited to 10 users.</p>
         <ul className="sbuser-list">
           {userList.map(user => <li key={`${user.user_id}`}>
-            ID: {user.user_id},
-            Nickname: {user.nickname},
-            isOnline: {JSON.stringify(user.is_online)} ,
-            <button onClick={() => SBActions.openChat(user.user_id, user.nickname)}>Chat!</button>
+            ID: {user.user_id}
+            <ul>
+              <li>Nickname: {user.nickname}</li>
+              <li>is_Online: {JSON.stringify(user.is_online)}</li>
+              <li><button onClick={() => SBActions.openChat(user.user_id, user.nickname)}>
+                Chat!</button></li>
+            </ul>
           </li>)}
         </ul>
         <div className="btn">
@@ -32,5 +36,10 @@ class sbUserList extends Reflux.Component {
     );
   }
 }
+
+// ID: {user.user_id},
+// Nickname: {user.nickname},
+// is_Online: {JSON.stringify(user.is_online)} ,
+// <button onClick={() => SBActions.openChat(user.user_id, user.nickname)}>Chat!</button>
 
 export default sbUserList;
