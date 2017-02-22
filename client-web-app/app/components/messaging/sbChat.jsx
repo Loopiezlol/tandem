@@ -26,7 +26,7 @@ class sbChat extends Reflux.Component {
           <div className="messages">
 
             <ul style={{textColor: "GRAY"}} className="old-messages">
-              {prevMessages.map(message => <li key={`${message.message_id}`}>
+              {prevMessages.map(message => <li key={`${message.messageId}`}>
                 {message.sender.nickname}: {message.message}
               </li>)}
             </ul>
@@ -35,7 +35,7 @@ class sbChat extends Reflux.Component {
           <div className="currentMsg">
 
               <ul className="new-messages">
-                {messages.map(message => <li key={`${message.message_id}`}>
+                {messages.map(message => <li key={`${message.messageId}`}>
                   {message.sender.nickname}: {message.message}
                 </li>)}
               </ul>
