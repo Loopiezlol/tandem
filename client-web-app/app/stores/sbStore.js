@@ -146,16 +146,19 @@ class sbStore extends Reflux.Store {
       channelHandler: new sb.ChannelHandler(),
     });
 
+    const x = this;
+
     this.state.channelHandler.onMessageReceived = function (channel, message) {
       console.log('CHANNEL HANDLER: Got a message!! Here: ');
       console.log(channel, message);
-      const messagesState = this.state.messages;
+
+      const messagesState = x.state.messages;
       messagesState.push(message);
-      this.setState({
+      x.setState({
         messages: messagesState,
       });
       console.log('our messages list contains: ');
-      console.log(this.state.messages);
+      console.log(x.state.messages);
     };
 
     // TODO: Unique handler ID is set to UserID (may be a problem?)

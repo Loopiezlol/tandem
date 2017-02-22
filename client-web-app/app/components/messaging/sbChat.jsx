@@ -36,7 +36,7 @@ class sbChat extends Reflux.Component {
 
               <ul className="new-messages">
                 {messages.map(message => <li key={`${message.message_id}`}>
-                  {message.user.nickname}: {message.message}
+                  {message.sender.nickname}: {message.message}
                 </li>)}
               </ul>
 
