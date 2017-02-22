@@ -20,29 +20,94 @@ class sbStore extends Reflux.Store {
       chatOpen: false,
       otherUser: '',
       otherUserNick: '',
+      prevMessages: [],
     };
     this.listenables = sbactions;
   }
 
   openChat(userid, userNick) {
-    this.setState({
-      chatOpen: true,
-      otherUser: userid,
-      otherUserNick: userNick,
+    // TODO:
+    // 1) Check if a channel with the other user already exists.
+    // 2a) If YES, JOIN and load previous messages.
+    // 2b) If NO, create the new channel and event handlers and JOIN.
+
+    // 1) First query using SendBird to get the list of channels user participating in...
+
+    if (this.state.loggedIn) {
+      const channelListQuery = sb.GroupChannel.createMyGroupChannelListQuery();
+      channelListQuery.includeEmpty = true;
+      channelListQuery.limit = 10;
+
+      if (channelListQuery.hasNext) {
+        channelListQuery.next((channelList, error) => {
+          if (error) {
+            console.error(`error querying for channel list: ${error}`);
+            return;
+          }
+          console.log(`Got the channel list for ${this.state.userID}: `);
+          console.log(channelList);
+
+          for (let i = 0, size = channelList.length; i < size; i += 1) {
+            console.log(`entered for loop ${i}`);
+            for (let n = 0; n < channelList[i].members.length; n += 1) {
+              if (channelList[i].members[n].userId === userid) {
+                // 2a) If YES, JOIN and load previous messages.
+                console.log('Channel already exists, getting previous messages.');
+                sbactions.loadPreviousMessages(channelList[i]);
+                return;
+              }
+            }
+          }
+          // 2b) If NO, create the new channel and event handlers and JOIN.
+          this.createChannel(this.state.userID, userid);
+          this.setState({
+            chatOpen: true,
+            otherUser: userid,
+            otherUserNick: userNick,
+          });
+        });
+      }
+    } else {
+      alert('Not logged in! Please log in before trying to chat.');
+    }
+  }
+
+  createChannel(userID, otherUserID) {
+    console.log(`trying to make a new channel between ${userID} and ${otherUserID}`);
+    // TODO: Implement channelhandler for each one here.
+
+    const userIds = [`${userID}`, `${otherUserID}`];
+    const name = `Chat between ${userID} and ${otherUserID}`;
+    const coverUrl = '';
+    const data = '';
+
+    sb.GroupChannel.createChannelWithUserIds(userIds, true, name, coverUrl, data,
+      (channel, error) => {
+        if (error) {
+          console.error(`error creating new channel: ${error}`);
+          return;
+        }
+        console.log(`made the new channel successfully: ${channel}`);
+        this.setState({
+          currentChannel: channel,
+        });
+        console.log(channel);
+      });
+  }
+
+  loadPreviousMessages(channel) {
+    const messageListQuery = channel.createPreviousMessageListQuery();
+
+    messageListQuery.load(20, true, (messageList, error) => {
+      if (error) {
+        console.error(error);
+        return;
+      }
+      console.log(`Got the previous messages: ${messageList}`);
+      this.setState({
+        prevMessages: messageList,
+      });
     });
-    // const channelListQuery = sb.GroupChannel.createMyGroupChannelListQuery();
-    // channelListQuery.includeEmpty = true;
-    // channelListQuery.limit = 20;
-    //
-    // if (channelListQuery.hasNext) {
-    //   channelListQuery.next((channelList, error) => {
-    //     if (error) {
-    //       console.error(error);
-    //       return;
-    //     }
-    //     console.log(channelList);
-    //   });
-    // }
   }
 
   loginUser(userid) {
@@ -175,28 +240,28 @@ sbactions.loadOnlineUsersList.listen(() => {
     });
 });
 
-sbactions.createChannel.listen((userID, otherUserID) => {
-  request.get('https://api.sendbird.com/v3/group_channels')
-    .set('Content-Type', 'application/json', 'charset=utf8')
-    .set('Api-Token', API_TOKEN)
-    .send({
-      name: `Chat with ${otherUserID}`,
-      cover_url: 'https://sendbird.com/main/img/cover/cover_08.jpg',
-      custom_type: 'personal',
-      data: '',
-      user_ids: [userID, otherUserID],
-      is_distinct: true,
-    })
-    .end((err, res) => {
-      if (err || !res.ok) {
-        console.log(`Error creating 1-1 channel: ${JSON.stringify(err)}`);
-        sbactions.createChannel.failed(err);
-      } else {
-        console.log(`1-1 channel creation success: ${JSON.stringify(res.body)}`);
-        sbactions.createChannel.completed(res);
-      }
-    });
-});
+// sbactions.createChannel.listen((userID, otherUserID) => {
+//   request.get('https://api.sendbird.com/v3/group_channels')
+//     .set('Content-Type', 'application/json', 'charset=utf8')
+//     .set('Api-Token', API_TOKEN)
+//     .send({
+//       name: `Chat with ${otherUserID}`,
+//       cover_url: 'https://sendbird.com/main/img/cover/cover_08.jpg',
+//       custom_type: 'personal',
+//       data: '',
+//       user_ids: [userID, otherUserID],
+//       is_distinct: true,
+//     })
+//     .end((err, res) => {
+//       if (err || !res.ok) {
+//         console.log(`Error creating 1-1 channel: ${JSON.stringify(err)}`);
+//         sbactions.createChannel.failed(err);
+//       } else {
+//         console.log(`1-1 channel creation success: ${JSON.stringify(res.body)}`);
+//         sbactions.createChannel.completed(res);
+//       }
+//     });
+// });
 
 sbactions.sendMessage.listen((channelType, channelUrl, userID, message) => {
   request.post(`https://api.sendbird.com/v3/${channelType}/${channelUrl}/messages`)
