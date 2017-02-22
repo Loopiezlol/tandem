@@ -13,6 +13,7 @@ class sbStore extends Reflux.Store {
     this.state = {
       userID: '',
       userNick: '',
+      loggedIn: false,
       profileURL: '', // TODO: Implement!
       userList: [],
       currentChannel: {},
@@ -29,7 +30,6 @@ class sbStore extends Reflux.Store {
       otherUser: userid,
       otherUserNick: userNick,
     });
-
     // const channelListQuery = sb.GroupChannel.createMyGroupChannelListQuery();
     // channelListQuery.includeEmpty = true;
     // channelListQuery.limit = 20;
@@ -52,10 +52,16 @@ class sbStore extends Reflux.Store {
       } else {
         console.log(`Logged in as user ${userid}`);
         this.setState({
-          userID: user.user_id,
-          userNick: user.nickanme,
+          userID: user.userId,
+          userNick: user.nickname,
           profileURL: user.profile_url,
         });
+        console.log(`nickname is: ${this.state.userNick}, username is ${this.state.userID}`);
+        console.log(user);
+        this.setState({
+          loggedIn: true,
+        });
+        sbactions.loadOnlineUsersList();
       }
     });
   }
@@ -73,6 +79,7 @@ class sbStore extends Reflux.Store {
           console.log(`SendBird Connection error: ${error}`);
         } else {
           console.log(`SendBird should be connected! User is: ${this.state.userID}`);
+          sbactions.loadOnlineUsersList();
         }
       });
     } else {

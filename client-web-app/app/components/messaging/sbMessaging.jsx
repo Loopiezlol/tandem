@@ -37,6 +37,10 @@ class sbMessaging extends Reflux.Component {
             />
             <button onClick={() => this.handleLogIn()}>Log in as SendBird User</button>
           </div>
+          <div>
+            <p>Currently logged in as: </p>
+            { this.logInCheck() }
+          </div>
           <SBUserList />
         </div>
       </div>
@@ -57,6 +61,13 @@ class sbMessaging extends Reflux.Component {
     } else {
       SBActions.loginUser(sbUser);
     }
+  }
+  logInCheck() {
+    const { loggedIn, userID, userNick } = this.state;
+    if (loggedIn) {
+      return <p>{ userID } ({ userNick })</p>;
+    }
+    return <p>Not logged in yet!</p>;
   }
   handleIDType(e) {
     this.setState({
