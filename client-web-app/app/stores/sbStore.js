@@ -21,6 +21,8 @@ class sbStore extends Reflux.Store {
       otherUser: '',
       otherUserNick: '',
       prevMessages: [],
+      messages: [],
+      channelHandler: {},
     };
     this.listenables = sbactions;
   }
@@ -54,6 +56,12 @@ class sbStore extends Reflux.Store {
                 // 2a) If YES, JOIN and load previous messages.
                 console.log('Channel already exists, getting previous messages.');
                 sbactions.loadPreviousMessages(channelList[i]);
+                this.setState({
+                  chatOpen: true,
+                  otherUser: userid,
+                  otherUserNick: userNick,
+                  currentChannel: channelList[i],
+                });
                 return;
               }
             }
@@ -104,6 +112,7 @@ class sbStore extends Reflux.Store {
         return;
       }
       console.log(`Got the previous messages: ${messageList}`);
+      console.log(messageList);
       this.setState({
         prevMessages: messageList,
       });
@@ -127,7 +136,41 @@ class sbStore extends Reflux.Store {
           loggedIn: true,
         });
         sbactions.loadOnlineUsersList();
+        sbactions.makeChannelHandler();
       }
+    });
+  }
+
+  makeChannelHandler() {
+    this.setState({
+      channelHandler: new sb.ChannelHandler(),
+    });
+
+    this.state.channelHandler.onMessageReceived = function (channel, message) {
+      console.log('CHANNEL HANDLER: Got a message!! Here: ');
+      console.log(channel, message);
+      this.setState({
+        messages: this.state.messages.add(message),
+      });
+      console.log('our messages list contains: ');
+      console.log(this.state.messages);
+    };
+
+    // TODO: Unique handler ID is set to UserID (may be a problem?)
+    sb.addChannelHandler(this.state.userID, this.state.channelHandler);
+  }
+
+  sendMessage(message) {
+    // TODO: add these messages on to the end of the messages list so they appear in UI
+    const data = '';
+    const customType = '';
+    this.state.currentChannel.sendUserMessage(message, data, customType, (mess, error) => {
+      if (error) {
+        console.error(`error sending message: ${error}`);
+        return;
+      }
+      console.log(`message sent!! ${mess}`);
+      console.log(mess);
     });
   }
 
@@ -146,6 +189,7 @@ class sbStore extends Reflux.Store {
             loggedIn: true,
           });
           sbactions.loadOnlineUsersList();
+          sbactions.makeChannelHandler();
         }
       });
     } else {
@@ -190,19 +234,19 @@ class sbStore extends Reflux.Store {
     console.log(`SendBird Channel Creation ERROR. ERROR: ${err}`);
   }
 
-  sendMessageCompleted(res) {
-    if (res.status === 200) {
-      console.log('SendBird Message Sent: Server response 200 (OK)');
-      this.state.messagesSen.push(res);
-    } else {
-      console.log(`SendBird Message Send ERROR:
-      Server response ${res.status} ${res.statusText}`);
-    }
-  }
+  // sendMessageCompleted(res) {
+  //   if (res.status === 200) {
+  //     console.log('SendBird Message Sent: Server response 200 (OK)');
+  //     this.state.messagesSen.push(res);
+  //   } else {
+  //     console.log(`SendBird Message Send ERROR:
+  //     Server response ${res.status} ${res.statusText}`);
+  //   }
+  // }
 
-  static sendMessageFailed(err) {
-    console.log(`SendBird Message Sending ERROR. ERROR: ${err}`);
-  }
+  // static sendMessageFailed(err) {
+  //   console.log(`SendBird Message Sending ERROR. ERROR: ${err}`);
+  // }
 }
 
 sbactions.createUser.listen((userid, nick) => {
@@ -263,24 +307,24 @@ sbactions.loadOnlineUsersList.listen(() => {
 //     });
 // });
 
-sbactions.sendMessage.listen((channelType, channelUrl, userID, message) => {
-  request.post(`https://api.sendbird.com/v3/${channelType}/${channelUrl}/messages`)
-    .set('Content-Type', 'application/json', 'charset=utf8')
-    .set('Api-Token', API_TOKEN)
-    .send({
-      message_type: 'MESG',
-      user_id: userID,
-      message,
-    })
-    .end((err, res) => {
-      if (err || !res.ok) {
-        console.log(`Error sending SendBird message: ${JSON.stringify(err)}`);
-        sbactions.sendMessage.failed(err);
-      } else {
-        console.log(`SendBird message sent: ${JSON.stringify(res.body)}`);
-        sbactions.sendMessage.completed(res);
-      }
-    });
-});
+// sbactions.sendMessage.listen((channelType, channelUrl, userID, message) => {
+//   request.post(`https://api.sendbird.com/v3/${channelType}/${channelUrl}/messages`)
+//     .set('Content-Type', 'application/json', 'charset=utf8')
+//     .set('Api-Token', API_TOKEN)
+//     .send({
+//       message_type: 'MESG',
+//       user_id: userID,
+//       message,
+//     })
+//     .end((err, res) => {
+//       if (err || !res.ok) {
+//         console.log(`Error sending SendBird message: ${JSON.stringify(err)}`);
+//         sbactions.sendMessage.failed(err);
+//       } else {
+//         console.log(`SendBird message sent: ${JSON.stringify(res.body)}`);
+//         sbactions.sendMessage.completed(res);
+//       }
+//     });
+// });
 
 export default sbStore;

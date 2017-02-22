@@ -17,20 +17,36 @@ class sbChat extends Reflux.Component {
     this.store = SBStore;
   }
   render() {
-    const { chatOpen, otherUser, otherUserNick, message } = this.state;
+    const { chatOpen, otherUser, otherUserNick, message, prevMessages, messages } = this.state;
     if (chatOpen) {
       return (
         <div className="wrapper-sb">
           <h2>SendBird Chat with {otherUserNick} ({otherUser})</h2>
+          <h3>Messages</h3>
           <div className="messages">
-            <p>placeholder message</p>
+
+            <ul style={{textColor: "GRAY"}} className="old-messages">
+              {prevMessages.map(message => <li key={`${message.message_id}`}>
+                {message.sender.nickname}: {message.message}
+              </li>)}
+            </ul>
+
+          </div>
+          <div className="currentMsg">
+
+              <ul className="new-messages">
+                {messages.map(message => <li key={`${message.message_id}`}>
+                  {message.user.nickname}: {message.message}
+                </li>)}
+              </ul>
+
           </div>
           <div className="input">
             <input
               type="text" placeholder="Message"
               value={message} onChange={e => this.handleMessageType(e)}
             />
-            <button onClick={() => this.handleSend()}>Send!</button>
+            <button onClick={() => SBActions.sendMessage(this.state.message)}>Send!</button>
           </div>
         </div>
       );
@@ -42,12 +58,23 @@ class sbChat extends Reflux.Component {
       message: e.target.value,
     });
   }
-  handleSend() {
-    this.setState({
-    });
-    SBActions.sendMessage();
-    // TODO: Implement!
-  }
 }
+
+// TODO: Show previous messages from prevMessages!!!
+// <div className="messages">
+//
+//   <ul className="old-messages">
+//     {prevMessages.map(message => <li key={`${user.user_id}`}>
+//       ID: {user.user_id}
+//       <ul>
+//         <li>Nickname: {user.nickname}</li>
+//         <li>is_Online: {JSON.stringify(user.is_online)}</li>
+//         <li><button onClick={() => SBActions.openChat(user.user_id, user.nickname)}>
+//           Chat!</button></li>
+//       </ul>
+//     </li>)}
+//   </ul>
+//
+// </div>
 
 export default sbChat;
