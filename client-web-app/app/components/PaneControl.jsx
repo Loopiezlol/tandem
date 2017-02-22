@@ -11,7 +11,7 @@ class PaneControl extends React.Component {
 
   handleOpen(opened) {
     this.setState({
-      opened,
+      opened, 
     });
   }
 
