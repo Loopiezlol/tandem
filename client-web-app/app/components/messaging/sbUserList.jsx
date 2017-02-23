@@ -14,7 +14,7 @@ class sbUserList extends Reflux.Component {
     return (
       <div className="wrapper-sb">
         <h2>SendBird User List</h2>
-        <p>Limited to 10 users.</p>
+        <p>N/B: currently imited to 10 users.</p>
         <ul className="sbuser-list">
           {userList.map(user => <li key={`${user.user_id}`}>
             ID: {user.user_id}
