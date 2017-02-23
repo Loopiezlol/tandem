@@ -1,0 +1,14 @@
+.control-discover {
+  background-color: blue;
+  
+  .control-discover-filter {
+    height: 200px;
+    background: green;
+    box-shadow: 0px 7px 9px;
+    position: relative;
+  }
+  .control-discover-results {
+    height: calc(100vh - 232px);
+    position: relative;
+  }
+}

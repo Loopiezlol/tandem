@@ -3,45 +3,44 @@ import Reflux from 'reflux';
 import SampleStore from '../stores/sampleStore';
 import actions from '../actions';
 
-const divStyle = {
-  background: 'blue',
-};
-
-function SampleFilter() {
-  const filterStyle = {
-    height: '200px',
-    background: 'green',
-    boxShadow: '0px 7px 9px',
-    position: 'relative',
-  };
-  return (
-    <div className="control-discover-filterbar" style={filterStyle}>
-      <button onClick={() => actions.getUsers()}>Search!</button>
-    </div>
-  );
-}
-
 class Discover extends Reflux.Component {
   constructor(props) {
     super(props);
     this.state = {
-      options: [],
+      searchText: '',
+      boxContent: 0,
     };
     this.store = SampleStore;
   }
 
   render() {
-    const { users } = this.state;
+    const { users, searchText, boxContent } = this.state;
     return (
-      <div style={divStyle}>
-        <SampleFilter />
-        <div style={{ height: 'calc(100vh - 232px)', position: 'relative' }}>
+      <div className="control-discover">
+        <div className="control-discover-filter">
+          <input type="text" value={searchText} onChange={e => this.handleType(e)} />
+          <input type="checkbox" checked={boxContent} onChange={e => this.handleBox(e)} />
+          <button onClick={() => actions.getUsers()}>Search!</button>
+        </div>
+        <div className="control-discover-results">
           <ul>
             {users.map(user => <li key={`${user.username}`}>{user.username}</li>)}
           </ul>
         </div>
       </div>
     );
+  }
+  handleType(e) {
+    this.setState({
+      searchText: e.target.value,
+    });
+    console.log(this.state.searchText);
+  }
+  handleBox(e) {
+    console.log(e);
+    this.setState({
+      boxContent: e.target.checked,
+    }, console.log(this.state.boxContent));
   }
 }
 
