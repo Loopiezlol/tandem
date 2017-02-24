@@ -1,5 +1,10 @@
 import React from 'react';
 import Reflux from 'reflux';
+import Paper from 'material-ui/Paper';
+import RaisedButton from 'material-ui/RaisedButton';
+import { List, ListItem } from 'material-ui/List';
+import Avatar from 'material-ui/Avatar';
+import ChatIcon from 'material-ui/svg-icons/communication/chat-bubble';
 import SBStore from '../../stores/sbStore';
 import SBActions from '../../actions/sbActions';
 import SBChat from '../messaging/sbChat';
@@ -9,29 +14,51 @@ class sbUserList extends Reflux.Component {
     super(props);
     this.store = SBStore;
   }
+  static isOnlineIcon(isOnline) {
+    if (isOnline) {
+      return <Avatar icon={<ChatIcon />} backgroundColor="#00bcd4" />;
+    }
+    return <ChatIcon />;
+  }
   render() {
     const { userList } = this.state;
+    const style = {
+      width: 600,
+      margin: 20,
+      textAlign: 'center',
+      display: 'inline-block',
+    };
+    const buttonStyle = {
+      margin: 12,
+    };
     return (
       <div className="wrapper-sb">
-        <h2>SendBird User List</h2>
-        <p>N/B: currently imited to 10 users.</p>
-        <ul className="sbuser-list">
-          {userList.map(user => <li key={`${user.user_id}`}>
-            ID: {user.user_id}
-            <ul>
-              <li>Nickname: {user.nickname}</li>
-              <li>is_Online: {JSON.stringify(user.is_online)}</li>
-              <li><button onClick={() => SBActions.openChat(user.user_id, user.nickname)}>
-                Chat!</button></li>
-            </ul>
-          </li>)}
-        </ul>
-        <div className="btn">
-          <button onClick={() => SBActions.loadOnlineUsersList()}>Get Users</button>
-        </div>
+
+        <Paper style={style} zDepth={2}>
+          <RaisedButton
+            label="Refresh User List"
+            onClick={() => SBActions.loadOnlineUsersList()}
+            onTap={() => SBActions.loadOnlineUsersList()}
+            primary style={buttonStyle}
+          />
+          <br />
+          <List>
+            {userList.map(user =>
+              <ListItem
+                key={`${user.user_id}`}
+                primaryText={user.user_id}
+                secondaryText={user.nickname}
+                leftIcon={sbUserList.isOnlineIcon(user.is_online)}
+                onClick={() => SBActions.openChat(user.user_id, user.nickname)}
+              />,
+          )}
+          </List>
+        </Paper>
+
         <div className="chat">
           <SBChat />
         </div>
+
       </div>
     );
   }

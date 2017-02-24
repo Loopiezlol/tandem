@@ -37,7 +37,12 @@ class sbMessaging extends Reflux.Component {
         />
 
         <Paper style={style} zDepth={2}>
-          <p>Select a unique UserID and nickname:</p>
+          <p>Currently logged in as: </p>
+          { this.logInCheck() }
+        </Paper>
+
+        <Paper style={style} zDepth={2}>
+          <p>Select a unique User ID and nickname:</p>
           <TextField
             hintText="User ID"
             value={sbUser}
@@ -59,9 +64,9 @@ class sbMessaging extends Reflux.Component {
         </Paper>
 
         <Paper style={style} zDepth={2}>
-          <p>Or, log in to an existing userID: </p>
+          <p>Or, log in to an existing user ID: </p>
           <TextField
-            hintText="Existing UserID"
+            hintText="Existing User ID"
             value={sbUser}
             onChange={e => this.handleEIDType(e)}
           />
@@ -72,11 +77,6 @@ class sbMessaging extends Reflux.Component {
             onTap={() => this.handleLogIn()}
             primary style={buttonStyle}
           />
-        </Paper>
-
-        <Paper style={style} zDepth={2}>
-          <p>Currently logged in as: </p>
-          { this.logInCheck() }
         </Paper>
 
         <SBUserList />
@@ -105,7 +105,7 @@ class sbMessaging extends Reflux.Component {
     if (loggedIn) {
       return <p style={{ fontWeight: 'bold' }}>{ userID } ({ userNick })</p>;
     }
-    return <p style={{ color: '#00bcd4' }}>Not logged in yet!</p>;
+    return <p style={{ color: '#00bcd4', fontWeight: 'bold' }}>Not logged in yet!</p>;
   }
   handleIDType(e) {
     this.setState({
