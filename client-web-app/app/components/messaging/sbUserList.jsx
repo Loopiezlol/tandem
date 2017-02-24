@@ -14,12 +14,6 @@ class sbUserList extends Reflux.Component {
     super(props);
     this.store = SBStore;
   }
-  static isOnlineIcon(isOnline) {
-    if (isOnline) {
-      return <Avatar icon={<ChatIcon />} backgroundColor="#00bcd4" />;
-    }
-    return <ChatIcon />;
-  }
   render() {
     const { userList } = this.state;
     const style = {
@@ -49,7 +43,7 @@ class sbUserList extends Reflux.Component {
                 primaryText={user.user_id}
                 secondaryText={user.nickname}
                 leftIcon={sbUserList.isOnlineIcon(user.is_online)}
-                onClick={() => SBActions.openChat(user.user_id, user.nickname)}
+                onClick={() => this.openChat(user.user_id, user.nickname)}
               />,
           )}
           </List>
@@ -62,6 +56,21 @@ class sbUserList extends Reflux.Component {
       </div>
     );
   }
+  static isOnlineIcon(isOnline) {
+    if (isOnline) {
+      return <Avatar icon={<ChatIcon />} backgroundColor="#00bcd4" />;
+    }
+    return <ChatIcon />;
+  }
+  openChat(userid, nick) {
+    const { loggedIn, userID } = this.state;
+    if (loggedIn && (userID === userid)) {
+      alert("You can't chat with yourself!");
+    } else {
+      SBActions.openChat(userid, nick);
+    }
+  }
 }
+// onClick={() => SBActions.openChat(user.user_id, user.nickname)}
 
 export default sbUserList;
