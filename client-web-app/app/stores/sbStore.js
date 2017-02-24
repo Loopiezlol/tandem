@@ -146,7 +146,7 @@ class sbStore extends Reflux.Store {
 
     const x = this;
 
-    this.state.channelHandler.onMessageReceived = function (channel, message) {
+    this.state.channelHandler.onMessageReceived = function gotMessage(channel, message) {
       console.log('CHANNEL HANDLER: Got a message!! Here: ');
       console.log(channel, message);
 

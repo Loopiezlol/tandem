@@ -45,7 +45,7 @@ class sbUserList extends Reflux.Component {
                 leftIcon={sbUserList.isOnlineIcon(user.is_online)}
                 onClick={() => this.openChat(user.user_id, user.nickname)}
               />,
-          )}
+            )}
           </List>
         </Paper>
 
@@ -60,7 +60,7 @@ class sbUserList extends Reflux.Component {
     if (isOnline) {
       return <Avatar icon={<ChatIcon />} backgroundColor="#00bcd4" />;
     }
-    return <ChatIcon />;
+    return <Avatar icon={<ChatIcon />} backgroundColor="#bdbdbd" />;
   }
   openChat(userid, nick) {
     const { loggedIn, userID } = this.state;
