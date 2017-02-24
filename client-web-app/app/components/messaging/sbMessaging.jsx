@@ -1,5 +1,9 @@
 import React from 'react';
 import Reflux from 'reflux';
+import AppBar from 'material-ui/AppBar';
+import Paper from 'material-ui/Paper';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 import SBStore from '../../stores/sbStore';
 import SBActions from '../../actions/sbActions';
 import SBUserList from '../messaging/sbUserList';
@@ -15,34 +19,68 @@ class sbMessaging extends Reflux.Component {
   }
   render() {
     const { sbUser, sbNick } = this.state;
+    const style = {
+      width: 600,
+      margin: 20,
+      textAlign: 'center',
+      display: 'inline-block',
+    };
+    const buttonStyle = {
+      margin: 12,
+    };
     return (
       <div className="wrapper-sb">
-        <h1>SendBird Chat Interface</h1>
-        <p>Select a unique UserID and nickname:</p>
-        <div>
-          <input
-            type="text" placeholder="UserID"
-            value={sbUser} onChange={e => this.handleIDType(e)}
+
+        <AppBar
+          title="Prototype Chat Interface"
+          iconClassNameRight="muidocs-icon-navigation-expand-more"
+        />
+
+        <Paper style={style} zDepth={2}>
+          <p>Select a unique UserID and nickname:</p>
+          <TextField
+            hintText="User ID"
+            value={sbUser}
+            onChange={e => this.handleIDType(e)}
           />
-          <input
-            type="text" placeholder="Nickname"
-            value={sbNick} onChange={e => this.handleNickType(e)}
+          <br />
+          <TextField
+            hintText="Nickname"
+            value={sbNick}
+            onChange={e => this.handleNickType(e)}
           />
-          <button onClick={() => this.handleCreate()}>Create SendBird User</button>
-          <div>
-            <p>Or, log in to an existing userID: </p>
-            <input
-              type="text" placeholder="Existing UserID"
-              value={sbUser} onChange={e => this.handleEIDType(e)}
-            />
-            <button onClick={() => this.handleLogIn()}>Log in as SendBird User</button>
-          </div>
-          <div>
-            <p>Currently logged in as: </p>
-            { this.logInCheck() }
-          </div>
-          <SBUserList />
-        </div>
+          <br />
+          <RaisedButton
+            label="Create SendBird User"
+            onClick={() => this.handleCreate()}
+            onTap={() => this.handleCreate()}
+            primary style={buttonStyle}
+          />
+        </Paper>
+
+        <Paper style={style} zDepth={2}>
+          <p>Or, log in to an existing userID: </p>
+          <TextField
+            hintText="Existing UserID"
+            value={sbUser}
+            onChange={e => this.handleEIDType(e)}
+          />
+          <br />
+          <RaisedButton
+            label="Log in as SendBird User"
+            onClick={() => this.handleLogIn()}
+            onTap={() => this.handleLogIn()}
+            primary style={buttonStyle}
+          />
+        </Paper>
+
+        <Paper style={style} zDepth={2}>
+          <p>Currently logged in as: </p>
+          { this.logInCheck() }
+        </Paper>
+
+        <SBUserList />
+
       </div>
     );
   }
@@ -65,9 +103,9 @@ class sbMessaging extends Reflux.Component {
   logInCheck() {
     const { loggedIn, userID, userNick } = this.state;
     if (loggedIn) {
-      return <p>{ userID } ({ userNick })</p>;
+      return <p style={{ fontWeight: 'bold' }}>{ userID } ({ userNick })</p>;
     }
-    return <p>Not logged in yet!</p>;
+    return <p style={{ color: '#00bcd4' }}>Not logged in yet!</p>;
   }
   handleIDType(e) {
     this.setState({

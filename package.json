@@ -55,9 +55,11 @@
     "co-express": "^1.2.2",
     "cors": "^2.8.1",
     "express": "^4.14.1",
+    "material-ui": "^0.17.0",
     "mongoose": "^4.8.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-tap-event-plugin": "^2.0.1",
     "reflux": "^6.0.0",
     "sendbird": "^3.0.22",
     "superagent": "^3.4.1"

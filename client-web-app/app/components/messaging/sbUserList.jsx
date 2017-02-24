@@ -37,9 +37,4 @@ class sbUserList extends Reflux.Component {
   }
 }
 
-// ID: {user.user_id},
-// Nickname: {user.nickname},
-// is_Online: {JSON.stringify(user.is_online)} ,
-// <button onClick={() => SBActions.openChat(user.user_id, user.nickname)}>Chat!</button>
-
 export default sbUserList;

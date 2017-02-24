@@ -28,13 +28,11 @@ class sbStore extends Reflux.Store {
   }
 
   openChat(userid, userNick) {
-    // TODO:
     // 1) Check if a channel with the other user already exists.
     // 2a) If YES, JOIN and load previous messages.
     // 2b) If NO, create the new channel and event handlers and JOIN.
 
     // 1) First query using SendBird to get the list of channels user participating in...
-
     if (this.state.loggedIn) {
       const channelListQuery = sb.GroupChannel.createMyGroupChannelListQuery();
       channelListQuery.includeEmpty = true;
