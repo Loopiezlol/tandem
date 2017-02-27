@@ -12,8 +12,8 @@
     "web-app:prod": "cd client-web-app && ../node_modules/webpack/bin/webpack.js --config ./webpack.config.production.babel.js --progress --colors -p",
     "hybrid:dev": "cd client-hybrid && ../node_modules/webpack-dev-server/bin/webpack-dev-server.js --content-base .dist/ --hot --progress --colors",
     "hybrid:build": "cd client-hybrid && ../node_modules/webpack/bin/webpack.js --config ./webpack.config.production.babel.js --progress --colors -p",
-    "hybrid:ios": "",
-    "hybrid:android": ""
+    "hybrid:ios": "cd client-hybrid && yarn hybrid:build && cordova run ios",
+    "hybrid:android": "cd client-hybrid && yarn hybrid:build && cordova run android"
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",
