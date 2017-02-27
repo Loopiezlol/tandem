@@ -9,7 +9,9 @@
   "scripts": {
     "web-app": "cd client-web-app && ../node_modules/webpack-dev-server/bin/webpack-dev-server.js --content-base ./dist/ --hot --progress --colors",
     "backend": "cd backend && nodemon app.js",
-    "build-web-app": "cd client-web-app && ../node_modules/webpack/bin/webpack.js --config ./webpack.production.babel.js --progress --colors -p" 
+    "web-app:prod": "cd client-web-app && ../node_modules/webpack/bin/webpack.js --config ./webpack.config.production.babel.js --progress --colors -p",
+    "hybrid": "cd client-hybrid && ../node_modules/webpack-dev-server/bin/webpack-dev-server.js --content-base ./dist/ --hot --progress --colors",
+    "hybrid:prod": "cd client-hybrid && ../node_modules/webpack/bin/webpack.js --config ./webpack.config.production.babel.js --progress --colors -p"
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",

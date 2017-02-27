@@ -5,3 +5,5 @@ client-web-app/dist/client-bundle.js*
 client-web-app/dist/**/*.css*
 **/node_modules/
 .localdb
+client-hybrid/plugins
+client-hybrid/platforms
