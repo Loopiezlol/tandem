@@ -5,7 +5,7 @@ export default {
   entry: path.resolve(__dirname, 'app/app.jsx'),
   output: {
     path: path.resolve(__dirname, '.dist'),
-    filename: 'client-bundle.js',
+    filename: 'index_bundle.js',
   },
   devtool: 'eval-source-map',
   devServer: {

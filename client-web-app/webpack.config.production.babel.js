@@ -3,12 +3,13 @@ import path from 'path';
 import webpack from 'webpack';
 // eslint-disable-next-line
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 export default {
   entry: path.resolve(__dirname, 'app/app.jsx'),
   output: {
     path: path.resolve(__dirname, 'dist/'),
-    filename: 'client-bundle.js',
+    filename: 'index_bundle.js',
   },
   devtool: 'cheap-module-source-map',
   module: {
@@ -37,6 +38,9 @@ export default {
     new ExtractTextPlugin({
       filename: 'style.css',
       allChunks: true,
+    }),
+    new HtmlWebpackPlugin({
+      template: '../common/templates/index.template.html',
     }),
   ],
   resolve: {
