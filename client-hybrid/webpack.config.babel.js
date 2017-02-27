@@ -3,7 +3,7 @@ import path from 'path';
 export default {
   entry: path.resolve(__dirname, 'app/app.jsx'),
   output: {
-    path: path.resolve(__dirname, 'dist/'),
+    path: path.resolve(__dirname, './www'),
     filename: 'client-bundle.js',
   },
   devtool: 'source-map',
