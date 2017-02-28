@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import SampleStore from '../stores/sampleStore';
+import DiscoverStore from '../stores/discoverStore';
 import actions from '../actions';
 
 class Discover extends Reflux.Component {
@@ -8,39 +8,51 @@ class Discover extends Reflux.Component {
     super(props);
     this.state = {
       searchText: '',
-      boxContent: 0,
+      boxContent: false,
     };
-    this.store = SampleStore;
+    this.store = DiscoverStore;
+
+    actions.getResults({ searchText: '', boxContent: false });
   }
 
   render() {
-    const { users, searchText, boxContent } = this.state;
+    const { results, searchText, boxContent } = this.state;
     return (
       <div className="control-discover">
         <div className="control-discover-filter">
           <input type="text" value={searchText} onChange={e => this.handleType(e)} />
-          <input type="checkbox" checked={boxContent} onChange={e => this.handleBox(e)} />
-          <button onClick={() => actions.getUsers()}>Search!</button>
+          <div>
+            <input type="checkbox" checked={boxContent} onChange={e => this.handleBox(e)} /> Match with people of the same gender
+          </div>
+          <button onClick={() => actions.getResults({ name: searchText, sameGender: boxContent })}>
+            Search!
+          </button>
         </div>
         <div className="control-discover-results">
-          <ul>
-            {users.map(user => <li key={`${user.username}`}>{user.username}</li>)}
-          </ul>
+          {results && results.length ?
+            results.map(user =>
+              <div onClick={() => console.log(user.username, 'selected!')} className="result" key={`${user.username}`}>
+                {user.username} ({user.gender})<br />
+                <span className="result-flag">{user.mainLanguage.substring(0, 2)}</span>
+              </div>)
+            :
+            <div className="control-discover-results-emptypage">No matches!</div>
+          }
         </div>
       </div>
     );
   }
+
   handleType(e) {
     this.setState({
       searchText: e.target.value,
     });
-    console.log(this.state.searchText);
   }
+
   handleBox(e) {
-    console.log(e);
     this.setState({
       boxContent: e.target.checked,
-    }, console.log(this.state.boxContent));
+    });
   }
 }
 
