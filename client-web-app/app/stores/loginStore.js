@@ -6,42 +6,53 @@ class LoginStore extends Reflux.Store {
   constructor() {
     super();
     this.state = {
-      email: '',
-      password: '',
-      repassword: '',
-      error: '',
+      emailL: '',
+      passwordL: '',
+      messageL: '',
+      errorEmL: '',
+      errorPassL: '',
     };
     this.listenables = actions;
   }
 
-  emailAction(input) {
+  emailActionL(input) {
     this.setState({
-      email: input.target.value,
+      emailL: input.target.value,
     });
   }
 
-  passwordAction(input) {
+  passwordActionL(input) {
     this.setState({
-      password: input.target.value,
+      passwordL: input.target.value,
     });
   }
 
-  repPA(input) {
+  submitClickLCompleted(res) {
     this.setState({
-      repassword: input.target.value,
+      messageL: res.body.message,
+      errorEmL: '',
+      errorPassL: '',
     });
   }
+  submitClickLFailed(res) {
+    this.setState({
+      messageL: res.body.message,
+      errorEmL: res.body.errors.email,
+      errorPassL: res.body.errors.password,
+    });
+  }
+
 }
 // how to get actual email and password of component!
-actions.submitClick.listen((email, password) => {
+actions.submitClickL.listen((email, password) => {
   request.put('http://localhost:3000/login/')
-  .send({ email: { email }, password: { password } })
+  .send({ email, password })
   .end((err, res) => {
     if (err) {
-      // handle error
+      actions.submitClickL.failed(res);
+    } else {
+      actions.submitClickL.completed(res);
     }
-    console.log(res);
-    // handle no error
   });
 });
 

@@ -8,7 +8,10 @@ const actions = Reflux.createActions({
   emailAction: {},
   passwordAction: {},
   repPA: {},
+  emailActionL: {},
+  passwordActionL: {},
   submitClick: { asyncResult: true },
+  submitClickL: { asyncResult: true },
 });
 
 export default actions;

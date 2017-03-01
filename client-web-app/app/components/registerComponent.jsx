@@ -5,31 +5,31 @@ import { Link } from 'react-router';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import RegisterStore from '../stores/registerStore';
 import actions from '../actions';
-import LoginStore from '../stores/loginStore'
 
 
-class LoginComponent extends Reflux.Component {
+class RegisterComponent extends Reflux.Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.store = LoginStore;
+    this.store = RegisterStore;
   }
   render() {
-    const { emailL, passwordL, messageL, errorEmL, errorPassL } = this.state;
+    const { email, password, repassword, message, errorEm, errorPass, errorRepass } = this.state;
     return (
       <MuiThemeProvider >
         <Card className="container">
-          <h2 className="card-heading"> Login </h2>
-          { messageL && <p className="error-message">{messageL}</p> }
+          <h2 className="card-heading"> Register </h2>
+          { message && <p className="error-message">{message}</p> }
           <form action="/">
             <div className="field-line">
               <TextField
                 hintText="Your KCL Email"
                 floatingLabelText="E-mail"
-                value={emailL}
-                errorText={errorEmL}
-                onChange={actions.emailActionL}
+                value={email}
+                errorText={errorEm}
+                onChange={actions.emailAction}
               />
             </div>
             <div className="field-line">
@@ -37,21 +37,32 @@ class LoginComponent extends Reflux.Component {
                 type="password"
                 hintText="Your Password"
                 floatingLabelText="Password"
-                value={passwordL}
-                errorText={errorPassL}
-                onChange={actions.passwordActionL}
+                value={password}
+                errorText={errorPass}
+                onChange={actions.passwordAction}
+              />
+            </div>
+            <div className="field-line">
+              <TextField
+                type="password"
+                hintText="Your Password"
+                floatingLabelText="Repeat password"
+                value={repassword}
+                errorText={errorRepass}
+                onChange={actions.repPA}
               />
             </div>
             <div className="button-line">
               <br />
               <RaisedButton
-                onClick={() => actions.submitClickL(emailL, passwordL)}
+                className="form-button"
                 primary="true"
+                onClick={() => actions.submitClick(email, password, repassword)}
               >
-                Sign in!
+                Sign up!
               </RaisedButton>
             </div>
-            <CardText>Don't have an account? <Link to={'/login'}>Sign up!</Link></CardText>
+            <CardText>Already have an account? <Link to={'/login'}>Sign in!</Link></CardText>
           </form>
         </Card>
       </MuiThemeProvider>
@@ -59,4 +70,4 @@ class LoginComponent extends Reflux.Component {
   }
 }
 
-export default LoginComponent;
+export default RegisterComponent;
