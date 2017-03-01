@@ -9,7 +9,7 @@
   "scripts": {
     "web-app": "cd client-web-app && ../node_modules/webpack-dev-server/bin/webpack-dev-server.js --content-base ./dist/ --hot --progress --colors",
     "backend": "cd backend && nodemon app.js",
-    "build-web-app": "cd client-web-app && ../node_modules/webpack/bin/webpack.js --config ./webpack.production.babel.js --progress --colors -p" 
+    "build-web-app": "cd client-web-app && ../node_modules/webpack/bin/webpack.js --config ./webpack.production.babel.js --progress --colors -p"
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",
@@ -38,7 +38,8 @@
       "import"
     ],
     "rules": {
-      "jsx-a11y/no-marquee": 0
+      "jsx-a11y/no-marquee": 0,
+      "jsx-a11y/no-static-element-interactions": 0
     },
     "env": {
       "browser": true,
@@ -61,8 +62,10 @@
     "cors": "^2.8.1",
     "express": "^4.14.1",
     "mongoose": "^4.8.1",
+    "paper-react": "^0.0.2",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-image": "^0.1.0",
     "reflux": "^6.0.0",
     "superagent": "^3.4.1"
   }
