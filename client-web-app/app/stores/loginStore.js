@@ -30,8 +30,8 @@ class LoginStore extends Reflux.Store {
   submitClickLCompleted(res) {
     this.setState({
       messageL: res.body.message,
-      errorEmL: '',
-      errorPassL: '',
+      errorEmL: res.body.errors.email,
+      errorPassL: res.body.errors.password,
     });
   }
   submitClickLFailed(res) {
