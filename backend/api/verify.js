@@ -1,19 +1,8 @@
-const express = require('express');
-const cors = require('cors');
 const router = require('express').Router();
 const mongoose = require('mongoose');
 const nev = require('email-verification')(mongoose);
-const bodyParser = require('body-parser');
 const User = require('../models/user');
 const TempUser = require('../models/tempUser');
-
-myHasher = function(password, tempUserData, insertTempUser, callback) {
-  bcrypt.genSalt(8, function(err, salt) {
-    bcrypt.hash(password, salt, function(err, hash) {
-      return insertTempUser(hash, tempUserData, callback);
-    });
-  });
-};
 
 nev.configure({
   persistentUserModel: User,
@@ -28,9 +17,6 @@ nev.configure({
       pass: 'daybreak1',                       //ADD E-MAIL USERNAMER HERE
     }
   },
-
-  hashingFunction: myHasher,
-  passwordFieldName: 'password',
 }, function(err, options) {
   if (err) {
     console.log(err);
@@ -48,12 +34,7 @@ function verifyUrl (req, res) {
 
   nev.confirmTempUser(url,function(err, user) {
     if (user) {
-      nev.sendConfirmationEmail(user.email, function(err, info) {
-        if (err) {
-          return res.status(404).send('ERROR: sending confirmation email FAILED');
-        }
-      res.redirect('/'); //if all goes well, go to login page (TODO: display message on top "Successfully verified!")
-      });
+      res.redirect('/'); //if all goes well, go to login page (TODO:Render login p)
     } else {
       return res.status(404).send('ERROR: confirming temp user FAILED');
     }

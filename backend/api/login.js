@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const wrap = require('co-express');
 const User = require('../models/user');
 const validator = require('validator');
 
