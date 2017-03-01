@@ -21,7 +21,7 @@ function logIn(req,res){
         errors
       });
       }else{
-        errors.password = 'Password was incorrect.'
+        errors.password = 'Incorrect password.'
           res.json({
           message:'Invalid email or password',
           errors

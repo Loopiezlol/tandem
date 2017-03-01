@@ -51,7 +51,7 @@ class LoginComponent extends Reflux.Component {
                 Sign in!
               </RaisedButton>
             </div>
-            <CardText>Don't have an account? <Link to={'/login'}>Sign up!</Link></CardText>
+            <CardText>Don't have an account? <Link to={'/register'}>Sign up!</Link></CardText>
           </form>
         </Card>
       </MuiThemeProvider>

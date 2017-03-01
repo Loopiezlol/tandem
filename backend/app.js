@@ -5,9 +5,8 @@ const nev = require('email-verification')(mongoose);
 const bodyParser = require('body-parser');
 const User = require('./models/user');
 const TempUser = require('./models/tempUser');
-
-
 const app = express();
+
 mongoose.connect('mongodb://localhost/my_database');
 app.use(cors());
 
