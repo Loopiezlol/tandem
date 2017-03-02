@@ -35,7 +35,6 @@ class RegisterStore extends Reflux.Store {
   }
 
   submitClickCompleted(res) {
-    console.log(res);
     this.setState({
       message: res.body.message,
       errorEm: '',

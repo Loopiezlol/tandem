@@ -53,8 +53,12 @@ function registerUser (req, res) {
 
   // SENDS EMAIL WHEN YOU REGISTER
   nev.createTempUser(user, function(err, existingPersistentUser, newTempUser) {
+  const errors = {};
       if (err) {
-        return res.status(404).send('ERROR: creating temp user FAILED');
+        return res.status(404).json({
+          message: 'ERROR: creating temp user FAILED',
+          errors
+        });
       }
 
       // user already exists in persistent collection
@@ -70,10 +74,12 @@ function registerUser (req, res) {
         var URL = newTempUser[nev.options.URLFieldName];
         nev.sendVerificationEmail(req.body.email, URL, function(err, info) {
           if (err) {
-            return res.status(404).send('ERROR: sending verification email FAILED');
+            return res.status(404).json({
+              message: 'ERROR: sending verification email FAILED',
+              errors
+            });
           }
-          console.log(URL)
-          res.json({
+          return res.json({
             success: true,
             message: 'An email has been sent to you. Please check it to verify your account.',
             info: info,
@@ -81,7 +87,7 @@ function registerUser (req, res) {
         });
       // user already exists in temporary collection!
       } else {
-        res.json({
+        return res.json({
           success: true,
           message: 'You have already signed up. Please check your email to verify your account.',
         });
