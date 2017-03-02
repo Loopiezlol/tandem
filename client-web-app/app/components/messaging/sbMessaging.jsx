@@ -20,8 +20,8 @@ class sbMessaging extends Reflux.Component {
   render() {
     const { sbUser, sbNick } = this.state;
     const style = {
-      width: 600,
-      margin: 20,
+      width: '30pc',
+      margin: 15,
       textAlign: 'center',
       display: 'inline-block',
     };

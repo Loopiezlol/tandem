@@ -17,8 +17,8 @@ class sbUserList extends Reflux.Component {
   render() {
     const { userList } = this.state;
     const style = {
-      width: 600,
-      margin: 20,
+      width: '30pc',
+      margin: 15,
       textAlign: 'center',
       display: 'inline-block',
     };
@@ -71,6 +71,5 @@ class sbUserList extends Reflux.Component {
     }
   }
 }
-// onClick={() => SBActions.openChat(user.user_id, user.nickname)}
 
 export default sbUserList;
