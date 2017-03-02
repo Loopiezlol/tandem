@@ -2,47 +2,7 @@ const validator = require('validator');
 const passport = require('passport');
 const router = require('express').Router();
 const User = require('../models/user');
-const TempUser = require('../models/tempUser');
-const mongoose = require('mongoose');
-const nev = require('email-verification')(mongoose);
-const bcrypt = require('bcryptjs');
-
-
-
-myHasher = function(password, tempUserData, insertTempUser, callback) {
-  bcrypt.genSalt(8, function(err, salt) {
-    bcrypt.hash(password, salt, function(err, hash) {
-      return insertTempUser(hash, tempUserData, callback);
-    });
-  });
-};
-
-nev.configure({
-  persistentUserModel: User,
-  tempUserModel: TempUser,
-  expirationTime: 600, // 10 minutes
-
-  verificationURL: 'http://localhost:3000/email-verification/${URL}',
-  transportOptions: {
-    service: 'Gmail',
-    auth: {
-      user: 'daybreak.vk@gmail.com',
-      pass: 'daybreak1',                       //ADD E-MAIL USERNAMER HERE
-    }
-  },
-
-  hashingFunction: myHasher,
-  passwordFieldName: 'password',
-}, function(err, options) {
-  if (err) {
-    console.log(err);
-    return;
-  }
-
-  console.log('configured: ' + (typeof options === 'object'));
-});
-
-
+const nev = require('../mailer/index');
 
 function registerUser (req, res) {
   const user = new User ({
