@@ -32,7 +32,6 @@ nev.configure({
     console.log(err);
     return;
   }
-
   console.log('configured: ', (typeof options === 'object'));
 });
 

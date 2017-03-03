@@ -1,16 +1,21 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const nev = require('email-verification')(mongoose);
 const bodyParser = require('body-parser');
-const User = require('./models/user');
-const TempUser = require('./models/tempUser');
+const morgan = require('morgan');
+const jwt = require('jsonwebtoken');
+const config = require('../common/config.js');
+
 const app = express();
 
-mongoose.connect('mongodb://localhost/my_database');
+mongoose.connect(config.db);
 app.use(cors());
+app.set('superSecret', config.secret);
 
 app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(morgan('dev'));
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
