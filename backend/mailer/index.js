@@ -3,6 +3,7 @@ const nev = require('email-verification')(mongoose);
 const User = require('../models/user');
 const TempUser = require('../models/tempUser');
 const bcrypt = require('bcryptjs');
+const config = require('../../common/config');
 
 const myHasher = (password, tempUserData, insertTempUser, callback) => {
   bcrypt.genSalt(8, (err, salt) => {
@@ -20,11 +21,12 @@ nev.configure({
   transportOptions: {
     service: 'Gmail',
     auth: {
-      user: 'daybreak.vk@gmail.com',
-      pass: 'daybreak1',                       //ADD E-MAIL USERNAMER HERE
+      user: config.mailerLogin,
+      pass: config.mailerPassword,
+      //ADD E-MAIL USERNAMER HERE
+      // TODO: check for oAuth / token login instead
     },
   },
-
   hashingFunction: myHasher,
   passwordFieldName: 'password',
 }, (err, options) => {

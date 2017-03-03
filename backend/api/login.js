@@ -1,7 +1,11 @@
+const express = require('express');
 const router = require('express').Router();
 const User = require('../models/user');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
+const app = express();
 
 function logIn(req, res) {
   const errors = {};
@@ -10,21 +14,39 @@ function logIn(req, res) {
     if (!user) {
       errors.email = 'No user registered with this e-mail.';
       res.json({
-        message: 'Invalid email or password',
-        errors,
-      });
-    } else if (bcrypt.compareSync(password, user.password)) {
-      res.json({
-        message: 'This should get you to the dashboard now',
-        errors,
-      });
-    } else {
-      errors.password = 'Incorrect password.';
-      res.json({
+        success: false,
         message: 'Invalid email or password',
         errors,
       });
     }
+    const token = jwt.sign(user, app.get('superSecret'), {
+      expiresInMinutes: 1440, // expires in 24 hours
+    });
+    console.log(token);
+    res.json({
+      success: true,
+      message: 'This should get you to the dashboard now',
+      errors,
+      token,
+    });
+    // else if (bcrypt.compareSync(password, user.password)) {
+    //   const token = jwt.sign(user, app.get('superSecret'), {
+    //     expiresInMinutes: 1440, // expires in 24 hours
+    //   });
+    //   console.log(token);
+    //   res.json({
+    //     success: true,
+    //     message: 'This should get you to the dashboard now',
+    //     errors,
+    //     token,
+    //   });
+    // }
+    // errors.password = 'Incorrect password.';
+    // res.json({
+    //   success: false,
+    //   message: 'Invalid email or password',
+    //   errors,
+    // });
   });
 }
 
