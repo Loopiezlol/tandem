@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css?family=Abel|Rubik:300|Muli|Quicksand:300|Josefin+Sans');
+
+.iconsWrap {
+  display: inline-block;
+  z-index: 1;
+}
+
+.unselected {
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  margin-top:-95px;
+  margin-left: 52px;
+  opacity: 0.3;
+  border-radius: 5px;
+  padding: 5px 10px;
+  -webkit-transition: all 0.5s ease-out;
+  -moz-transition: all 0.5s ease-out;
+  -ms-transition: all 0.5s ease-out;
+  -o-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
+}
+
+.unselected:hover {
+  background-color: #ff7272;
+}
+
+.selected {
+  background-color: #892a2c;
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  margin-top:-95px;
+  margin-left: 52px;
+  border-radius: 5px;
+  padding: 5px 10px;
+  border: none;
+  opacity: 0.4;
+  animation: pulse 2.5s infinite
+}
+
+@-webkit-keyframes pulse {
+    0% {transform: scale(1.1);}
+    50% {transform: scale(1);}
+    100% {transform: scale(1.1);}
+}
+
+.interestsIcons {
+  width: 40px;
+  height: 40px;
+  margin-left: 80px;
+  margin-right: 80px;
+  padding-top: 20px;
+}
+
+
+.hobbyLabel {
+  margin-top: -2px;
+  font-family: 'Rubik', sans-serif;
+  position: relative;
+}
+
+.promptLabel {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 15px;
+  color: #bababa;
+}

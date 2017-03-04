@@ -1,127 +1,200 @@
-import React, {Component} from 'react';
+import React from 'react';
+import Reflux from 'reflux';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import MuiThemeProvider from '../node_modules/material-ui/styles/MuiThemeProvider';
+import Paper from '../node_modules/material-ui/Paper';
+import SelectField from '../node_modules/material-ui/SelectField';
+import Avatar from '../node_modules/material-ui/Avatar';
+import MenuItem  from '../node_modules/material-ui/MenuItem';
+import LanguageLevel from './LanguageLevel';
 import './User.css';
 
-class User extends Component {
+class User extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {tab:"info"};
+  constructor(props) {
+    super(props);
+    injectTapEventPlugin();
+    this.famLangArr = [{name:'English',level:'A2'},{name:'Spanish',level:'B1'},{name:'Bulgarian',level:'C2'},{name:'Russian',level:'B2'}];
+    this.state = {selectorBg:'bg-info',famLanguage:'English'};
+  }
+
+  changeSelector = (idx) => {
+    switch (idx) {
+      case 0:
+        console.log(idx);
+        this.setState({selectorBg:'bg-info'})
+        break;
+      case 1:
+        console.log(idx);;
+        this.setState({selectorBg:'bg-languages'})
+        break;
+      case 2:
+
+        console.log(idx);
+        this.setState({selectorBg:'bg-interests'})
+        break;
+      default:
+        console.log(idx);
+        this.setState({selectorBg:'bg-info'})
+        break;
     }
+  };
+
+  selectFamLang = (event,index,value) => {
+    this.setState({famLanguage:value});
+  }
+
+  addNotes = (hobby) => {
+    this.setState({addNotes:hobby});
+  }
+
+  render () {
 
 
-    handleClick = (id) => {
-      let tab = this.state.tab;
+    const selectors = ['info','chatting','heart'].map((selector, index) => {
+      const source = `userProfile/${selector}.png`;
+      return (
+        <img key={index} src = {source} className='selector' onClick = {() => this.changeSelector(index)}/>
+      );
+    });
 
 
-      if (id === 0) {
-        this.setState({
-          tab: 'info',
-        });
-      }else if (id === 1) {
-        tab = "love";
-        this.setState({
-          tab: 'love',
-        });
+
+    const infoSelector = (
+      <div className = 'genericSelectorWrap'>
+        <div  className='nameWrap'>
+          <p className = 'propLabel' id = 'nameLabel' onMouseEnter={()=>console.log('sese')} >Name</p>
+          <p className = 'dataLabel' id = 'nameData'>Radoslav Naydenov</p>
+        </div>
+        <div className='ageWrap'>
+          <p className = 'propLabel' id = 'ageLabel' >Age</p>
+          <p className = 'dataLabel' id = 'ageData'>20</p>
+        </div>
+      </div>
+    );
+
+    const familiarLanguages = this.famLangArr.map((lang,index) => {
+      return (
+        <MenuItem
+          value = {lang.name}
+          key={index}
+          primaryText={lang.name}
+        />
+      )
+    });
+
+    const languageLevels = () => {
+
+      for (var lang of this.famLangArr) {
+        if (this.state.famLanguage===lang.name) {
+
+          return (
+            <LanguageLevel
+              value={lang.level}
+              className = 'famLangLevel'
+            />
+          )
+        }
       }
     }
 
 
-    render() {
+    const languagesSelector = (
+      <div className = 'genericSelectorWrap'>
+        <div className = 'motherLanguageWrap' >
+          <p className = 'propLabel' id ='motherLangLabel'>Mother language</p>
+          <p className = 'dataLabel' id = 'motherLangDataLabel'>Bulgarian</p>
+        </div>
+        <div>
+          <p className = 'propLabel' id = 'famLangLabel'>Familiar languages</p>
+          <div>
+            <p className = 'langLevelLabels' id = 'langLabel'>Language</p>
+            <p className = 'langLevelLabels' id = 'levelLabel'>Level</p>
+          </div>
+          <div className = 'famLangListWrap'>
+            <SelectField
+              value = {this.state.famLanguage}
+              onChange = {this.selectFamLang}
+              className = 'famLangList'
+              labelStyle = {{fontFamily: '"Dosis", sans-serif',
+                fontSize: '25px',float:'left'}}
+            >
+              {familiarLanguages}
+            </SelectField>
+            {languageLevels()}
+          </div>
+        </div>
 
+      </div>
+    )
 
-        const tab = {
-          backgroundColor: '#e3e6ea',
-          width: '180px',
-          height: '80px',
-          marginBottom: '50px',
-        };
+    const notes = (
+      <div className = 'genericSelectorWrap'>
+        <div>
+          <Paper
+            className='interestNotesWrap'>
+          <Avatar src = './png/airplane.png' className = 'notesInterestIcon'/>
+          <div>
+            <p className = 'interestLabel notesInterestLabel'>Travelling</p>
+          </div>
+          <span><img className = 'chosenInterestNotes' src='./notes-selected.png'/></span>
+          </Paper>
+          <span > <img src='./notesBubble.png' id='notesBubbleIcon'/></span>
+        </div>
+      </div>
+    )
 
-        const images = ["infoIcon.png","heartIcon.png","msgIcon.png"];
-
-        const tabs = images.map((img, index) => {
-          console.log(index);
-            return <div key={index} onClick={() => this.handleClick({index}.index)} style={tab}>
-                <img id="tabsIcon" src={img}/>
-            </div>;
-        });
-
-        function TabOption (props) {
-          const tab = props.tab;
-          const info = props.info;
-          if (tab==="info") {
-            return (
-              <Info userInfo = {info}/>
-            )
-          }
-          else if (tab === "love") {
-            return (
-              <Interests interests = {info.interests}/>
-            )
-          }
-        }
-
-
-
-
-        function Info (props) {
-          const userInfo = props.userInfo;
-          const wrapperBg = {'backgroundColor' : '#8da3c6'};
-          return (
-            <div className="optionWrapper" style={wrapperBg}>
-              <div id = "labels">Name </div><p id = "nameValue">{userInfo.firstName} {userInfo.lastName}</p>
-              <div id = "labels">Languages </div>
-                <div  id="languageInfo" >
-                  <span><img id = "iconsProps" src="speakIcon.png"/>{userInfo.languageNative}</span>
-                  <span><img id = "iconsProps" src="studyIcon.png"/>{userInfo.languageLearn}</span>
-                </div>
-                <div id="labels">
-                  Who am I?
-                </div>
-                <p id="descriptionValue">{userInfo.desc}</p>
+    const interests = [{icon:'airplane',name:'Travelling'},{icon:'books',name:'Reading'},{icon:'diamond',name:'Fashion'},{icon:'gamepad',name:'Video Games'}].map((hobby,index) => {
+      const source = `./png/${hobby.icon}.png`;
+      return (
+        <div className = 'interestsListWrap' key={index}>
+          <Avatar src = {source} className = 'interestCircleIcon'/>
+            <div>
+              <p className = 'interestLabel'>{hobby.name}</p>
             </div>
-          )
-        }
+            <span><img className = 'notesIcon' onClick = {() => this.addNotes({hobby})} src='./notes.png'/></span>
+        </div>
+      )
+    });
 
+    const interestsSelector = (
+      <div>
+        <div className = 'notesField'>
+          {this.state.addNotes != null && notes}
+        </div>
+        <div className = 'genericSelectorWrap'>
+          {interests}
+        </div>
+      </div>
+    )
 
-        function Interests (props) {
-
-          const wrapperBg = {'backgroundColor' : '#af5452'};
-
-          const hobbies = props.interests.map(
-            function (hobby) {
-              return (
-                <div id = "hobbyProps"># {hobby} </div>
-              )
-          });
-
-          return (
-             <div className="optionWrapper" style = {wrapperBg}>
-                {hobbies}
-             </div>
-          )
-        }
-
-        return (
-
-
-            <div id="profileWrap">
-
-                <div>
-                    <img id="profile-pic-sm" src="samplePic.png"/>
-                </div>
-
-
-                <div id="infoWrap">
-                  {tabs}
-                </div>
-
-                <TabOption tab={this.state.tab} info={this.props.userInfo}/>
-
-
+    return (
+      <div className = "userProfileWrap">
+        <img src='./boss.png' className='profileImg'/>
+        <MuiThemeProvider>
+          <Paper className="userInfoWrap" zDepth={1}>
+            <div className = "selectorsWrap">
+              <MuiThemeProvider>
+                <Paper className="selectorsContainer" zDepth={1}>
+                  {selectors}
+                </Paper>
+              </MuiThemeProvider>
             </div>
-
-        );
-    }
+            <div className="selectorDataWrap">
+              <span className='backgroundSelector' id={this.state.selectorBg}/>
+              <MuiThemeProvider>
+                <Paper className="selectorDataContainer">
+                  {this.state.selectorBg === 'bg-info' && infoSelector}
+                  {this.state.selectorBg === 'bg-languages' && languagesSelector}
+                  {this.state.selectorBg === 'bg-interests' && interestsSelector}
+                </Paper>
+              </MuiThemeProvider>
+            </div>
+          </Paper>
+        </MuiThemeProvider>
+      </div>
+    );
+  }
 }
 
 export default User;
