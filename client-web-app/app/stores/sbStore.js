@@ -23,6 +23,7 @@ class sbStore extends Reflux.Store {
       prevMessages: [],
       messages: [],
       channelHandler: {},
+      isTyping: false,
     };
     this.listenables = sbactions;
   }
@@ -146,7 +147,7 @@ class sbStore extends Reflux.Store {
 
     const x = this;
 
-    this.state.channelHandler.onMessageReceived = function gotMessage(channel, message) {
+    this.state.channelHandler.onMessageReceived = function (channel, message) {
       console.log('CHANNEL HANDLER: Got a message!! Here: ');
       console.log(channel, message);
 
@@ -156,12 +157,19 @@ class sbStore extends Reflux.Store {
         messages: messagesState,
       });
       console.log('our messages list contains: ');
-      console.log(x.state.messages);
+      console.log(x.state.message);
+    };
+
+    this.state.channelHandler.onTypingStatusUpdated = function () {
+      x.setState({
+        isTyping: true,
+      });
     };
 
     // TODO: Unique handler ID is set to UserID (may be a problem?)
     sb.addChannelHandler(this.state.userID, this.state.channelHandler);
   }
+
 
   sendMessage(message) {
     // TODO: add these messages on to the end of the messages list so they appear in UI
