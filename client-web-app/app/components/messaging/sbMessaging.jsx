@@ -24,10 +24,12 @@ class sbMessaging extends Reflux.Component {
       margin: 15,
       textAlign: 'center',
       display: 'inline-block',
+      backgroundColor: 'lightblue',
     };
     const buttonStyle = {
       margin: 12,
     };
+    let zDepthSize = 4;
     return (
       <div className="wrapper-sb">
 
@@ -36,12 +38,13 @@ class sbMessaging extends Reflux.Component {
           iconClassNameRight="muidocs-icon-navigation-expand-more"
         />
 
-        <Paper style={style} zDepth={2}>
+        <Paper style={style} zDepth={zDepthSize}>
+
           <p>Currently logged in as: </p>
           { this.logInCheck() }
         </Paper>
 
-        <Paper style={style} zDepth={2}>
+        <Paper style={style} zDepth={zDepthSize}>
           <p>Select a unique User ID and nickname:</p>
           <TextField
             hintText="User ID"
@@ -63,7 +66,7 @@ class sbMessaging extends Reflux.Component {
           />
         </Paper>
 
-        <Paper style={style} zDepth={2}>
+        <Paper style={style} zDepth={zDepthSize}>
           <p>Or, log in to an existing user ID: </p>
           <TextField
             hintText="Existing User ID"
@@ -93,7 +96,7 @@ class sbMessaging extends Reflux.Component {
     }
   }
   handleLogIn() {
-    const { sbUser } = this.state;
+    const { sbUser, zDepthSize } = this.state;
     if (!sbUser.length) {
       window.alert('Please insert an ID');
     } else {
@@ -106,6 +109,14 @@ class sbMessaging extends Reflux.Component {
       return <p style={{ fontWeight: 'bold' }}>{ userID } ({ userNick })</p>;
     }
     return <p style={{ color: '#00bcd4', fontWeight: 'bold' }}>Not logged in yet!</p>;
+  }
+  formattingThePage() {
+    const { loggedIn, userID, userNick } = this.state;
+    if (loggedIn) {
+      // return (
+      //
+      // );
+    }
   }
   handleIDType(e) {
     this.setState({
@@ -122,6 +133,7 @@ class sbMessaging extends Reflux.Component {
       sbNick: e.target.value,
     });
   }
+
 }
 
 export default sbMessaging;
