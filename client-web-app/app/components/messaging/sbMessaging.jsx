@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -31,60 +32,64 @@ class sbMessaging extends Reflux.Component {
     };
     let zDepthSize = 4;
     return (
-      <div className="wrapper-sb">
-
-        <AppBar
-          title="Prototype Chat Interface"
-          iconClassNameRight="muidocs-icon-navigation-expand-more"
-        />
-
-        <Paper style={style} zDepth={zDepthSize}>
-
-          <p>Currently logged in as: </p>
-          { this.logInCheck() }
-        </Paper>
-
-        <Paper style={style} zDepth={zDepthSize}>
-          <p>Select a unique User ID and nickname:</p>
-          <TextField
-            hintText="User ID"
-            value={sbUser}
-            onChange={e => this.handleIDType(e)}
+      <MuiThemeProvider>
+        <div className="wrapper-sb">
+          <AppBar
+            title="Prototype Chat Interface"
+            iconClassNameRight="muidocs-icon-navigation-expand-more"
           />
-          <br />
-          <TextField
-            hintText="Nickname"
-            value={sbNick}
-            onChange={e => this.handleNickType(e)}
-          />
-          <br />
-          <RaisedButton
-            label="Create SendBird User"
-            onClick={() => this.handleCreate()}
-            onTap={() => this.handleCreate()}
-            primary style={buttonStyle}
-          />
-        </Paper>
 
-        <Paper style={style} zDepth={zDepthSize}>
-          <p>Or, log in to an existing user ID: </p>
-          <TextField
-            hintText="Existing User ID"
-            value={sbUser}
-            onChange={e => this.handleEIDType(e)}
-          />
-          <br />
-          <RaisedButton
-            label="Log in as SendBird User"
-            onClick={() => this.handleLogIn()}
-            onTap={() => this.handleLogIn()}
-            primary style={buttonStyle}
-          />
-        </Paper>
+          <div
+            className="content-wrapper"
+            style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column' }}>
+            <Paper style={style} zDepth={zDepthSize}>
 
-        <SBUserList />
+              <p>Currently logged in as: </p>
+              { this.logInCheck() }
+            </Paper>
 
-      </div>
+            <Paper style={style} zDepth={zDepthSize}>
+              <p>Select a unique User ID and nickname:</p>
+              <TextField
+                hintText="User ID"
+                value={sbUser}
+                onChange={e => this.handleIDType(e)}
+              />
+              <br />
+              <TextField
+                hintText="Nickname"
+                value={sbNick}
+                onChange={e => this.handleNickType(e)}
+              />
+              <br />
+              <RaisedButton
+                label="Create SendBird User"
+                onClick={() => this.handleCreate()}
+                onTap={() => this.handleCreate()}
+                primary style={buttonStyle}
+              />
+            </Paper>
+
+            <Paper style={style} zDepth={zDepthSize}>
+              <p>Or, log in to an existing user ID: </p>
+              <TextField
+                hintText="Existing User ID"
+                value={sbUser}
+                onChange={e => this.handleEIDType(e)}
+              />
+              <br />
+              <RaisedButton
+                label="Log in as SendBird User"
+                onClick={() => this.handleLogIn()}
+                onTap={() => this.handleLogIn()}
+                primary style={buttonStyle}
+              />
+            </Paper>
+
+            <SBUserList />
+          </div>
+        </div>
+      </MuiThemeProvider>
     );
   }
   handleCreate() {
