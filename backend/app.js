@@ -9,7 +9,6 @@ const app = express();
 
 mongoose.connect(config.db);
 app.use(cors());
-app.set('superSecret', config.secret);
 
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended: false }));

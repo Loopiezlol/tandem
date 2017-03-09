@@ -14,7 +14,6 @@ function registerUser(req, res) {
   // SENDS EMAIL WHEN YOU REGISTER
   nev.createTempUser(user, (err, existingPersistentUser, newTempUser) => {
     const errors = {};
-
     if (err) {
       return res.status(404).json({
         message: 'ERROR: creating temp user FAILED',
@@ -46,7 +45,6 @@ function registerUser(req, res) {
           info,
         });
       });
-      // user already exists in temporary collection!
     }
     return res.json({
       success: true,

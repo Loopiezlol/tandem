@@ -4,9 +4,6 @@ const nev = require('../mailer/index');
 
 function verifyUrl(req, res) {
   const url = req.params.URL;
-  // const user =  TempUser.findOne({GENERATED_VERIFYING_URL: url}, function(err, document) {
-  //    const user = document;
-  // });
 
   nev.confirmTempUser(url, (err, user) => {
     if (user) {
