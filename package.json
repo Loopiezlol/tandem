@@ -11,9 +11,12 @@
     "backend": "cd backend && nodemon app.js",
     "web-app:prod": "cd client-web-app && ../node_modules/webpack/bin/webpack.js --config ./webpack.config.production.babel.js --progress --colors -p",
     "hybrid:dev": "cd client-hybrid && ../node_modules/webpack-dev-server/bin/webpack-dev-server.js --content-base .dist/ --hot --progress --colors",
+    "hybrid:watch": "cd client-hybrid && ../node_modules/webpack/bin/webpack.js --config ./webpack.config.production.babel.js --progress --colors --watch",
     "hybrid:build": "cd client-hybrid && ../node_modules/webpack/bin/webpack.js --config ./webpack.config.production.babel.js --progress --colors -p",
     "hybrid:ios": "yarn hybrid:build && cd client-hybrid && cordova run ios",
-    "hybrid:android": "yarn hybrid:build && cd client-hybrid && cordova run android"
+    "hybrid:android": "yarn hybrid:build && cd client-hybrid && cordova run android",
+    "hybrid:android:reload": "cd client-hybrid && cordova run android -- --live-reload",
+    "hybrid:ios:reload": "cd client-hybrid && cordova run ios -- --live-reload"
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",
