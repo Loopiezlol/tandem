@@ -1,21 +1,34 @@
 import React from 'react';
+import Reflux from 'reflux';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { Card, CardMedia, CardText } from 'material-ui/Card';
+import RaisedButton from 'material-ui/RaisedButton';
+import Divider from 'material-ui/Divider';
 
-// class SearchResult extends React.Component {
-function SearchResult() {
-  const name = 'Seba Raba';
-  const description = 'This is the text we are going to use for description it has to be pretty long to be tested in a good manner.';
-  const handleClick = () => {
-  };
-  return (
-    <div className="main">
-      <div className="search-result">
-        <img className="search-result-image" src="https://facebook.github.io/react/img/logo_og.png" alt="HTML" />
-        <p className="name">{name}</p>
-        <p className="description">{description}</p>
-        <button className="message-button" onClick={handleClick}> message </button>
-      </div>
-    </div>
-  );
+class UserCard extends Reflux.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+  render() {
+    return (
+      <MuiThemeProvider >
+        <Card className="containerSmall">
+          <CardMedia
+            overlay={<p className="overlay"> John Doe, 69 </p>}
+          />
+          <CardText>
+            <p>
+              Sample Text
+            </p>
+            <Divider className="cardDivider" />
+            <p> Speaks: GB     Practices: FR </p>
+          </CardText>
+          <RaisedButton className="overlay" primary="1" fullWidth="true"> Chat! </RaisedButton>
+        </Card>
+      </MuiThemeProvider>
+    );
+  }
 }
 
-export default SearchResult;
+export default UserCard;

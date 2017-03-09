@@ -14,6 +14,10 @@ export default {
   module: {
     loaders: [
       {
+        test: /\.(png|jpg)$/,
+        loader: 'url-loader',
+      },
+      {
         test: /\.jsx?$/,
         loader: ['react-hot-loader', 'babel-loader'],
         exclude: [/node_modules/, /dist/],
