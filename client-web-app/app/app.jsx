@@ -1,12 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import SampleComponent from './components/sampleComponent';
-import UsersList from './components/userList';
+import { Router, Route, browserHistory } from 'react-router';
+import RegisterComponent from './components/registerComponent';
+import LoginComponent from './components/loginComponent';
+import './styles/example.scss';
+
+import './styles/example2.scss';
 
 ReactDOM.render(
-  <div className="view">
-    <SampleComponent />
-    <UsersList />
-  </div>
+  <Router history={browserHistory}>
+    <Route path="/" component={LoginComponent} />
+    <Route path="/login" component={LoginComponent} />
+    <Route path="/register" component={RegisterComponent} />
+  </Router>
   , document.querySelector('.app'),
 );
