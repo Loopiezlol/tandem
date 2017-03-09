@@ -1,17 +1,12 @@
-import HtmlWebpackPlugin from 'html-webpack-plugin';
 import path from 'path';
 
 export default {
   entry: path.resolve(__dirname, 'app/app.jsx'),
   output: {
-    path: path.resolve(__dirname, 'dist/'),
-    filename: 'index_bundle.js',
+    path: path.resolve(__dirname, './www'),
+    filename: 'client-bundle.js',
   },
-  devtool: 'source-map',
-  devServer: {
-    inline: true,
-    port: 3001,
-  },
+  devtool: 'cheap-module-source-map',
   module: {
     loaders: [
       {
@@ -34,9 +29,4 @@ export default {
   resolve: {
     extensions: ['*', '.js', '.jsx', 'scss', 'css'],
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: '../common/templates/index.template.html',
-    }),
-  ],
 };
