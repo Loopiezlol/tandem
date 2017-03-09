@@ -2,7 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Link } from 'react-router';
-import { Card, CardHeader, CardText } from 'material-ui/Card';
+import { Card, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import RegisterStore from '../stores/registerStore';
@@ -16,13 +16,21 @@ class RegisterComponent extends Reflux.Component {
     this.store = RegisterStore;
   }
   render() {
-    const { email, password, repassword, message, errorEm, errorPass, errorRepass } = this.state;
+    const { username, email, password, repassword, message, errorEm, errorPass, errorRepass } = this.state;
     return (
       <MuiThemeProvider >
         <Card className="container">
           <h2 className="card-heading"> Register </h2>
           { message && <p className="error-message">{message}</p> }
           <form action="/">
+            <div className="field-line">
+              <TextField
+                hintText="Your Username"
+                floatingLabelText="Username"
+                value={username}
+                onChange={actions.usernameAction}
+              />
+            </div>
             <div className="field-line">
               <TextField
                 hintText="Your KCL Email"
