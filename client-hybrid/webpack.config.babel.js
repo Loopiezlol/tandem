@@ -1,16 +1,17 @@
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 import path from 'path';
-// eslint-disable-next-line
-import webpack from 'webpack';
-// eslint-disable-next-line
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 export default {
   entry: path.resolve(__dirname, 'app/app.jsx'),
   output: {
-    path: path.resolve(__dirname, 'dist/'),
-    filename: 'client-bundle.js',
+    path: path.resolve(__dirname, '.dist'),
+    filename: 'index_bundle.js',
   },
-  devtool: 'cheap-module-source-map',
+  devtool: 'eval-source-map',
+  devServer: {
+    inline: true,
+    port: 3002,
+  },
   module: {
     loaders: [
       {
@@ -25,21 +26,17 @@ export default {
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader?sourceMap!sass-loader?sourceMap',
-        }),
+        loader: ['style-loader', 'css-loader?sourceMap', 'sass-loader?sourceMap'],
         exclude: [/node_modules/, /dist/],
       },
     ],
   },
-  plugins: [
-    new ExtractTextPlugin({
-      filename: 'style.css',
-      allChunks: true,
-    }),
-  ],
   resolve: {
     extensions: ['*', '.js', '.jsx', 'scss', 'css'],
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: '../common/templates/index.template.html',
+    }),
+  ],
 };

@@ -19,7 +19,7 @@ class UserCard extends Reflux.Component {
           />
           <CardText>
             <p>
-              Sample Text
+            Send nudes? Porfavor mi amor! And so on...
             </p>
             <Divider className="cardDivider" />
             <p> Speaks: GB     Practices: FR </p>
