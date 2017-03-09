@@ -1,5 +1,12 @@
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import FlatButton from 'material-ui/FlatButton';
+import Drawer from 'material-ui/Drawer';
+import AppBar from 'material-ui/AppBar';
+
+
 import React from 'react';
 import Reflux from 'reflux';
+import Filters from './filters';
 import DiscoverStore from '../stores/discoverStore';
 import actions from '../actions';
 
@@ -7,51 +14,49 @@ class Discover extends Reflux.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchText: '',
-      boxContent: false,
+      open: false,
     };
     this.store = DiscoverStore;
 
-    actions.getResults({ searchText: '', boxContent: false });
+    actions.getResults({});
   }
 
   render() {
-    const { results, searchText, boxContent } = this.state;
+    const { results } = this.state;
     return (
-      <div className="control-discover">
-        <div className="control-discover-filter">
-          <input type="text" value={searchText} onChange={e => this.handleType(e)} />
-          <div>
-            <input type="checkbox" checked={boxContent} onChange={e => this.handleBox(e)} /> Match with people of the same gender
+      <MuiThemeProvider>
+        <div className="control-discover">
+          <AppBar
+            iconElementRight={<FlatButton label="Show Filters" />}
+            onRightIconButtonTouchTap={() => this.handleToggleDrawer()}
+          />
+          <Drawer open={this.state.open} openSecondary>
+            <AppBar
+              title="Hide filters"
+              onLeftIconButtonTouchTap={() => this.handleToggleDrawer()}
+              onTitleTouchTap={() => this.handleToggleDrawer()}
+            />
+            <Filters />
+          </Drawer>
+          <div className="control-discover-results">
+            {results && results.length ?
+              results.map(user =>
+                <div className="result" key={`${user.username}`} onClick={() => console.log(user)}>
+                  {user.username} ({user.gender})<br />
+                  <span className="result-flag">{user.mainLanguage.name && user.mainLanguage.name.substring(0, 2)}</span><br />
+                </div>)
+              :
+              <div className="control-discover-results-emptypage">No matches!</div>
+            }
           </div>
-          <button onClick={() => actions.getResults({ name: searchText, sameGender: boxContent })}>
-            Search!
-          </button>
         </div>
-        <div className="control-discover-results">
-          {results && results.length ?
-            results.map(user =>
-              <div onClick={() => console.log(user.username, 'selected!')} className="result" key={`${user.username}`}>
-                {user.username} ({user.gender})<br />
-                <span className="result-flag">{user.mainLanguage.substring(0, 2)}</span>
-              </div>)
-            :
-            <div className="control-discover-results-emptypage">No matches!</div>
-          }
-        </div>
-      </div>
+      </MuiThemeProvider>
     );
   }
 
-  handleType(e) {
+  handleToggleDrawer() {
     this.setState({
-      searchText: e.target.value,
-    });
-  }
-
-  handleBox(e) {
-    this.setState({
-      boxContent: e.target.checked,
+      open: !this.state.open,
     });
   }
 }

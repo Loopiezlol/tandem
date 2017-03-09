@@ -60,6 +60,8 @@
     "co-express": "^1.2.2",
     "cors": "^2.8.1",
     "express": "^4.14.1",
+    "material-ui": "^0.17.0",
+    "material-ui-chip-input": "^0.13.1",
     "mongoose": "^4.8.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",

@@ -19,3 +19,5 @@ app.use('/users/', require('./api/users'));
 app.listen(3000, () => {
   console.log('Server started on port 3000!');
 });
+
+// require('./helpers/usergenerator').populateDB(50);
