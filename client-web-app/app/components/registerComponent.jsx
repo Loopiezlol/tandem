@@ -16,7 +16,8 @@ class RegisterComponent extends Reflux.Component {
     this.store = RegisterStore;
   }
   render() {
-    const { username, email, password, repassword, message, errorEm, errorPass, errorRepass } = this.state;
+    const { username, email, password, repassword, message, errorEm, errorPass, errorRepass }
+    = this.state;
     return (
       <MuiThemeProvider >
         <Card className="container">
