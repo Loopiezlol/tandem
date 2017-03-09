@@ -6,6 +6,7 @@ class RegisterStore extends Reflux.Store {
   constructor() {
     super();
     this.state = {
+      username: '',
       email: '',
       password: '',
       message: '',
@@ -14,6 +15,12 @@ class RegisterStore extends Reflux.Store {
       errorRepass: '',
     };
     this.listenables = actions;
+  }
+
+  usernameAction(input) {
+    this.setState({
+      username: input.target.value,
+    });
   }
 
   emailAction(input) {
