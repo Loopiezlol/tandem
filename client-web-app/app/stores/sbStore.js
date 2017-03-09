@@ -160,9 +160,10 @@ class sbStore extends Reflux.Store {
       console.log(x.state.message);
     };
 
-    this.state.channelHandler.onTypingStatusUpdated = function () {
+    this.state.channelHandler.onTypingStatusUpdated = function (channel) {
+      const typing = channel.isTyping();
       x.setState({
-        isTyping: true,
+        isTyping: typing,
       });
     };
 
