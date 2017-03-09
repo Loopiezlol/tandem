@@ -7,3 +7,4 @@ client-web-app/dist/*
 client-hybrid/plugins
 client-hybrid/platforms
 client-hybrid/www/client-bundle.js*
+.DS_Store
