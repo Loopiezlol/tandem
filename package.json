@@ -38,7 +38,8 @@
       "import"
     ],
     "rules": {
-      "jsx-a11y/no-marquee": 0
+      "jsx-a11y/no-marquee": 0,
+      "jsx-a11y/img-has-alt": 0
     },
     "env": {
       "browser": true,

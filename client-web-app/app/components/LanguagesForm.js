@@ -1,50 +1,67 @@
 import React from 'react';
 import Reflux from 'reflux';
-import './LanguagesForm.css';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import MuiThemeProvider from '../node_modules/material-ui/styles/MuiThemeProvider';
-import FlatButton from '../node_modules/material-ui/FlatButton';
-import TextField from '../node_modules/material-ui/TextField';
-import AutoComplete from '../node_modules/material-ui/AutoComplete';
-import Paper from '../node_modules/material-ui/Paper';
-import DropDownMenu from '../node_modules/material-ui/DropDownMenu';
-import MenuItem from '../node_modules/material-ui/MenuItem';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import FlatButton from 'material-ui/FlatButton';
+import TextField from 'material-ui/TextField';
+import Paper from 'material-ui/Paper';
 import LanguageLevel from './LanguageLevel';
-import OnboardingActions from './actions/OnboardingActions';
-import OnboardingStore from './stores/OnboardingStore';
+import OnboardingActions from '../actions/OnboardingActions';
+import OnboardingStore from '../stores/OnboardingStore';
+import './LanguagesForm.css';
 
 class LanguagesForm extends Reflux.Component {
 
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.store = OnboardingStore;
     // injectTapEventPlugin();
-    this.state = {greetUser:true,askLanguages:false,inputContainer:"inputContainer",bubbleState:'speechBubbleGreeting',bubbleSrc:'./speechBubbleGreeting.png',inputFieldState:'inputCountryField',okBtn:"okBtn",languageAddedLabel:'languageAddedLabel',langErrorWrap:'languagesErrorWrap-appear',showInstruction:false,enableInputField:false};
+    this.state = {
+      greetUser: true,
+      askLanguages: false,
+      inputContainer: 'inputContainer',
+      bubbleState: 'speechBubbleGreeting',
+      bubbleSrc: './speechBubbleGreeting.png',
+      inputFieldState: 'inputCountryField',
+      okBtn: 'okBtn',
+      languageAddedLabel: 'languageAddedLabel',
+      langErrorWrap: 'languagesErrorWrap-appear',
+      showInstruction: false,
+      enableInputField: false,
+    };
   }
 
 
   // Event listener to show button if mother language is provided
   showOkBtn = (e) => {
-
     OnboardingActions.updateLanguage(e);
     // If input is more than 5 characters long, show the button
-    if(!this.state.askLanguages && e.target.value.length > 5) {
-      this.setState({okBtn:'okBtn okBtn-show'});
+    if (!this.state.askLanguages && e.target.value.length > 5) {
+      this.setState({ okBtn: 'okBtn okBtn-show' });
     }
   };
 
   // Event, which prompts the user to
   // add the languages he/she is familiar with
   askLanguages = () => {
-
     OnboardingActions.addLanguage();
     const x = this;
-    function changeState () {
-      x.setState({inputContainer:'inputContainer inputContainer-expanded',bubbleSrc:'./speechBubbleLanguages.png',bubbleState:'speechBubbleLanguages',askLanguages:true,okBtn:'okBtn',enableInputField:true});
+    function changeState() {
+      x.setState({
+        inputContainer: 'inputContainer inputContainer-expanded',
+        bubbleSrc: './speechBubbleLanguages.png',
+        bubbleState: 'speechBubbleLanguages',
+        askLanguages: true,
+        okBtn: 'okBtn',
+        enableInputField: true,
+      });
     }
 
-    this.setState({bubbleState:'speechBubbleGreeting bubbleLeave',inputFieldState:'inputCountryField inputFieldExit',greetUser:false},() => {
-        setTimeout(changeState,1000);
+    this.setState({
+      bubbleState: 'speechBubbleGreeting bubbleLeave',
+      inputFieldState: 'inputCountryField inputFieldExit',
+      greetUser: false,
+    }, () => {
+      setTimeout(changeState, 1000);
     });
   }
 
