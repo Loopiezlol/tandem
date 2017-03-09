@@ -1,6 +1,7 @@
 import Reflux from 'reflux';
 import request from 'superagent';
 import actions from '../actions';
+import SBActions from '../actions/sbActions';
 
 class RegisterStore extends Reflux.Store {
   constructor() {
@@ -42,6 +43,7 @@ class RegisterStore extends Reflux.Store {
   }
 
   submitClickCompleted(res) {
+    SBActions.createUser(this.state.email, this.state.username);
     this.setState({
       message: res.body.message,
       errorEm: '',
