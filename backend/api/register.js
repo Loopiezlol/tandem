@@ -30,7 +30,7 @@ function registerUser(req, res) {
       // new user created
     if (newTempUser) {
       const URL = newTempUser[nev.options.URLFieldName];
-      nev.sendVerificationEmail(req.body.email, URL, (err1) => {
+      return nev.sendVerificationEmail(req.body.email, URL, (err1) => {
         if (err1) {
           return res.status(404).json({
             message: 'ERROR: sending verification email FAILED',
