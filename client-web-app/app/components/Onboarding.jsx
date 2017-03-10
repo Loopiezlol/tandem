@@ -9,11 +9,9 @@ import LanguagesForm from './LanguagesForm';
 import Interests from './Interests';
 import DetailsForm from './DetailsForm';
 import InterestsNotes from './InterestsNotes';
-
 import OnboardingActions from '../actions/OnboardingActions';
 import OnboardingStore from '../stores/OnboardingStore';
-
-import './Onboarding.css';
+import './Onboarding.scss';
 
 
 class Onboarding extends Reflux.Component {
@@ -22,15 +20,6 @@ class Onboarding extends Reflux.Component {
     super(props);
     this.state = { errorBubble: 'errorMsgInfoWrap' };
     this.store = OnboardingStore;
-  }
-
-
-  goNext = () => {
-    OnboardingActions.goNext();
-  }
-
-  finish = () => {
-    console.log(this.state.userInfo);
   }
 
   render() {
@@ -78,7 +67,7 @@ class Onboarding extends Reflux.Component {
           </Paper>
         </MuiThemeProvider>
         <div className="ctrlBtns">
-          {this.state.stage !== 'interestsNotesStage' && <NextButton onClick={() => this.goNext()} />}
+          {this.state.stage !== 'interestsNotesStage' && <NextButton onClick={() => OnboardingActions.goNext()} />}
           {this.state.stage === 'interestsNotesStage' && <FinishButton onClick={() => this.finish()} />}
         </div>
       </div>

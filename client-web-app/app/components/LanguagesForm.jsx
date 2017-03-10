@@ -7,7 +7,7 @@ import Paper from 'material-ui/Paper';
 import LanguageLevel from './LanguageLevel';
 import OnboardingActions from '../actions/OnboardingActions';
 import OnboardingStore from '../stores/OnboardingStore';
-import './LanguagesForm.css';
+import './LanguagesForm.scss';
 
 class LanguagesForm extends Reflux.Component {
 
@@ -31,17 +31,17 @@ class LanguagesForm extends Reflux.Component {
 
 
   // Event listener to show button if mother language is provided
-  showOkBtn = (e) => {
+  showOkBtn(e) {
     OnboardingActions.updateLanguage(e);
     // If input is more than 5 characters long, show the button
     if (!this.state.askLanguages && e.target.value.length > 5) {
       this.setState({ okBtn: 'okBtn okBtn-show' });
     }
-  };
+  }
 
   // Event, which prompts the user to
   // add the languages he/she is familiar with
-  askLanguages = () => {
+  askLanguages() {
     OnboardingActions.addLanguage();
     const x = this;
     function changeState() {
@@ -64,12 +64,12 @@ class LanguagesForm extends Reflux.Component {
     });
   }
 
-  updateFamLangInput = (e) => {
+  updateFamLangInput(e) {
     this.setState({ famLangInput: e.target.value });
   }
 
   // Add a language the user is familiar with the list
-  addLanguage = () => {
+  addLanguage() {
     const userInfoState = this.state.userInfo;
     const stateLangList = userInfoState.familiarLanguages;
     const newLang = this.state.currLang;

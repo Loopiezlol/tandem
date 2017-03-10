@@ -7,7 +7,7 @@ import Paper from 'material-ui/Paper';
 import Avatar from 'material-ui/Avatar';
 // import PictureUploader from "./PictureUploader";
 import CustomCarousel from './CustomCarousel';
-import './DetailsForm.css';
+import './DetailsForm.scss';
 import OnboardingActions from '../actions/OnboardingActions';
 import OnboardingStore from '../stores/OnboardingStore';
 
@@ -26,7 +26,7 @@ class DetailsForm extends Reflux.Component {
 
 
     // Click event when selecting a character
-  selectCharacter = (e) => {
+  selectCharacter(e) {
     const character = e.target.name;
     let source = '';
     if (character.includes('woman')) {
@@ -53,7 +53,7 @@ class DetailsForm extends Reflux.Component {
 
 
     // Confirming character selection for new profile picture
-  selectCharacterDone = () => {
+  selectCharacterDone() {
     this.setState({ showForm: true });
 
     const x = this;
@@ -68,7 +68,7 @@ class DetailsForm extends Reflux.Component {
     }
   }
 
-  selectSex = (e) => {
+  selectSex(e) {
     const sex = e.target.name;
     OnboardingActions.selectSex(sex);
     this.setState({ sexSelected: `selected-${sex}` });

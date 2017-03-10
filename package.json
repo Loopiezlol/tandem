@@ -48,11 +48,8 @@
     ],
     "rules": {
       "jsx-a11y/no-marquee": 0,
-<<<<<<< HEAD
       "jsx-a11y/img-has-alt": 0,
       "react/prop-types": 0,
-=======
->>>>>>> develop
       "jsx-a11y/no-static-element-interactions": 0
     },
     "env": {
@@ -65,12 +62,16 @@
   "babel": {
     "presets": [
       "react",
-      "latest"
+      "latest",
+      "react-app"
     ]
   },
   "dependencies": {
-    "babel-polyfill": "^6.22.0",
+    "babel-plugin-transform-class-properties": "^6.23.0",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-polyfill": "^6.23.0",
     "babel-preset-react": "^6.22.0",
+    "babel-preset-react-app": "^2.2.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.16.0",
     "co-express": "^1.2.2",
