@@ -7,6 +7,7 @@ import AppBar from 'material-ui/AppBar';
 import React from 'react';
 import Reflux from 'reflux';
 import Filters from './filters';
+import UserCard from './discover-search-result';
 import DiscoverStore from '../stores/discoverStore';
 import actions from '../actions';
 
@@ -14,11 +15,11 @@ class Discover extends Reflux.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false,
+      filtersVisible: false,
     };
     this.store = DiscoverStore;
 
-    actions.getResults({});
+    actions.getResults();
   }
 
   render() {
@@ -30,7 +31,7 @@ class Discover extends Reflux.Component {
             iconElementRight={<FlatButton label="Show Filters" />}
             onRightIconButtonTouchTap={() => this.handleToggleDrawer()}
           />
-          <Drawer open={this.state.open} openSecondary>
+          <Drawer open={this.state.filtersVisible} openSecondary>
             <AppBar
               title="Hide filters"
               onLeftIconButtonTouchTap={() => this.handleToggleDrawer()}
@@ -41,10 +42,8 @@ class Discover extends Reflux.Component {
           <div className="control-discover-results">
             {results && results.length ?
               results.map(user =>
-                <div className="result" key={`${user.username}`} onClick={() => console.log(user)}>
-                  {user.username} ({user.gender})<br />
-                  <span className="result-flag">{user.mainLanguage.name && user.mainLanguage.name.substring(0, 2)}</span><br />
-                </div>)
+                <UserCard me={user} />,
+              )
               :
               <div className="control-discover-results-emptypage">No matches!</div>
             }
@@ -56,7 +55,7 @@ class Discover extends Reflux.Component {
 
   handleToggleDrawer() {
     this.setState({
-      open: !this.state.open,
+      filtersVisible: !this.state.filtersVisible,
     });
   }
 }

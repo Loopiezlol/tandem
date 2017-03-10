@@ -14,14 +14,15 @@ class Filters extends Reflux.Component {
     super(props);
     this.state = {
       searchText: '',
-      boxContent: false,
+      genderBoxContent: false,
+      languageBoxContent: false,
       chips: [],
       interests: [],
     };
   }
 
   render() {
-    const { searchText, boxContent, chips } = this.state;
+    const { searchText, genderBoxContent, languageBoxContent, chips } = this.state;
     const dataSource = [
       { text: 'English', value: '58b9ccf16a4efb4d7b96d5ba' },
       { text: 'French', value: '58b9cda0bb447f4e95953092' },
@@ -29,7 +30,8 @@ class Filters extends Reflux.Component {
     ];
     const queryParameters = {
       name: searchText,
-      sameGender: boxContent,
+      sameGender: genderBoxContent,
+      matchLanguages: languageBoxContent,
       languagesToMatch: chips.map(chip => chip.value),
     };
     return (
@@ -39,14 +41,19 @@ class Filters extends Reflux.Component {
           // floatingLabelText="username:"
           // floatingLabelFixed
           onChange={e => this.handleType(e)}
-        /><br />
+        />
         <Divider />
         <CheckBox
           label="Match with people of the same gender"
-          onCheck={(e, checked) => this.handleBox(checked)}
+          onCheck={(e, checked) => this.handleGenderBox(checked)}
+        />
+        <CheckBox
+          label="Only show people that speak my language"
+          onCheck={(e, checked) => this.handleLanguageBox(checked)}
         />
         <ChipInput
-          floatingLabelText="Select languages"
+          floatingLabelText="Display users that speak:"
+          hintText="Just type in languages"
           value={this.state.chips}
           dataSource={dataSource}
           dataSourceConfig={{ text: 'text', value: 'value' }}
@@ -74,7 +81,6 @@ class Filters extends Reflux.Component {
     this.setState({
       chips: tempChips,
     });
-    console.log(index);
   }
 
   handleType(e) {
@@ -83,9 +89,15 @@ class Filters extends Reflux.Component {
     });
   }
 
-  handleBox(checked) {
+  handleGenderBox(checked) {
     this.setState({
-      boxContent: checked,
+      genderBoxContent: checked,
+    });
+  }
+
+  handleLanguageBox(checked) {
+    this.setState({
+      languageBoxContent: checked,
     });
   }
 }
