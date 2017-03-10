@@ -1,54 +1,27 @@
 .control-discover {
-  max: 97vh;
+  // max: 97vh; // for now
   background-color: #F0E7BB;
   $filterheight: 4vh;
 
-  .control-discover-filter {
-    display: flex;
-    justify-content: space-between;
-    // width: 30vw;
-    height: $filterheight;
-    border-radius: 3pt;
-    margin: 0 auto;
-    background-color: #DAE14E;
-    box-shadow: 0px 7px 9px;
-    z-index: 1;
-    position: relative;
-  }
+  // .control-discover-filter {
+  //   // width: 30vw;
+  //   height: $filterheight;
+  //   border-radius: 3pt;
+  //   margin: 0 auto;
+  //   background-color: #DAE14E;
+  //   box-shadow: 0px 7px 9px;
+  //   z-index: 1;
+  //   position: relative;
+  // }
 
+  .appbar {
+    // position: absolute !important;
+
+  }
 
   .control-discover-results {
-    height: 98vh-$filterheight;
+    // top: $filterheight;
     overflow-y: auto;
     text-align: center;
-    padding: 0 12px;
-
-    .result {
-      display: inline-block;
-      width: 400px;
-      height: 500px;
-      font-size: 40pt;
-      margin: 10px;
-      background-color: #F5FCFD;
-      border-radius: 12pt;
-      .result-flag {
-        color: #a5500e;
-      }
-    }
-    .result:hover {
-      background: darken(#F5FCFD, 5%);
-    }
-    .control-discover-results-emptypage {
-      font-size: 20pt;
-      margin: 10px;
-    }
   }
-}
-
-::-webkit-scrollbar {
-    width: 6px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: orange;
 }

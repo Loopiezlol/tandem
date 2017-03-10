@@ -3,13 +3,14 @@ import FlatButton from 'material-ui/FlatButton';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 
-
 import React from 'react';
 import Reflux from 'reflux';
 import Filters from './filters';
 import UserCard from './discover-search-result';
 import DiscoverStore from '../stores/discoverStore';
 import actions from '../actions';
+
+import '../styles/discover.scss';
 
 class Discover extends Reflux.Component {
   constructor(props) {
@@ -27,10 +28,6 @@ class Discover extends Reflux.Component {
     return (
       <MuiThemeProvider>
         <div className="control-discover">
-          <AppBar
-            iconElementRight={<FlatButton label="Show Filters" />}
-            onRightIconButtonTouchTap={() => this.handleToggleDrawer()}
-          />
           <Drawer open={this.state.filtersVisible} openSecondary>
             <AppBar
               title="Hide filters"
@@ -39,10 +36,15 @@ class Discover extends Reflux.Component {
             />
             <Filters />
           </Drawer>
+          <AppBar
+            className="appbar"
+            iconElementRight={<FlatButton label="Show Filters" />}
+            onRightIconButtonTouchTap={() => this.handleToggleDrawer()}
+          />
           <div className="control-discover-results">
             {results && results.length ?
               results.map(user =>
-                <UserCard me={user} />,
+                <UserCard className="result" me={user} />,
               )
               :
               <div className="control-discover-results-emptypage">No matches!</div>

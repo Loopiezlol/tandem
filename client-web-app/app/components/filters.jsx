@@ -48,11 +48,12 @@ class Filters extends Reflux.Component {
           onCheck={(e, checked) => this.handleGenderBox(checked)}
         />
         <CheckBox
-          label="Only show people that speak my language"
+          label="Only show people that want to learn my language"
           onCheck={(e, checked) => this.handleLanguageBox(checked)}
         />
         <ChipInput
           floatingLabelText="Display users that speak:"
+          openOnFocus
           hintText="Just type in languages"
           value={this.state.chips}
           dataSource={dataSource}
@@ -61,6 +62,8 @@ class Filters extends Reflux.Component {
           onRequestDelete={(chip, index) => this.handleDeleteChip(chip, index)}
         />
         <FlatButton
+          style={{ width: '100%' }}
+          fullWidth
           label="Search"
           primary
           onTouchTap={() => actions.getResults(queryParameters)}

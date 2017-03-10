@@ -9,17 +9,17 @@ module.exports = {
       query.username = new RegExp(options.name, 'i');
     }
 
-    if (options.sameGender === 'true') {
-      const MALE = 'M'; // hard coded for now
-      query.gender = MALE;
-    }
-
     if (options.languagesToMatch) {
       query.mainLanguage = options.languagesToMatch;
     }
 
     if (options.interests) {
       query['interests.name'] = { $in: options.interests };
+    }
+
+    if (options.sameGender === 'true') {
+      const MALE = 'M'; // hard coded for now
+      query.gender = MALE;
     }
 
     if (options.matchLanguages === 'true') {
