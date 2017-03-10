@@ -2,11 +2,11 @@ import React from 'react';
 import Reflux from 'reflux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Link } from 'react-router';
-import { Card, CardHeader, CardText } from 'material-ui/Card';
+import { Card, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import actions from '../actions';
-import LoginStore from '../stores/loginStore'
+import LoginStore from '../stores/loginStore';
 
 
 class LoginComponent extends Reflux.Component {

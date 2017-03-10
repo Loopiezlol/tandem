@@ -66,7 +66,7 @@ class sbChat extends Reflux.Component {
               </div>
             </Paper>
 
-            <div>{this.showTypingIndicator()}</div>
+            { isTyping ? <div>typing...</div> : <div />}
 
             <div className="input">
               <TextField
@@ -89,28 +89,26 @@ class sbChat extends Reflux.Component {
   }
 
   handleMessageType(e) {
-    const { currentChannel } = this.state;
-    currentChannel.startTyping();
-    currentChannel.endTyping();
-    this.setState({
-      message: e.target.value,
-    });
-  }
+   const { currentChannel } = this.state;
+   console.log(currentChannel.isTyping());
+   if (e.target.value && e.target.value.length) {
+     currentChannel.startTyping();
+   } else {
+     currentChannel.endTyping();
+   }
+   this.setState({
+     message: e.target.value,
+   });
+ }
 
-  handleSendButton(e) {
-    const { currentChannel, isTyping } = this.state;
-    currentChannel.endTyping();
-    console.log(isTyping);
-    SBActions.sendMessage(this.state.message);
-  }
-  showTypingIndicator() {
-    const { isTyping } = this.state;
-    if (isTyping) {
-      return <div>typing...</div>;
-    }
-    return <div />;
-  }
-
+ handleSendButton() {
+   const { currentChannel } = this.state;
+   currentChannel.endTyping();
+   SBActions.sendMessage(this.state.message);
+   this.setState({
+     message: '',
+   });
+ }
 }
 
 

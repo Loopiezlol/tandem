@@ -8,7 +8,6 @@ function registerUser(req, res) {
     email: req.body.email,
     password: req.body.password,
   });
-  // const password = req.body.password;
   const { email } = req.body;
 
   // SENDS EMAIL WHEN YOU REGISTER
@@ -21,7 +20,7 @@ function registerUser(req, res) {
       });
     }
 
-    // user already exists in persistent collection
+      // user already exists in persistent collection
     if (existingPersistentUser) {
       return res.json({
         success: true,
@@ -32,7 +31,8 @@ function registerUser(req, res) {
       // new user created
     if (newTempUser) {
       const URL = newTempUser[nev.options.URLFieldName];
-      nev.sendVerificationEmail(email, URL, (err1, info) => {
+
+      return nev.sendVerificationEmail(email, URL, (err1) => {
         if (err1) {
           return res.status(404).json({
             message: 'ERROR: sending verification email FAILED',
@@ -42,9 +42,9 @@ function registerUser(req, res) {
         return res.json({
           success: true,
           message: 'An email has been sent to you. Please check it to verify your account.',
-          info,
         });
       });
+      // user already exists in temporary collection!
     }
     return res.json({
       success: true,
@@ -97,7 +97,6 @@ router.put('/register', (req, res) => {
       errors: validationResult.errors,
     });
   }
-
   return registerUser(req, res);
 });
 

@@ -7,34 +7,31 @@ const config = require('../../common/config');
 
 function logIn(req, res) {
   const errors = {};
-  const { email, password } = req.body;
-  User.findOne({ email }, (err, user) => {
+
+  User.findOne({ email: req.body.email }, (err, user) => {
     if (!user) {
       errors.email = 'No user registered with this e-mail.';
-      res.json({
-        success: false,
-        message: 'Invalid email or password',
-        errors,
-      });
-    } else if (bcrypt.compareSync(password, user.password)) {
-      const token = jwt.sign(user, config.secret, {
-        expiresIn: '1440m', // expires in 24 hours
-      });
-      console.log(token);
-      res.json({
-        success: true,
-        message: 'This should get you to the dashboard now',
-        errors,
-        token,
-      });
-    } else {
-      errors.password = 'Incorrect password.';
-      res.json({
-        success: false,
+      return res.json({
         message: 'Invalid email or password',
         errors,
       });
     }
+
+    if (bcrypt.compareSync(req.body.password, user.password)) {
+      const token = jwt.sign(user, config.secret, {
+        expiresIn: '1440m', // expires in 24 hours
+      });
+      return res.json({
+        message: 'This should get you to the dashboard now',
+        errors,
+        token,
+      });
+    }
+    errors.password = 'Incorrect password.';
+    res.json({
+      message: 'Invalid email or password',
+      errors,
+    });
   });
 }
 

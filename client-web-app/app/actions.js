@@ -6,6 +6,7 @@ const actions = Reflux.createActions({
   getUsers: { asyncResult: true },
   createUser: { asyncResult: true },
   emailAction: {},
+  usernameAction: {},
   passwordAction: {},
   repPA: {},
   emailActionL: {},

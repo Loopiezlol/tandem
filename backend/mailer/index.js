@@ -15,7 +15,6 @@ const myHasher = (password, tempUserData, insertTempUser, callback) => {
 nev.configure({
   persistentUserModel: User,
   tempUserModel: TempUser,
-  expirationTime: 600, // 10 minutes
   // eslint-disable-next-line
   verificationURL: 'http://localhost:3000/email-verification/${URL}',
   transportOptions: {
