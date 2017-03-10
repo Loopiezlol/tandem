@@ -62,12 +62,17 @@
   "babel": {
     "presets": [
       "react",
-      "latest",
-      "react-app"
+      "latest"
+    ],
+    "plugins": [
+      "transform-object-assign",
+      "transform-object-rest-spread",
+      "transform-class-properties"
     ]
   },
   "dependencies": {
     "babel-plugin-transform-class-properties": "^6.23.0",
+    "babel-plugin-transform-object-assign": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-polyfill": "^6.23.0",
     "babel-preset-react": "^6.22.0",
