@@ -13,9 +13,9 @@ class AuthHandler extends Reflux.Component {
     return this.props.children;
   }
 
-
   componentDidMount() {
     if (this.state.status === 'in') {
+      // could be improved with indexroute I guess
       hashHistory.push('/message');
     } else {
       hashHistory.push('/login');

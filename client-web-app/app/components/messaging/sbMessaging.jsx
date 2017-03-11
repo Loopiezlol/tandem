@@ -8,8 +8,6 @@ import TextField from 'material-ui/TextField';
 import SBStore from '../../stores/sbStore';
 import SBActions from '../../actions/sbActions';
 import SBUserList from '../messaging/sbUserList';
-import actions from '../../actions';
-import Auth from '../../stores/auth';
 
 class sbMessaging extends Reflux.Component {
   constructor(props) {
@@ -18,7 +16,7 @@ class sbMessaging extends Reflux.Component {
       sbUser: '',
       sbNick: '',
     };
-    this.stores = [SBStore, Auth];
+    this.stores = SBStore;
   }
   render() {
     const { sbUser, sbNick } = this.state;
@@ -32,7 +30,7 @@ class sbMessaging extends Reflux.Component {
     const buttonStyle = {
       margin: 12,
     };
-    let zDepthSize = 4;
+    const zDepthSize = 4;
     return (
       <MuiThemeProvider>
         <div className="wrapper-sb">
@@ -43,13 +41,8 @@ class sbMessaging extends Reflux.Component {
 
           <div
             className="content-wrapper"
-            style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column' }}>
-            <RaisedButton
-              label="Log out"
-              onClick={() => actions.handleLogOut()}
-              onTap={() => actions.handleLogOut()}
-              primary style={buttonStyle}
-            />
+            style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column' }}
+          >
             <Paper style={style} zDepth={zDepthSize}>
 
               <p>Currently logged in as: </p>
