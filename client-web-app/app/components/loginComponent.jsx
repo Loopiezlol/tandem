@@ -1,19 +1,34 @@
 import React from 'react';
 import Reflux from 'reflux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { Link } from 'react-router';
+import { Link, hashHistory } from 'react-router';
 import { Card, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import actions from '../actions';
 import LoginStore from '../stores/loginStore';
+import Auth from '../stores/auth';
 
 
 class LoginComponent extends Reflux.Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.store = LoginStore;
+    this.stores = [LoginStore, Auth];
+  }
+
+  componentDidMount() {
+    if (this.state.status === 'in') {
+      this.props.router.push('/');
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.status !== prevState.status) {
+      if (this.state.status === 'in') {
+        this.props.router.push('/');
+      }
+    }
   }
   render() {
     const { emailL, passwordL, messageL, errorEmL, errorPassL } = this.state;

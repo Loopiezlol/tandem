@@ -18,27 +18,35 @@ class Auth extends Reflux.Store {
 
 //eslint-disable-next-line
   handleLoginCompleted(res) {
-    console.log(res);
     if (res.body.token) {
       this.jwt = res.body.token;
       localStorage.setItem('jwt', this.jwt);
+      actions.meFromToken(this.jwt);
     } else {
       console.log('error getting token');
     }
   }
   //eslint-disable-next-line
   handleLoginFailed(res) {
-    console.log(res);
+    this.setState({
+      status: 'off',
+      me: {},
+    });
   }
 
   meFromTokenCompleted(res) {
     this.setState({
       me: res.body.user,
+      token: res.body.token,
+      status: 'in',
     });
   }
 
-  meFromTokenFailed(res) {
-    console.log(res);
+  meFromTokenFailed() {
+    this.setState({
+      status: 'off',
+      me: {},
+    });
   }
 
 }

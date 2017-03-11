@@ -11,9 +11,6 @@ import UserCard from './components/discover-search-result';
 import AuthHandler from './components/authHandler';
 
 ReactDOM.render(
-    // <MuiThemeProvider>
-    //   <SBMessaging />
-    // </MuiThemeProvider>
   <Router history={hashHistory}>
     <Route path="/" component={AuthHandler}>
       <Route path="/message" component={SBMessaging} />

@@ -1,8 +1,6 @@
-import React from 'react';
 import { hashHistory } from 'react-router';
 import Reflux from 'reflux';
 import Auth from '../stores/auth';
-import actions from '../actions';
 
 class AuthHandler extends Reflux.Component {
   constructor(props) {
@@ -15,12 +13,20 @@ class AuthHandler extends Reflux.Component {
   }
 
   componentDidMount() {
-    switch (this.state.status) {
-      case 'in':
-        hashHistory.push('/user');
-        break;
-      default:
-        console.log('not logged in');
+    if (this.state.status === 'in') {
+      hashHistory.push('/message');
+    } else {
+      hashHistory.push('/login');
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.status !== this.state.status) {
+      if (this.state.status === 'in') {
+        hashHistory.push('/message');
+      } else {
+        hashHistory.push('/login');
+      }
     }
   }
 }
