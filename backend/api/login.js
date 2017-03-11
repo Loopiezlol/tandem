@@ -24,11 +24,12 @@ function logIn(req, res) {
       return res.json({
         message: 'This should get you to the dashboard now',
         errors,
+        // user,
         token,
       });
     }
     errors.password = 'Incorrect password.';
-    res.json({
+    return res.json({
       message: 'Invalid email or password',
       errors,
     });
