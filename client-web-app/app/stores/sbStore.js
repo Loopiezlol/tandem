@@ -113,7 +113,7 @@ class sbStore extends Reflux.Store {
       console.log(`Got the previous messages: ${messageList}`);
       console.log(messageList);
       this.setState({
-        prevMessages: messageList,
+        prevMessages: messageList.reverse(),
       });
     });
   }

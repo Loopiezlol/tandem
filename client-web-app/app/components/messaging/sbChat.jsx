@@ -3,8 +3,18 @@ import Reflux from 'reflux';
 import Paper from 'material-ui/Paper';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
+import Chip from 'material-ui/Chip';
 import SBStore from '../../stores/sbStore';
 import SBActions from '../../actions/sbActions';
+
+const chipStyle = {
+  margin: 2,
+};
+const chipOurStyle = {
+  margin: 2,
+  backgroundColor: '#00bcd4',
+  align: 'right',
+};
 
 class sbChat extends Reflux.Component {
   constructor(props) {
@@ -29,7 +39,7 @@ class sbChat extends Reflux.Component {
       margin: 15,
       textAlign: 'center',
       display: 'inline-block',
-      color: 'blue',
+      color: 'gray',
     };
     const styleMessage = {
       width: '20pc',
@@ -45,26 +55,25 @@ class sbChat extends Reflux.Component {
       return (
         <div className="wrapper-sb">
           <Paper style={style} zDepth={2}>
-            <h2>SendBird Chat with {otherUserNick} ({otherUser})</h2>
-            <h3>Messages</h3>
+            <h5>SendBird Chat with {otherUserNick} ({otherUser})</h5>
 
-            <Paper style={styleMessage}>
+            <div>
               <div className="messages">
-                <ul className="old-messages">
-                  {prevMessages.map(message => <li key={`${message.messageId}`}>
-                    {message.sender.nickname}: {message.message}
+                <ul className="old-messages" style={{ listStyle: 'none' }}>
+                  {prevMessages.map(msg => <li key={`${msg.messageId}`}>
+                    {this.renderMessage(msg)}
                   </li>)}
                 </ul>
 
               </div>
               <div className="currentMsg">
-                <ul className="new-messages">
-                  {messages.map(message => <li key={`${message.messageId}`}>
-                    {message.sender.nickname}: {message.message}
+                <ul className="new-messages" style={{ listStyle: 'none' }}>
+                  {messages.map(msg => <li key={`${msg.messageId}`}>
+                    {this.renderMessage(msg)}
                   </li>)}
                 </ul>
               </div>
-            </Paper>
+            </div>
 
             { isTyping ? <div>typing...</div> : <div />}
 
@@ -89,26 +98,37 @@ class sbChat extends Reflux.Component {
   }
 
   handleMessageType(e) {
-   const { currentChannel } = this.state;
-   console.log(currentChannel.isTyping());
-   if (e.target.value && e.target.value.length) {
-     currentChannel.startTyping();
-   } else {
-     currentChannel.endTyping();
-   }
-   this.setState({
-     message: e.target.value,
-   });
- }
+    const { currentChannel } = this.state;
+    console.log(currentChannel.isTyping());
+    if (e.target.value && e.target.value.length) {
+      currentChannel.startTyping();
+    } else {
+      currentChannel.endTyping();
+    }
+    this.setState({
+      message: e.target.value,
+    });
+  }
 
- handleSendButton() {
-   const { currentChannel } = this.state;
-   currentChannel.endTyping();
-   SBActions.sendMessage(this.state.message);
-   this.setState({
-     message: '',
-   });
- }
+  handleSendButton() {
+    const { currentChannel } = this.state;
+    currentChannel.endTyping();
+    SBActions.sendMessage(this.state.message);
+    this.setState({
+      message: '',
+    });
+  }
+
+  renderMessage(message) {
+    if (message.sender.userId === this.store.state.userID) {
+      return (<Chip style={chipOurStyle}>
+        You: {message.message}
+      </Chip>);
+    }
+    return (<Chip style={chipStyle}>
+      {message.sender.nickname}: {message.message}
+    </Chip>);
+  }
 }
 
 
