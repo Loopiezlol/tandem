@@ -30,3 +30,6 @@ ReactDOM.render(
   </Router>
   , document.querySelector('.app'),
 );
+
+// please note how at unprotected routes I've added the onEnter check.
+// basically if you're already logged in it'll redirect you to /
