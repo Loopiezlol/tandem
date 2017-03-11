@@ -6,9 +6,9 @@ class Auth extends Reflux.Store {
   constructor() {
     super();
     this.listenables = actions;
-    this.jwt = window.localStorage.getItem('jwt');
+    const jwt = window.localStorage.getItem('jwt');
     this.state = {
-      status: this.jwt ? 'in' : 'off',
+      status: jwt ? 'in' : 'off',
       me: {},
     };
     if (this.jwt) {
@@ -19,9 +19,9 @@ class Auth extends Reflux.Store {
 //eslint-disable-next-line
   handleLoginCompleted(res) {
     if (res.body.token) {
-      this.jwt = res.body.token;
-      localStorage.setItem('jwt', this.jwt);
-      actions.meFromToken(this.jwt);
+      const jwt = res.body.token;
+      localStorage.setItem('jwt', jwt);
+      actions.meFromToken(jwt);
     } else {
       console.log('error getting token');
     }
@@ -37,12 +37,19 @@ class Auth extends Reflux.Store {
   meFromTokenCompleted(res) {
     this.setState({
       me: res.body.user,
-      token: res.body.token,
       status: 'in',
     });
   }
 
   meFromTokenFailed() {
+    this.setState({
+      status: 'off',
+      me: {},
+    });
+  }
+  handleLogOut() {
+    localStorage.removeItem('jwt');
+    this.jwt = '';
     this.setState({
       status: 'off',
       me: {},
