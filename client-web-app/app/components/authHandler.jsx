@@ -14,11 +14,11 @@ class AuthHandler extends Reflux.Component {
   }
 
   componentDidMount() {
-    if (this.state.status === 'in') {
+    if (this.state.status === 'in' && this.props.children === null) {
       // could be improved with indexroute I guess
       // Currently set the main page as /message because we didn't have another one
       hashHistory.push('/message');
-    } else {
+    } else if (this.state.status === 'off') {
       hashHistory.push('/login');
     }
   }
