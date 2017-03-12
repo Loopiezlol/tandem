@@ -1,7 +1,7 @@
 .control-discover {
-  // max: 97vh; // for now
+  height: 98vh; // for now
   background-color: #F0E7BB;
-  $filterheight: 4vh;
+  $filterheight: 64px;
 
   // .control-discover-filter {
   //   // width: 30vw;
@@ -14,13 +14,9 @@
   //   position: relative;
   // }
 
-  .appbar {
-    // position: absolute !important;
-
-  }
-
   .control-discover-results {
-    // top: $filterheight;
+    position: relative;
+    height: calc(98vh - #{$filterheight});
     overflow-y: auto;
     text-align: center;
   }

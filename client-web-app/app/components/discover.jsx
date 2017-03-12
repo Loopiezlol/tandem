@@ -2,6 +2,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import FlatButton from 'material-ui/FlatButton';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
+import ContentFilterList from 'material-ui/svg-icons/content/filter-list';
+
 
 import React from 'react';
 import Reflux from 'reflux';
@@ -28,7 +30,12 @@ class Discover extends Reflux.Component {
     return (
       <MuiThemeProvider>
         <div className="control-discover">
-          <Drawer open={this.state.filtersVisible} openSecondary>
+          <Drawer
+            open={this.state.filtersVisible}
+            openSecondary
+            docked={false}
+            onRequestChange={filtersVisible => this.handleSwipeDrawer(filtersVisible)}
+          >
             <AppBar
               title="Hide filters"
               onLeftIconButtonTouchTap={() => this.handleToggleDrawer()}
@@ -38,7 +45,7 @@ class Discover extends Reflux.Component {
           </Drawer>
           <AppBar
             className="appbar"
-            iconElementRight={<FlatButton label="Show Filters" />}
+            iconElementRight={<ContentFilterList color='white' style={{ height: '64px' }} />}
             onRightIconButtonTouchTap={() => this.handleToggleDrawer()}
           />
           <div className="control-discover-results">
@@ -53,6 +60,10 @@ class Discover extends Reflux.Component {
         </div>
       </MuiThemeProvider>
     );
+  }
+
+  handleSwipeDrawer(filtersVisible) {
+    this.setState({ filtersVisible });
   }
 
   handleToggleDrawer() {

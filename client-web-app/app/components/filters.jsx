@@ -9,6 +9,14 @@ import React from 'react';
 import Reflux from 'reflux';
 import actions from '../actions';
 
+const me = {
+  languages: [
+    { id: '58b9ccf16a4efb4d7b96d5ba', name: 'English' },
+    { id: '58b9cda0bb447f4e95953092', name: 'French' },
+    { id: '58b9cdafe80f944ec8f14716', name: 'Spanish' },
+  ],
+};
+
 class Filters extends Reflux.Component {
   constructor(props) {
     super(props);
@@ -23,11 +31,6 @@ class Filters extends Reflux.Component {
 
   render() {
     const { searchText, genderBoxContent, languageBoxContent, chips } = this.state;
-    const dataSource = [
-      { text: 'English', value: '58b9ccf16a4efb4d7b96d5ba' },
-      { text: 'French', value: '58b9cda0bb447f4e95953092' },
-      { text: 'Spanish', value: '58b9cdafe80f944ec8f14716' },
-    ];
     const queryParameters = {
       name: searchText,
       sameGender: genderBoxContent,
@@ -56,8 +59,8 @@ class Filters extends Reflux.Component {
           openOnFocus
           hintText="Just type in languages"
           value={this.state.chips}
-          dataSource={dataSource}
-          dataSourceConfig={{ text: 'text', value: 'value' }}
+          dataSource={me.languages}
+          dataSourceConfig={{ text: 'name', value: 'id' }}
           onRequestAdd={chip => this.handleAddChip(chip)}
           onRequestDelete={(chip, index) => this.handleDeleteChip(chip, index)}
         />
@@ -73,8 +76,28 @@ class Filters extends Reflux.Component {
   }
 
   handleAddChip(chip) {
+    const foundLanguage = me.languages.find(language => language.name.match(new RegExp(`^${chip.name}`, 'i')));
+    console.log(foundLanguage, chip, foundLanguage === chip);
+    if (!foundLanguage) {
+      alert('No such language!');
+      return;
+    }
+    if (this.state.chips.includes(foundLanguage)) {
+      return;
+    }
+    // if (me.languages.indexOf(chip) === -1) {
+    //   let chipToAdd;
+    //   console.log(filtered);
+    //   if (filtered && filtered.length) {
+    //     chipToAdd = filtered[0];
+    //   }
+    //   alert('No such language!');
+    //   return;
+    // }
+    //
+
     this.setState({
-      chips: [...this.state.chips, chip],
+      chips: [...this.state.chips, foundLanguage],
     });
   }
 
