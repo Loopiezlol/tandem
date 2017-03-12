@@ -8,19 +8,28 @@ import './styles/example.scss';
 import './styles/example2.scss';
 import SBMessaging from './components/messaging/sbMessaging';
 import UserCard from './components/discover-search-result';
-// import SampleComponent from './components/sampleComponent';
-// import UsersList from './components/userList';
+import AuthHandler from './components/authHandler';
+import actions from './actions';
+
+function redirectIfLoggedIn() {
+  const jwt = localStorage.getItem('jwt');
+  if (jwt) {
+    actions.meFromToken(jwt);
+    hashHistory.push('/');
+  }
+}
 
 ReactDOM.render(
-    // <MuiThemeProvider>
-    //   <SBMessaging />
-    // </MuiThemeProvider>
   <Router history={hashHistory}>
-    <Route path="/" component={LoginComponent} />
-    <Route path="/login" component={LoginComponent} />
-    <Route path="/register" component={RegisterComponent} />
-    <Route path="/message" component={SBMessaging} />
-    <Route path="/user" component={UserCard} />
+    <Route path="/" component={AuthHandler}>
+      <Route path="/message" component={SBMessaging} />
+      <Route path="/user" component={UserCard} />
+    </Route>
+    <Route path="/login" component={LoginComponent} onEnded={redirectIfLoggedIn} />
+    <Route path="/register" component={RegisterComponent} onEnter={redirectIfLoggedIn} />
   </Router>
   , document.querySelector('.app'),
 );
+
+// please note how at unprotected routes I've added the onEnter check.
+// basically if you're already logged in it'll redirect you to /

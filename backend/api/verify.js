@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const nev = require('../mailer/index');
 
+
 function verifyUrl(req, res) {
   const url = req.params.URL;
   nev.confirmTempUser(url, (err, user) => {

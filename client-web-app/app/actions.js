@@ -13,6 +13,9 @@ const actions = Reflux.createActions({
   passwordActionL: {},
   submitClick: { asyncResult: true },
   submitClickL: { asyncResult: true },
+  handleLogin: { asyncResult: true },
+  meFromToken: { asyncResult: true },
+  handleLogOut: {},
 });
 
 export default actions;

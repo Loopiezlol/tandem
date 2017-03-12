@@ -2,9 +2,12 @@ const router = require('express').Router();
 const User = require('../models/user');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const config = require('../../common/config');
 
 function logIn(req, res) {
   const errors = {};
+
   User.findOne({ email: req.body.email }, (err, user) => {
     if (!user) {
       errors.email = 'No user registered with this e-mail.';
@@ -15,20 +18,24 @@ function logIn(req, res) {
     }
 
     if (bcrypt.compareSync(req.body.password, user.password)) {
+      const token = jwt.sign(user, config.secret, {
+        expiresIn: '1440m', // expires in 24 hours
+      });
       return res.json({
         message: 'This should get you to the dashboard now',
         errors,
+        // user,
+        token,
       });
     }
     errors.password = 'Incorrect password.';
-    res.json({
+    return res.json({
       message: 'Invalid email or password',
       errors,
     });
   });
 }
 
-// using co-express wraper -> note how we can store async values
 function validateLoginForm(req, res) {
   const errors = {};
   const email = req.body.email;
@@ -36,7 +43,8 @@ function validateLoginForm(req, res) {
   let isFormValid = true;
   let message = '';
 
-  if (!email || typeof email !== 'string' || !validator.isEmail(email) || !email.endsWith('kcl.ac.uk')) {
+  if (!email || typeof email !== 'string' || !validator.isEmail(email)
+   || !email.endsWith('kcl.ac.uk')) {
     isFormValid = false;
     errors.email = 'Please provide a valid KCL e-mail.';
   }
