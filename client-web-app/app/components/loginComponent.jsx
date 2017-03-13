@@ -5,8 +5,8 @@ import { Link } from 'react-router';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import actions from '../actions';
-import LoginStore from '../stores/loginStore'
+import actions from '../actions/actions';
+import LoginStore from '../stores/loginStore';
 
 
 class LoginComponent extends Reflux.Component {

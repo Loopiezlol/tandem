@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import DropDownMenu from '../node_modules/material-ui/DropDownMenu';
-import MenuItem from '../node_modules/material-ui/MenuItem';
+import React from 'react';
+import DropDownMenu from 'material-ui/DropDownMenu';
+import MenuItem from 'material-ui/MenuItem';
 
 function LanguageLevel() {
   return (

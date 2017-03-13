@@ -5,8 +5,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Avatar from 'material-ui/Avatar';
 import Paper from 'material-ui/Paper';
-import './Interests.css';
-import './InterestsNotes.css';
+import './Interests.scss';
+import './InterestsNotes.scss';
 import CustomCarousel from './CustomCarousel';
 import OnboardingActions from '../actions/OnboardingActions';
 import OnboardingStore from '../stores/OnboardingStore';
@@ -21,14 +21,14 @@ class Ineterests extends Reflux.Component {
   }
 
 
-  showBtn = (e) => {
+  showBtn(e) {
     this.setState({ notesInputValue: e.target.value });
     if (e.target.value.length > 10) {
       this.setState({ showSaveNotesBtn: true, notesInput: e.target.value });
     }
   }
 
-  selectInterest = (e, hobby) => {
+  selectInterest(e, hobby) {
     const selected = this.state.selectedInterest;
 
     function updateInterest(self) {
@@ -44,9 +44,9 @@ class Ineterests extends Reflux.Component {
       selected.className = 'singleInterest';
       updateInterest(this);
     }
-  };
+  }
 
-  saveNotes = () => {
+  saveNotes() {
     OnboardingActions.saveNotes();
     this.setState({ notesSavedLabel: 'Notes saved', notesSavedIcon: 'done', notesSavedBtnColor: '#1f9b4e', notesInputValue: '' });
     const self = this;

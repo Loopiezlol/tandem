@@ -6,7 +6,7 @@ import { Card, CardHeader, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import RegisterStore from '../stores/registerStore';
-import actions from '../actions';
+import actions from '../actions/actions';
 
 
 class RegisterComponent extends Reflux.Component {

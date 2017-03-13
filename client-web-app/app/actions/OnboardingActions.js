@@ -7,13 +7,12 @@ const OnboardingActions = Reflux.createActions({
   updateLanguage: {},
   changeLangLevel: {},
   selectInterest: {},
-  expandNotes : {},
-  updateNotes : {},
-  saveNotes : {},
+  expandNotes: {},
+  updateNotes: {},
+  saveNotes: {},
   goNext: {},
-  goBack:{}
+  goBack: {},
 });
-
 
 
 export default OnboardingActions;

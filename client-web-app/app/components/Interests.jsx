@@ -2,7 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import OnboardingActions from '../actions/OnboardingActions';
 import OnboardingStore from '../stores/OnboardingStore';
-import './Interests.css';
+import './Interests.scss';
 
 
 class Ineterests extends Reflux.Component {
@@ -16,21 +16,21 @@ class Ineterests extends Reflux.Component {
 
   // If more than 3 interests have been selected
   // go to the next section of the onboarding process
-  goToNotes = () => {
+  goToNotes() {
     if (this.state.chosenInterests.length >= 3) {
       this.setState({ showNotes: true });
     }
   }
 
   // Return to the interests section
-  goBack = () => {
+  goBack() {
     if (this.state.showNotes) {
       this.setState({ showNotes: false });
     }
   }
 
 
-  expandNotes = (index) => {
+  expandNotes(index) {
     const interest = this.state.chosenInterests[index].label;
     this.setState({ toAddNotes: interest });
   }
@@ -46,14 +46,10 @@ class Ineterests extends Reflux.Component {
 
 
     // Container for all the available interests
-    const hobbies = this.state.interests.map((hobby, index) => {
+    const hobbies = this.state.interests.map((hobby) => {
       const source = `./png/${hobby.icon}.png`;
-      let classSelector = 'selector';
-      if (hobby.isClicked) {
-        classSelector = 'selector-click';
-      }
       return (
-        <div key={index} className="iconsWrap" onTouchTap={this.openDescModal}>
+        <div className="iconsWrap" onTouchTap={this.openDescModal}>
           <img className="interestsIcons" src={source} />
           <p className="hobbyLabel">{hobby.label}</p>
           <div className={hobby.state} onClick={() => OnboardingActions.selectInterest(hobby)} />
