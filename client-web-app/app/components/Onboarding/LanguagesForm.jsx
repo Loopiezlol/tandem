@@ -2,12 +2,12 @@ import React from 'react';
 import Reflux from 'reflux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import FlatButton from 'material-ui/FlatButton';
-import TextField from 'material-ui/TextField';
 import Paper from 'material-ui/Paper';
+import AutoComplete from 'material-ui/AutoComplete';
 import LanguageLevel from './LanguageLevel';
-import OnboardingActions from '../actions/OnboardingActions';
-import OnboardingStore from '../stores/OnboardingStore';
-import './LanguagesForm.scss';
+import OnboardingActions from '../../actions/OnboardingActions';
+import OnboardingStore from '../../stores/OnboardingStore';
+import '../../styles/Onboarding/LanguagesForm.scss';
 
 class LanguagesForm extends Reflux.Component {
 
@@ -20,7 +20,7 @@ class LanguagesForm extends Reflux.Component {
       inputContainer: 'inputContainer',
       bubbleState: 'speechBubbleGreeting',
       bubbleSrc: './speechBubbleGreeting.png',
-      inputFieldState: 'inputCountryField',
+      inputFieldState: 'inputMotherLangField',
       okBtn: 'okBtn',
       languageAddedLabel: 'languageAddedLabel',
       langErrorWrap: 'languagesErrorWrap-appear',
@@ -31,10 +31,10 @@ class LanguagesForm extends Reflux.Component {
 
 
   // Event listener to show button if mother language is provided
-  showOkBtn(e) {
-    OnboardingActions.updateLanguage(e);
+  showOkBtn(input) {
+    OnboardingActions.updateLanguage(input);
     // If input is more than 5 characters long, show the button
-    if (!this.state.askLanguages && e.target.value.length > 5) {
+    if (!this.state.askLanguages && input.length > 5) {
       this.setState({ okBtn: 'okBtn okBtn-show' });
     }
   }
@@ -57,15 +57,11 @@ class LanguagesForm extends Reflux.Component {
 
     this.setState({
       bubbleState: 'speechBubbleGreeting bubbleLeave',
-      inputFieldState: 'inputCountryField inputFieldExit',
+      inputFieldState: 'inputMotherLangField inputFieldExit',
       greetUser: false,
     }, () => {
       setTimeout(changeState, 1000);
     });
-  }
-
-  updateFamLangInput(e) {
-    this.setState({ famLangInput: e.target.value });
   }
 
   // Add a language the user is familiar with the list
@@ -143,13 +139,14 @@ class LanguagesForm extends Reflux.Component {
     // Input text field that prompts
     // user to enter his/her mother language
     const motherLanguage = (
-      <TextField
+      <AutoComplete
+        dataSource={this.state.allLanguages}
         hintText="E.g Italian"
         hintStyle={{ marginLeft: '20px', fontSize: '20px' }}
         className={this.state.inputFieldState}
         inputStyle={{ fontSize: '35px', fontFamily: "'Questrial', sans-serif" }}
         underlineShow={false}
-        onChange={this.showOkBtn}
+        onUpdateInput={e => this.showOkBtn(e)}
       />
     );
 
@@ -157,12 +154,13 @@ class LanguagesForm extends Reflux.Component {
     // with the corresponding competency level
     const familiarLanguages = (
       <div className="familiarLanguagesWrap">
-        <TextField
-          value={this.state.famLangInput}
+
+        <AutoComplete
           hintText="Language"
+          searchText={this.state.currLang}
+          dataSource={this.state.allLanguages}
+          onUpdateInput={e => OnboardingActions.updateLanguage(e)}
           className="inputFamLangField"
-          onChange={(e) => this.updateFamLangInput(e)}
-          onBlur={e => OnboardingActions.updateLanguage(e)}
         />
 
         <span>

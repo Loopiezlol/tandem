@@ -33,6 +33,10 @@ export default {
         loader: ['style-loader', 'css-loader?sourceMap', 'sass-loader?sourceMap'],
         exclude: [/node_modules/, /dist/],
       },
+      { 
+	test: /\.(png|jpg)$/,
+ 	loader: 'file-loader?name=public/[name].[ext]' 
+      }
     ],
   },
   resolve: {

@@ -7,10 +7,10 @@ import Paper from 'material-ui/Paper';
 import Avatar from 'material-ui/Avatar';
 // import PictureUploader from "./PictureUploader";
 import CustomCarousel from './CustomCarousel';
-import './DetailsForm.scss';
-import OnboardingActions from '../actions/OnboardingActions';
+import '../../styles/Onboarding/DetailsForm.scss';
+import OnboardingActions from '../../actions/OnboardingActions';
 
-import OnboardingStore from '../stores/OnboardingStore';
+import OnboardingStore from '../../stores/OnboardingStore';
 
 class DetailsForm extends Reflux.Component {
   constructor(props) {

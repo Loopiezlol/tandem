@@ -9,9 +9,9 @@ import LanguagesForm from './LanguagesForm';
 import Interests from './Interests';
 import DetailsForm from './DetailsForm';
 import InterestsNotes from './InterestsNotes';
-import OnboardingActions from '../actions/OnboardingActions';
-import OnboardingStore from '../stores/OnboardingStore';
-import './Onboarding.scss';
+import OnboardingActions from '../../actions/OnboardingActions';
+import OnboardingStore from '../../stores/OnboardingStore';
+import '../../styles/Onboarding/Onboarding.scss';
 
 
 class Onboarding extends Reflux.Component {
@@ -20,6 +20,10 @@ class Onboarding extends Reflux.Component {
     super(props);
     this.state = { errorBubble: 'errorMsgInfoWrap' };
     this.store = OnboardingStore;
+  }
+
+  finish () {
+    console.log(this.state.userInfo);
   }
 
   render() {

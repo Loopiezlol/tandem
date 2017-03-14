@@ -1,8 +1,8 @@
 import React from 'react';
 import Reflux from 'reflux';
-import OnboardingActions from '../actions/OnboardingActions';
-import OnboardingStore from '../stores/OnboardingStore';
-import './Interests.scss';
+import OnboardingActions from '../../actions/OnboardingActions';
+import OnboardingStore from '../../stores/OnboardingStore';
+import '../../styles/Onboarding/Interests.scss';
 
 
 class Ineterests extends Reflux.Component {

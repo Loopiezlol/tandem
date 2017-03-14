@@ -5,6 +5,7 @@ import OnboardingActions from '../actions/OnboardingActions';
 class OnboardingStore extends Reflux.Store {
   constructor() {
     super();
+    const langs = ['Abkhaz', 'Afar', 'Afrikaans', 'Akan', 'Albanian', 'Amharic', 'Arabic', 'Aragonese', 'Armenian', 'Assamese', 'Avaric', 'Avestan', 'Aymara', 'Azerbaijani', 'Bambara', 'Bashkir', 'Basque', 'Belarusian', 'Bengali', 'Bihari', 'Bislama', 'Bosnian', 'Breton', 'Bulgarian', 'Burmese', 'Catalan', 'Chamorro', 'Chechen', 'Chichewa', 'Chinese', 'Chuvash', 'Cornish', 'Corsican', 'Cree', 'Croatian', 'Czech', 'Danish', 'Divehi', 'Dutch', 'English', 'Esperanto', 'Estonian', 'Ewe', 'Faroese', 'Fijian', 'Finnish', 'French', 'Fula', 'Galician', 'Georgian', 'German', 'Greek', 'Guaraní', 'Gujarati', 'Haitian', 'Hausa', 'Hebrew', 'Herero', 'Hindi', 'Hiri Motu', 'Hungarian', 'Interlingua', 'Indonesian', 'Interlingue', 'Irish', 'Igbo', 'Inupiaq', 'Ido', 'Icelandic', 'Italian', 'Inuktitut', 'Japanese', 'Javanese', 'Kalaallisut', 'Kannada', 'Kanuri', 'Kashmiri', 'Kazakh', 'Khmer', 'Kikuyu, Gikuyu', 'Kinyarwanda', 'Kirghiz', 'Komi', 'Kongo', 'Korean', 'Kurdish', 'Kwanyama', 'Latin', 'Luxembourgish', 'Luganda', 'Limburgish', 'Lingala', 'Lao', 'Lithuanian', 'Luba-Katanga', 'Latvian', 'Manx', 'Macedonian', 'Malagasy', 'Malay', 'Malayalam', 'Maltese', 'Māori', 'Marathi', 'Marshallese', 'Mongolian', 'Nauru', 'Navajo, Navaho', 'Norwegian Bokmål', 'North Ndebele', 'Nepali', 'Ndonga', 'Norwegian Nynorsk', 'Norwegian', 'Nuosu', 'South Ndebele', 'Occitan', 'Ojibwe', 'Oromo', 'Oriya', 'Ossetian', 'Panjabi', 'Pāli', 'Persian', 'Polish', 'Pashto', 'Portuguese', 'Quechua', 'Romansh', 'Kirundi', 'Romanian', 'Russian', 'Sanskrit', 'Sardinian', 'Sindhi', 'Northern Sami', 'Samoan', 'Sango', 'Serbian', 'Gaelic', 'Shona', 'Sinhala', 'Slovak', 'Slovene', 'Somali', 'Southern Sotho', 'Spanish', 'Sundanese', 'Swahili', 'Swati', 'Swedish', 'Tamil', 'Telugu', 'Tajik', 'Thai', 'Tigrinya', 'Tibetan', 'Turkmen', 'Tagalog', 'Tswana', 'Tonga', 'Turkish', 'Tsonga', 'Tatar', 'Twi', 'Tahitian', 'Uighur', 'Ukrainian', 'Urdu', 'Uzbek', 'Venda', 'Vietnamese', 'Volapük', 'Walloon', 'Welsh', 'Wolof', 'Western Frisian', 'Xhosa', 'Yiddish', 'Yoruba', 'Zhuang'];
     const iconsWithLabels = [
       {
         icon: 'airplane',
@@ -79,7 +80,7 @@ class OnboardingStore extends Reflux.Store {
         notes: '',
       },
     ];
-    this.state = { userInfo: { firstName: null, lastName: null, sex: null, age: null, errorMsgInfo: '', motherLanguage: null, familiarLanguages: [], interests: [] }, langLevel: 'Level', currLang: null, interests: iconsWithLabels, stage: 'userInfoStage' };
+    this.state = { allLanguages: langs, userInfo: { firstName: null, lastName: null, sex: null, age: null, errorMsgInfo: '', motherLanguage: null, familiarLanguages: [], interests: [] }, langLevel: 'Level', currLang: null, interests: iconsWithLabels, stage: 'userInfoStage' };
     this.listenables = OnboardingActions;
   }
 
@@ -141,8 +142,8 @@ class OnboardingStore extends Reflux.Store {
     // ------------- Languages stage ------------- //
 
     // Handle change in input text field
-  updateLanguage = (e) => {
-    this.setState({ currLang: e.target.value });
+  updateLanguage = (input) => {
+    this.setState({ currLang: input });
   }
 
 

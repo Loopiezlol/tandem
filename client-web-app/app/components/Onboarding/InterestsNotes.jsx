@@ -5,11 +5,10 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Avatar from 'material-ui/Avatar';
 import Paper from 'material-ui/Paper';
-import './Interests.scss';
-import './InterestsNotes.scss';
+import '../../styles/Onboarding/InterestsNotes.scss';
 import CustomCarousel from './CustomCarousel';
-import OnboardingActions from '../actions/OnboardingActions';
-import OnboardingStore from '../stores/OnboardingStore';
+import OnboardingActions from '../../actions/OnboardingActions';
+import OnboardingStore from '../../stores/OnboardingStore';
 
 
 class Ineterests extends Reflux.Component {

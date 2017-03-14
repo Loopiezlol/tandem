@@ -390,10 +390,11 @@
   width: 450px;
 }
 
-.inputCountryField {
+.inputMotherLangField {
   max-width: 150px;
   max-height: 100px;
   margin-top: 25px;
+  margin-left: -50px !important;
 }
 
 .inputFieldExit {
@@ -407,22 +408,22 @@
 }
 
 .inputFamLangField {
-  max-width: 150px;
+  max-width: 100px;
   margin-top: 25px;
   margin-right: 220px;
-
+  margin-left: -100px
 }
 
 .levelSelector {
   position: absolute  !important;
-  margin-left: -230px;
+  margin-left: -185px;
   margin-top: 17px;
 }
 
 .addLangBtn {
   position: absolute !important;
   margin-top: 30px !important;
-  margin-left: -80px !important;
+  margin-left: -5px !important;
 }
 
 

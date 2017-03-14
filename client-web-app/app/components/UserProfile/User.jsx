@@ -11,11 +11,11 @@ import TextField from 'material-ui/TextField';
 import AutoComplete from 'material-ui/AutoComplete';
 import { List, ListItem } from 'material-ui/List';
 import Infinite from 'react-infinite';
-import LanguageLevel from './LanguageLevel';
-import CustomCarousel from './CustomCarousel';
-import MeStore from '../stores/MeStore';
-import MeActions from '../actions/MeActions';
-import './User.scss';
+import LanguageLevel from '../Onboarding/LanguageLevel';
+import CustomCarousel from '../Onboarding/CustomCarousel';
+import MeStore from '../../stores/MeStore';
+import MeActions from '../../actions/MeActions';
+import '../../styles/User/User.scss';
 
 class User extends Reflux.Component {
 
@@ -129,7 +129,7 @@ class User extends Reflux.Component {
 
   render() {
     const selectors = ['info', 'chatting', 'heart'].map((selector, index) => {
-      const source = `../userProfile/${selector}.png`;
+      const source = `${selector}.png`;
       return (
         <img src={source} className="selector" onClick={() => this.changeSelector(index)} />
       );
