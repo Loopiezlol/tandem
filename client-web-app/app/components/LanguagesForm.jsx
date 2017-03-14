@@ -70,6 +70,7 @@ class LanguagesForm extends Reflux.Component {
 
   // Add a language the user is familiar with the list
   addLanguage() {
+    console.log(this);
     const userInfoState = this.state.userInfo;
     const stateLangList = userInfoState.familiarLanguages;
     const newLang = this.state.currLang;
@@ -160,7 +161,7 @@ class LanguagesForm extends Reflux.Component {
           value={this.state.famLangInput}
           hintText="Language"
           className="inputFamLangField"
-          onChange={this.updateFamLangInput}
+          onChange={(e) => this.updateFamLangInput(e)}
           onBlur={e => OnboardingActions.updateLanguage(e)}
         />
 
@@ -181,7 +182,7 @@ class LanguagesForm extends Reflux.Component {
           label="Add"
           labelStyle={{ color: 'white' }}
           className="addLangBtn"
-          onClick={this.addLanguage}
+          onClick={() => this.addLanguage()}
         />
       </div>
     );
@@ -253,7 +254,7 @@ class LanguagesForm extends Reflux.Component {
               label="OK"
               labelStyle={{ color: 'white' }}
               className={this.state.okBtn}
-              onClick={this.askLanguages}
+              onClick={() => this.askLanguages()}
             />
 
             <Paper className={this.state.inputContainer}>

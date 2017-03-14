@@ -9,10 +9,10 @@ import Avatar from 'material-ui/Avatar';
 import CustomCarousel from './CustomCarousel';
 import './DetailsForm.scss';
 import OnboardingActions from '../actions/OnboardingActions';
+
 import OnboardingStore from '../stores/OnboardingStore';
 
 class DetailsForm extends Reflux.Component {
-
   constructor(props) {
     super(props);
     this.store = OnboardingStore;
@@ -23,8 +23,6 @@ class DetailsForm extends Reflux.Component {
     }
     setTimeout(change, 700);
   }
-
-
     // Click event when selecting a character
   selectCharacter(e) {
     const character = e.target.name;
@@ -34,46 +32,37 @@ class DetailsForm extends Reflux.Component {
     } else if (character.includes('man')) {
       source = `./manBig/${character}.png`;
     }
-
     function updateChar(self) {
       self.setState({ selectedChar: e.target }, () => {
         self.state.selectedChar.className = 'charAvatar-selected'; //eslint-disable-line
       });
     }
-
     if (this.state.selectedChar === null) {
       updateChar(this);
     } else if (this.state.selectedChar.name !== e.target.name) {
       this.state.selectedChar.className = 'charAvatar';
       updateChar(this);
     }
-
     this.setState({ selectedCharacterSrc: source, goBtnState: 'goBtn goBtn-show' });
   }
-
-
     // Confirming character selection for new profile picture
   selectCharacterDone() {
     this.setState({ showForm: true });
-
     const x = this;
     function expandHeight() {
       x.setState({ charactersWrapState: 'charactersWrap-expandWidth charactersWrapState-expandHeight', newProfileEnabled: true });
     }
-
     if (this.state.goBtnState === 'goBtn goBtn-show') {
       this.setState({ goBtnState: 'goBtn goBtn-show contentLeave', charPromptLabel: 'characterPromptLabel characterPromptLabel-leave', charactersState: 'charAvatar contentLeave', defaultIcon: 'userDefault contentLeave', carouselState: 'contentLeave' });
       setTimeout(this.setState({ charactersWrapState: 'charactersWrap-expandWidth' }), 1000);
       setTimeout(expandHeight, 1000);
     }
   }
-
   selectSex(e) {
     const sex = e.target.name;
     OnboardingActions.selectSex(sex);
     this.setState({ sexSelected: `selected-${sex}` });
   }
-
   render() {
     // Label that introduecs stage of the onnboarding process
     const label = {
@@ -83,8 +72,6 @@ class DetailsForm extends Reflux.Component {
       color: '#545454',
       fontFamily: "'Abel', sans-serif",
     };
-
-
     // Avatars for all the male characters
     const userManWrap = ['man', 'man-1', 'man-2', 'man-3', 'man-4'].map((man) => {
       const source = `./manSmall/${man}.png`;
@@ -93,12 +80,10 @@ class DetailsForm extends Reflux.Component {
           className={this.state.charactersState}
           src={source}
           name={man}
-          onClick={this.selectCharacter}
+          onClick={e => this.selectCharacter(e)}
         />
       );
     });
-
-
     // Avatars for all the female characters
     const userWomanWrap = ['woman', 'woman-1', 'woman-2', 'woman-3', 'woman-4'].map((woman) => {
       const source = `./womanSmall/${woman}.png`;
@@ -107,28 +92,24 @@ class DetailsForm extends Reflux.Component {
           className={this.state.charactersState}
           src={source}
           name={woman}
-          onClick={this.selectCharacter}
+          onClick={e => this.selectCharacter(e)}
         />
       );
     });
-
     // Avatar for both male and female characters
     const userProfileCharacters = [userManWrap, userWomanWrap];
-
     const firstNameError = (
       <span className="firstNameError">
         <span className="nameLineError" />
         <p className="nameErrorText">Please enter a valid first name</p>
       </span>
       );
-
     const lastNameError = (
       <span className="lastNameError">
         <span className="nameLineError" />
         <p className="nameErrorText">Please enter a valid last name</p>
       </span>
       );
-
     // Form for providing the information about the user
     const form = (
       <div>
@@ -170,8 +151,6 @@ class DetailsForm extends Reflux.Component {
         </div>
       </div>
       );
-
-
     // Container for the list of characters that the user can choose for his/her profile picture
     const charactersWrap = (
       <div>
@@ -187,7 +166,7 @@ class DetailsForm extends Reflux.Component {
             label="Go"
             labelStyle={{ color: 'white' }}
             className={this.state.goBtnState}
-            onClick={this.selectCharacterDone}
+            onClick={() => this.selectCharacterDone()}
           />
         </MuiThemeProvider>
         <MuiThemeProvider>
@@ -201,23 +180,16 @@ class DetailsForm extends Reflux.Component {
             />
           </Paper>
         </MuiThemeProvider>
-
         {this.state.newProfileEnabled && form}
-
       </div>
       );
-
-
     // The user's new profile picture
     const newProfile = (
       <div>
         <img src={this.state.selectedCharacterSrc} className="newProfileImg" />
       </div>
       );
-
-
     return (
-
       <div>
         <div style={label}>Who are you?</div>
         <div className={this.state.defaultIcon}>
@@ -233,15 +205,8 @@ class DetailsForm extends Reflux.Component {
         </div>
         {this.state.newProfileEnabled && newProfile}
         {this.state.showCharacters && charactersWrap}
-
-
       </div>
-
     );
   }
-
-
 }
-
-
 export default DetailsForm;

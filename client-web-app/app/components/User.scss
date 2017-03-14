@@ -284,7 +284,7 @@
 }
 
 .popUpnewFamLangBox {
-  position: absolute;
+  position: absolute !important;
   margin-left: 135px;
   z-index: 2;
 }
@@ -295,7 +295,7 @@
 
 @keyframes newFamLangBoxAppear {
   0% {margin-top: 120px;opacity: 0}
-  100% {margin-top: 140px;opacity:1}
+  100% {margin-top: 10px;opacity:1}
 }
 
 

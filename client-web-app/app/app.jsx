@@ -10,6 +10,7 @@ import './styles/example.scss';
 import './styles/example2.scss';
 import SBMessaging from './components/messaging/sbMessaging';
 import UserCard from './components/discover-search-result';
+import User from './components/User';
 // import SampleComponent from './components/sampleComponent';
 // import UsersList from './components/userList';
 
@@ -24,6 +25,7 @@ ReactDOM.render(
     <Route path="/onboarding" component={Onboarding} />
     <Route path="/message" component={SBMessaging} />
     <Route path="/user" component={UserCard} />
+    <Route path="/myProfile" component={User} />
   </Router>
   , document.querySelector('.app'),
 );

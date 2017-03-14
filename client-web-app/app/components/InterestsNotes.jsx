@@ -120,7 +120,7 @@ class Ineterests extends Reflux.Component {
                 hintText={'Add you story here'}
                 value={this.state.notesInputValue}
                 multiLine
-                onChange={this.showBtn}
+                onChange={(e) => this.showBtn(e)}
                 onBlur={e => OnboardingActions.updateNotes(e)}
                 rows={1}
                 rowsMax={6}

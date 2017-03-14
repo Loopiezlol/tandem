@@ -15,7 +15,6 @@ function FinishButton({ onClick: _onClick }) {
         labelStyle={btnLabel}
         style={{ marginRight: '10px' }}
         onClick={_onClick}
-        disabled={this.props.disabled}
       />
     </MuiThemeProvider>
   );
