@@ -8,10 +8,7 @@ import ReactEmoji from 'react-emoji';
 import SBStore from '../../stores/sbStore';
 import SBActions from '../../actions/sbActions';
 import '../../styles/sbChat.scss';
-/* eslint-disable*/
-const chipStyle = {
-  margin: 2,
-};
+// /* eslint-disable*/
 
 class sbChat extends Reflux.Component {
   constructor(props) {
@@ -39,9 +36,6 @@ class sbChat extends Reflux.Component {
     const { chatOpen, otherUser, otherUserNick, message, prevMessages, messages, isTyping }
      = this.state;
 
-    if (isTyping) {
-      // console.log('user is typing');
-    }
     const style = {
       width: '30pc',
       margin: 15,
@@ -49,16 +43,7 @@ class sbChat extends Reflux.Component {
       display: 'inline-block',
       color: 'gray',
     };
-    const styleMessage = {
-      width: '20pc',
-      margin: 6,
-      textAlign: 'center',
-      display: 'inline-block',
-      color: 'black',
-    };
-    const buttonStyle = {
-      margin: 5,
-    };
+
     if (chatOpen) {
       return (
         <div className="wrapper-sb">
@@ -96,10 +81,11 @@ class sbChat extends Reflux.Component {
                 value={message} onChange={e => this.handleMessageType(e)}
               />
               <FlatButton
+                primary style={{ margin: 5 }}
                 label="Send"
                 onClick={e => this.handleSendButton(e)}
                 onTap={e => this.handleSendButton(e)}
-                primary style={buttonStyle}
+
               />
             </div>
           </Paper>
