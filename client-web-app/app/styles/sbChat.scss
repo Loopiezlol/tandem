@@ -3,10 +3,57 @@
   background-color: #00bcd4 !important;
   display: block !important;
   // float: right !important;
-  margin-left: 50px !important;
+  margin-left: 330px !important;
+  margin-top:-7px !important;
+  margin-bottom: 10px !important;
+  max-width: 300px !important;
+  word-wrap: break-word !important;
+  max-height: 300px !important;
+}
+.otherMessage{
+  margin-top:-7px !important;
+  margin-bottom: 10px !important;
+}
+.messageWrap {
+  // background-color: red !important;
+
+}
+.currentMsg {
+  // background-color: red !important;
 }
 
+.usernameLabel {
+  position: relative;
+  font-size: 12px;
+}
 
-.currentMsg {
-  background-color: red !important;
+#username-visible {
+  display: block;
+}
+
+#username-hidden {
+  display: none;
+}
+
+.messageDividerLine {
+  position: absolute;
+  width: 145px;
+  height: 1px;
+  margin-top: 17px;
+  background-color: pink;
+  z-index: 1;
+}
+
+#divider-left {
+  margin-left: -150px;
+}
+
+#divider-right {
+  margin-left: 5px;
+}
+
+#messageDividerLabel {
+  font-size: 14px;
+  display: inline;
+  z-index: 2;
 }

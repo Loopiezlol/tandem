@@ -4,10 +4,11 @@ import Paper from 'material-ui/Paper';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import Chip from 'material-ui/Chip';
+import ReactEmoji from 'react-emoji';
 import SBStore from '../../stores/sbStore';
 import SBActions from '../../actions/sbActions';
 import '../../styles/sbChat.scss';
-
+/* eslint-disable*/
 const chipStyle = {
   margin: 2,
 };
@@ -18,8 +19,19 @@ class sbChat extends Reflux.Component {
     this.state = {
       message: '',
       hello: true,
+      usernameLabel: 'username-hidden',
     };
     this.store = SBStore;
+  }
+
+
+  showUserName(e) {
+    console.log(e);
+    if (this.state.usernameLabel === 'username-show') {
+      this.setState({ usernameLabel: 'username-hidden' });
+    } else {
+      this.setState({ usernameLabel: 'username-show' });
+    }
   }
 
 
@@ -62,6 +74,11 @@ class sbChat extends Reflux.Component {
                 </ul>
 
               </div>
+              <span className="newMessageDivider">
+                <span className="messageDividerLine" id="divider-left" />
+                <p id="messageDividerLabel">New messages</p>
+                <span className="messageDividerLine" id="divider-right" />
+              </span>
               <div className="currentMsg">
                 <ul className="new-messages" style={{ listStyle: 'none' }}>
                   {messages.map(msg => <li key={`${msg.messageId}`}>
@@ -117,13 +134,23 @@ class sbChat extends Reflux.Component {
 
   renderMessage(message) {
     if (message.sender.userId === this.store.state.userID) {
-      return (<Chip className="youMessage">
-        You: {message.message}
-      </Chip>);
+      return (
+        <div className="messageWrap">
+          <p className="usernameLabel" style={{ paddingLeft: '260px' }} id={this.state.usernameLabel}> {message.sender.nickname} </p>
+          <Chip onClick={e => this.showUserName(e)} className="youMessage" labelStyle={{ wordWrap: 'break-word' }}>
+            {ReactEmoji.emojify(message.message) || message.message}
+          </Chip>
+        </div>
+      );
     }
-    return (<Chip style={chipStyle}>
-      {message.sender.nickname}: {message.message}
-    </Chip>);
+    return (
+      <div className="messageWrap">
+        <p className="usernameLabel" style={{ paddingRight: '360px' }} id={this.state.usernameLabel}> {message.sender.nickname} </p>
+        <Chip onClick={e => this.showUserName(e)} className="otherMessage">
+          {message.message}
+        </Chip>
+      </div>
+    );
   }
 }
 

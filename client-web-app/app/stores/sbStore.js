@@ -6,7 +6,7 @@ import sbactions from '../actions/sbActions';
 const APP_ID = '78A3DDF9-3396-4088-95C3-A5E8CBDF9AD3';
 const API_TOKEN = 'ff8bf5060352c01ce575287f25def5be4b02fd6d';
 const sb = new SendBird({ appId: APP_ID });
-
+/* eslint-disable*/
 class sbStore extends Reflux.Store {
   constructor() {
     super();
