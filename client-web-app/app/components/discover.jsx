@@ -1,9 +1,8 @@
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import FlatButton from 'material-ui/FlatButton';
+import IconButton from 'material-ui/IconButton';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 import ContentFilterList from 'material-ui/svg-icons/content/filter-list';
-
 
 import React from 'react';
 import Reflux from 'reflux';
@@ -45,7 +44,7 @@ class Discover extends Reflux.Component {
           </Drawer>
           <AppBar
             className="appbar"
-            iconElementRight={<ContentFilterList color='white' style={{ height: '64px' }} />}
+            iconElementRight={<IconButton><ContentFilterList /></IconButton>}
             onRightIconButtonTouchTap={() => this.handleToggleDrawer()}
           />
           <div className="control-discover-results">

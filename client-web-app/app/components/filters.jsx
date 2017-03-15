@@ -35,7 +35,7 @@ class Filters extends Reflux.Component {
       name: searchText,
       sameGender: genderBoxContent,
       matchLanguages: languageBoxContent,
-      languagesToMatch: chips.map(chip => chip.value),
+      languagesToMatch: chips.map(chip => chip.id),
     };
     return (
       <Paper className="control-discover-filter">
@@ -77,7 +77,6 @@ class Filters extends Reflux.Component {
 
   handleAddChip(chip) {
     const foundLanguage = me.languages.find(language => language.name.match(new RegExp(`^${chip.name}`, 'i')));
-    console.log(foundLanguage, chip, foundLanguage === chip);
     if (!foundLanguage) {
       alert('No such language!');
       return;
@@ -85,16 +84,6 @@ class Filters extends Reflux.Component {
     if (this.state.chips.includes(foundLanguage)) {
       return;
     }
-    // if (me.languages.indexOf(chip) === -1) {
-    //   let chipToAdd;
-    //   console.log(filtered);
-    //   if (filtered && filtered.length) {
-    //     chipToAdd = filtered[0];
-    //   }
-    //   alert('No such language!');
-    //   return;
-    // }
-    //
 
     this.setState({
       chips: [...this.state.chips, foundLanguage],
