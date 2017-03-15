@@ -19,7 +19,7 @@ class AuthHandler extends Reflux.Component {
       // Currently set the main page as /message because we didn't have another one
       hashHistory.push('/message');
     } else if (this.state.status === 'off') {
-      hashHistory.push('/login');
+      hashHistory.push('/message');
     }
   }
   componentDidUpdate(prevProps, prevState) {

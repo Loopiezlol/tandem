@@ -6,14 +6,10 @@ import TextField from 'material-ui/TextField';
 import Chip from 'material-ui/Chip';
 import SBStore from '../../stores/sbStore';
 import SBActions from '../../actions/sbActions';
+import '../../styles/sbChat.scss';
 
 const chipStyle = {
   margin: 2,
-};
-const chipOurStyle = {
-  margin: 2,
-  backgroundColor: '#00bcd4',
-  align: 'right',
 };
 
 class sbChat extends Reflux.Component {
@@ -121,7 +117,7 @@ class sbChat extends Reflux.Component {
 
   renderMessage(message) {
     if (message.sender.userId === this.store.state.userID) {
-      return (<Chip style={chipOurStyle}>
+      return (<Chip className="youMessage">
         You: {message.message}
       </Chip>);
     }
