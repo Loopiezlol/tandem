@@ -5,7 +5,7 @@ then
     sed -i "" 'client-web-app/dist/*' ./.gitignore
     git add .
     git commit -m "Edit .gitignore to publish"
-    git push origin `git subtree split --prefix client-web-app/dist/* deploy`:gh-pages --force
+    git subtree push --prefix client-web-app/dist origin gh-pages --force
     git reset HEAD~
     git checkout .gitignore
 else
