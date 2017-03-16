@@ -38,7 +38,6 @@ function registerUser(req, res) {
             message: 'ERROR: sending verification email FAILED',
             errors,
             err1,
-            url: URL,
           });
         }
         return res.json({
