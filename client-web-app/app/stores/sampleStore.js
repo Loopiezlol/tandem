@@ -1,6 +1,9 @@
 import Reflux from 'reflux';
 import request from 'superagent';
 import actions from '../actions';
+import config from '../../../common/config';
+
+const prefix = require('superagent-prefix')(config.server);
 
 class SampleStore extends Reflux.Store {
   constructor() {
@@ -57,7 +60,8 @@ class SampleStore extends Reflux.Store {
 
 
 actions.sampleAsyncAction.listen(() => {
-  request.get('http://0.0.0.0:3000/')
+  request.get('/')
+  .use(prefix)
   .end((err, res) => {
     if (err) {
       actions.sampleAsyncAction.failed(err);
@@ -67,7 +71,8 @@ actions.sampleAsyncAction.listen(() => {
 });
 
 actions.getUsers.listen(() => {
-  request.get('http://0.0.0.0:3000/users/')
+  request.get('/users/')
+  .use(prefix)
   .end((err, res) => {
     if (err) {
       actions.getUsers.failed(err);
@@ -77,7 +82,8 @@ actions.getUsers.listen(() => {
 });
 
 actions.createUser.listen((username) => {
-  request.put('http://0.0.0.0:3000/users/')
+  request.put('/users/')
+  .user(prefix)
   .send({ username })
   .end((err, res) => {
     if (err) {

@@ -1,6 +1,10 @@
 import Reflux from 'reflux';
 import request from 'superagent';
 import actions from '../actions';
+import config from '../../../common/config';
+
+const prefix = require('superagent-prefix')(config.server);
+
 
 class Auth extends Reflux.Store {
   constructor() {
@@ -59,7 +63,8 @@ class Auth extends Reflux.Store {
 }
 
 actions.meFromToken.listen((token) => {
-  request.put('http://localhost:3000/me')
+  request.put('/me')
+  .use(prefix)
   .send({ token })
   .end((err, res) => {
     if (err) {

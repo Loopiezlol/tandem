@@ -69,6 +69,7 @@
     "reflux": "^6.0.0",
     "sendbird": "^3.0.26",
     "superagent": "^3.4.1",
+    "superagent-prefix": "^0.0.2",
     "validator": "^6.2.1"
   },
   "eslintConfig": {

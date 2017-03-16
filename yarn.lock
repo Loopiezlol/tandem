@@ -5415,6 +5415,10 @@ style-loader@^0.13.1:
   dependencies:
     loader-utils "^1.0.2"
 
+superagent-prefix@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/superagent-prefix/-/superagent-prefix-0.0.2.tgz#b15bbb1353f889b00d25af10b4f11b350d203b06"
+
 superagent@^3.4.1:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/superagent/-/superagent-3.5.0.tgz#56872b8e1ee6de994035ada2e53266899af95a6d"
