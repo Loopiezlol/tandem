@@ -20,6 +20,12 @@ app.use('/', require('./api/login'));
 app.use('/', require('./api/register'));
 app.use('/', require('./api/verify'));
 
+
+// testing purposes only, should remove afterwards
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+
 // auth middleware
 //eslint-disable-next-line
 app.use((req, res, next) => {
@@ -47,11 +53,8 @@ app.use((req, res, next) => {
 app.use('/me', require('./api/me'));
 app.use('/users/', require('./api/users'));
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
-
-
-app.listen(3000, () => {
-  console.log('Server started on port 3000!');
+const server = app.listen(process.env.PORT || 3000, () => {
+  const host = server.address().address;
+  const port = server.address().port;
+  console.log('App listening at http://%s:%s', host, port);
 });
