@@ -54,7 +54,7 @@ app.use('/me', require('./api/me'));
 app.use('/users/', require('./api/users'));
 
 const server = app.listen(process.env.PORT || 3000, () => {
-  const host = server.address().address;
   const port = server.address().port;
+  const host = server.address().address;
   console.log('App listening at http://%s:%s', host, port);
 });
