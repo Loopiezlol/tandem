@@ -9,6 +9,7 @@
   "scripts": {
     "web-app": "cd client-web-app && ../node_modules/webpack-dev-server/bin/webpack-dev-server.js --content-base ./dist/ --hot --progress --colors",
     "backend": "cd backend && nodemon app.js",
+    "backend:deploy": "git push heroku master",
     "web-app:prod": "cd client-web-app && ../node_modules/webpack/bin/webpack.js --config ./webpack.config.production.babel.js --progress --colors -p",
     "hybrid:dev": "cd client-hybrid && ../node_modules/webpack-dev-server/bin/webpack-dev-server.js --content-base .dist/ --hot --progress --colors",
     "hybrid:watch": "cd client-hybrid && ../node_modules/webpack/bin/webpack.js --config ./webpack.config.production.babel.js --progress --colors --watch",
