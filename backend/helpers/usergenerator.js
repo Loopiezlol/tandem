@@ -5,7 +5,7 @@ module.exports = {
   populateDB(n) {
     const ObjectId = mongoose.Types.ObjectId;
     const interests = [...Array(12).keys()].map(i => ({ name: `interest_${i}`, notes: 'BLAH!' }));
-    const someLanguages = [new ObjectId('58b9ccf16a4efb4d7b96d5ba'), new ObjectId('58b9cda0bb447f4e95953092'), new ObjectId('58b9cdafe80f944ec8f14716')];
+    const someLanguages = [new ObjectId('58c332f56e9f63495f858d7f'), new ObjectId('58c332f56e9f63495f858d80'), new ObjectId('58c332f56e9f63495f858d7e')];
     [...Array(n).keys()].forEach((i) => {
       User.create({
         username: `user${i}`,

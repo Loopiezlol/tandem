@@ -1,3 +1,5 @@
+//eslint-disable-next-line
+import webpack from 'webpack';
 import path from 'path';
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -32,6 +34,13 @@ export default {
           use: 'css-loader?sourceMap!sass-loader?sourceMap',
         }),
         exclude: [/node_modules/, /dist/],
+      },
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        loaders: [
+          'file-loader?hash=sha512&digest=hex&name=[hash].[ext]',
+          'image-webpack-loader?bypassOnDebug&optimizationLevel=7&interlaced=false',
+        ],
       },
     ],
   },
