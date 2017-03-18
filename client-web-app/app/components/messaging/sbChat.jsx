@@ -44,6 +44,20 @@ class sbChat extends Reflux.Component {
       color: 'gray',
       transitionEnabled: false
     };
+    const styleMessage = {
+     width: '30pc',
+     margin: 0,
+     textAlign: 'center',
+     display: 'inline-block',
+     color: 'black',
+    };
+    const styleMessage2 = {
+     width: '25pc',
+     margin: 0,
+     textAlign: 'center',
+     display: 'inline-block',
+     color: 'black',
+    };
 
     if (chatOpen) {
       return (
@@ -52,6 +66,7 @@ class sbChat extends Reflux.Component {
             <h5>SendBird Chat with {otherUserNick} ({otherUser})</h5>
 
             <div>
+               <Paper style={styleMessage} zDepth={0}>
               <div className="messages">
                 <ul className="old-messages" style={{ listStyle: 'none' }}>
                   {prevMessages.map(msg => <li key={`${msg.messageId}`}>
@@ -60,9 +75,11 @@ class sbChat extends Reflux.Component {
                 </ul>
 
               </div>
+              <Paper style={styleMessage2}>
                 <span className="messageDividerLine" id="divider-left" />
                 <p id="messageDividerLabel">New messages</p>
                 <span className="messageDividerLine" id="divider-right" />
+                </Paper>
               <div className="currentMsg">
                 <ul className="new-messages" style={{ listStyle: 'none' }}>
                   {messages.map(msg => <li key={`${msg.messageId}`}>
@@ -70,6 +87,7 @@ class sbChat extends Reflux.Component {
                   </li>)}
                 </ul>
               </div>
+             </Paper>
             </div>
 
             { isTyping ? <div>typing...</div> : <div />}
