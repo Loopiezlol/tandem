@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React from 'react';
 import Reflux from 'reflux';
 import Paper from 'material-ui/Paper';
@@ -6,13 +7,14 @@ import TextField from 'material-ui/TextField';
 import ReactEmoji from 'react-emoji';
 import Divider from 'material-ui/Divider';
 import SBStore from '../../stores/sbStore';
-import SBActions from '../../actions/sbActions';
 import '../../styles/sbChat.scss';
+import SBActions from '../../actions/sbActions';
 /* eslint-disable*/
 
 class sbChat extends Reflux.Component {
   constructor(props) {
     super(props);
+    moment.format();
     this.state = {
       message: '',
       usernameLabel: 'username-hidden',
@@ -93,8 +95,7 @@ class sbChat extends Reflux.Component {
 
   handleMessageType(e) {
     const { currentChannel } = this.state;
-    console.log(currentChannel.isTyping());
-    if (e.target.value && e.target.value.length) {
+     if (e.target.value && e.target.value.length) {
       currentChannel.startTyping();
     } else {
       currentChannel.endTyping();
@@ -105,7 +106,7 @@ class sbChat extends Reflux.Component {
   }
 
   handleSendButton() {
-    if (this.state.message) {
+      if (this.state.message) {
       const { currentChannel } = this.state;
       currentChannel.endTyping();
       SBActions.sendMessage(this.state.message);
@@ -117,9 +118,12 @@ class sbChat extends Reflux.Component {
 
   renderMessage(message) {
     if (message.sender.userId === this.store.state.userID) {
+      var timeStamp = moment(message.createdAt).fromNow();
+      console.log(message.createdAt)
       return (
         <div>
           <p className="usernameLabel" style={{ paddingLeft: '340px' }} id={this.state.usernameLabel}> {message.sender.nickname} </p>
+          <p> {timeStamp} </p>
           <div onClick={e => this.showUserName(e)} className="message to">
             {ReactEmoji.emojify(message.message) || message.message}
           </div>
@@ -129,6 +133,7 @@ class sbChat extends Reflux.Component {
     return (
       <div>
         <p className="usernameLabel" style={{ paddingRight: '360px' }} id={this.state.usernameLabel}> {message.sender.nickname} </p>
+        <p> {timeStamp} </p>
         <div onClick={e => this.showUserName(e)} className="message from">
           {ReactEmoji.emojify(message.message) || message.message}
         </div>
