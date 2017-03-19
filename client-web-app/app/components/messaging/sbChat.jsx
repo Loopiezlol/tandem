@@ -14,7 +14,6 @@ import SBActions from '../../actions/sbActions';
 class sbChat extends Reflux.Component {
   constructor(props) {
     super(props);
-    moment.format();
     this.state = {
       message: '',
       usernameLabel: 'username-hidden',
@@ -119,7 +118,6 @@ class sbChat extends Reflux.Component {
   renderMessage(message) {
     if (message.sender.userId === this.store.state.userID) {
       var timeStamp = moment(message.createdAt).fromNow();
-      console.log(message.createdAt)
       return (
         <div>
           <p className="usernameLabel" style={{ paddingLeft: '340px' }} id={this.state.usernameLabel}> {message.sender.nickname} </p>
@@ -133,7 +131,6 @@ class sbChat extends Reflux.Component {
     return (
       <div>
         <p className="usernameLabel" style={{ paddingRight: '360px' }} id={this.state.usernameLabel}> {message.sender.nickname} </p>
-        <p> {timeStamp} </p>
         <div onClick={e => this.showUserName(e)} className="message from">
           {ReactEmoji.emojify(message.message) || message.message}
         </div>
