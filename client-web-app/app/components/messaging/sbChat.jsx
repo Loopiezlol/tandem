@@ -4,6 +4,7 @@ import Paper from 'material-ui/Paper';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import ReactEmoji from 'react-emoji';
+import Divider from 'material-ui/Divider';
 import SBStore from '../../stores/sbStore';
 import SBActions from '../../actions/sbActions';
 import '../../styles/sbChat.scss';
@@ -40,8 +41,8 @@ class sbChat extends Reflux.Component {
       return (
         <div>
           <Paper className="paperStyle" zDepth={1} >
-            <h5>SendBird Chat with {otherUserNick} ({otherUser})</h5>
-
+            <h5>Chat with {otherUserNick} ({otherUser})</h5>
+            <Divider />
             <div>
                <Paper className="messageStyle" zDepth={0}>
               <div className="messages">
