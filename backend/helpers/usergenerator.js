@@ -6,15 +6,37 @@ module.exports = {
   populateDB(n) {
     const ObjectId = mongoose.Types.ObjectId;
     const interests = [...Array(12).keys()].map(i => ({ name: `interest_${i}`, notes: 'BLAH!' }));
-    const someLanguages = [new ObjectId('58c332f56e9f63495f858d7f'),
-      new ObjectId('58c332f56e9f63495f858d80'),
-      new ObjectId('58c332f56e9f63495f858d7e'),
-      new ObjectId('58c33391c04e654a01ed752b'),
-      new ObjectId('58c33391c04e654a01ed752c'),
-      new ObjectId('58c33391c04e654a01ed752d'),
-      new ObjectId('58c33396ae17654a1e87b39f'),
-      new ObjectId('58c33396ae17654a1e87b3a0'),
-      new ObjectId('58c33396ae17654a1e87b3a1')];
+    const someLanguages = ['58cec30e9e85e938b3ac466d',
+      '58cec30e9e85e938b3ac466e',
+      '58cec30e9e85e938b3ac4670',
+      '58cec30e9e85e938b3ac466f',
+      '58cec30e9e85e938b3ac4671',
+      '58cec30e9e85e938b3ac4672',
+      '58cec30e9e85e938b3ac4673',
+      '58cec30e9e85e938b3ac4674',
+      '58cec30e9e85e938b3ac4675',
+      '58cec30e9e85e938b3ac4676',
+      '58cec30e9e85e938b3ac4677',
+      '58cec30e9e85e938b3ac467a',
+      '58cec30e9e85e938b3ac467b',
+      '58cec30e9e85e938b3ac467c',
+      '58cec30e9e85e938b3ac4679',
+      '58cec30e9e85e938b3ac467e',
+      '58cec30e9e85e938b3ac467d',
+      '58cec30e9e85e938b3ac4678',
+      '58cec30e9e85e938b3ac4680',
+      '58cec30e9e85e938b3ac4681',
+      '58cec30e9e85e938b3ac467f',
+      '58cec30e9e85e938b3ac4683',
+      '58cec30e9e85e938b3ac4682',
+      '58cec30e9e85e938b3ac4684',
+      '58cec30e9e85e938b3ac4685',
+      '58cec30e9e85e938b3ac4687',
+      '58cec30e9e85e938b3ac4688',
+      '58cec30e9e85e938b3ac4689',
+      '58cec30e9e85e938b3ac468a',
+      '58cec30e9e85e938b3ac4686',
+      '58cec30e9e85e938b3ac468b'];
     [...Array(n).keys()].forEach((i) => {
       User.create({
         username: `user${i}`,
@@ -34,6 +56,47 @@ module.exports = {
           //
           }],
         interests: [interests[Math.floor(Math.random() * 12)], interests[Math.floor(Math.random() * 12)]],
+      });
+    });
+  },
+  populateDBwithLanguages() {
+    const langs =
+    `Chinese,CN
+English,GB
+Spanish,ES
+Arabic,SA
+Bengali,IN
+Hindi,SG
+Russian,RU
+Portuguese,PT
+Japanese,JP
+German,DE
+Javanese,ID
+Korean,KR
+French,FR
+Turkish,TR
+Vietnamese,VN
+Cantonese,PH
+Italian,IT
+Urdu,AF
+Polish,PL
+Ukrainian,UA
+Persian,IR
+Hakka,BN
+Romanian,RO
+Bhojpuri,NP
+Azerbaijani,SY
+Hausa,SD
+Burmese,BD
+Dutch,NL
+Bulgarian,BG
+Greek,GR
+Serbia,SR`.split(/\n/);
+    langs.forEach((x) => {
+      const line = x.split(',');
+      Language.create({
+        name: line[0],
+        abbreviation: line[1],
       });
     });
   },

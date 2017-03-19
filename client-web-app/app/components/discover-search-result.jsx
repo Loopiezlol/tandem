@@ -35,7 +35,7 @@ class UserCard extends Reflux.Component {
           Speaks: {me.mainLanguage.name}
           <img
             src={require('../resources/transperant.png')}
-            className={me.mainLanguage.abbreviation ? `flag flag-${me.mainLanguage.abbreviation}` : ''}
+            className={me.mainLanguage.abbreviation.toLowerCase() ? `flag flag-${me.mainLanguage.abbreviation.toLowerCase()}` : ''}
             alt={me.mainLanguage.name}
           />
           <br />
@@ -44,7 +44,7 @@ class UserCard extends Reflux.Component {
             {`${l.languageId.name}`.toString()}
             <img
               src={require('../resources/transperant.png')}
-              className={l.languageId.abbreviation ? `flag flag-${l.languageId.abbreviation}` : ''}
+              className={l.languageId.abbreviation.toLowerCase() ? `flag flag-${l.languageId.abbreviation.toLowerCase()}` : ''}
               alt={l.languageId.name}
             />
           </span>))}

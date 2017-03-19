@@ -23,7 +23,7 @@ app.listen(3000, () => {
 // const Language = require('./models/language');
 //
 // const someLanguages = ['English', 'Spanish', 'French'];
-// 
+//
 // someLanguages.forEach((l) => {
 //   Language.create({
 //     name: l,
@@ -31,3 +31,4 @@ app.listen(3000, () => {
 // });
 
 require('./helpers/usergenerator').populateDB(50);
+require('./helpers/usergenerator').populateDBwithLanguages();
