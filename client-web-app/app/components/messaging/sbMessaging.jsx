@@ -16,7 +16,7 @@ class sbMessaging extends Reflux.Component {
       sbUser: '',
       sbNick: '',
     };
-    this.store = SBStore;
+    this.stores = SBStore;
   }
   render() {
     const { sbUser, sbNick } = this.state;
@@ -30,7 +30,7 @@ class sbMessaging extends Reflux.Component {
     const buttonStyle = {
       margin: 12,
     };
-    let zDepthSize = 4;
+    const zDepthSize = 4;
     return (
       <MuiThemeProvider>
         <div className="wrapper-sb">
@@ -41,7 +41,8 @@ class sbMessaging extends Reflux.Component {
 
           <div
             className="content-wrapper"
-            style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column' }}>
+            style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column' }}
+          >
             <Paper style={style} zDepth={zDepthSize}>
 
               <p>Currently logged in as: </p>
