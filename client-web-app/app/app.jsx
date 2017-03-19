@@ -13,6 +13,9 @@ import UserCard from './components/discover-search-result';
 import User from './components/UserProfile/User';
 import AuthHandler from './components/authHandler';
 import actions from './actions/actions';
+//eslint-disable-next-line
+import injectTapEventPlugin from "react-tap-event-plugin";
+injectTapEventPlugin();
 
 function redirectIfLoggedIn() {
   const jwt = localStorage.getItem('jwt');
