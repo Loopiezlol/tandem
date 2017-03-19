@@ -40,7 +40,7 @@ class sbChat extends Reflux.Component {
     if (chatOpen) {
       return (
         <div>
-          <Paper className="paperStyle" zDepth={1} >
+          <Paper className="paperStyle" zDepth={2} >
             <h5>Chat with {otherUserNick} ({otherUser})</h5>
             <Divider />
             <div>
