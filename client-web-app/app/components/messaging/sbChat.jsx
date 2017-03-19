@@ -3,7 +3,6 @@ import Reflux from 'reflux';
 import Paper from 'material-ui/Paper';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
-import Chip from 'material-ui/Chip';
 import ReactEmoji from 'react-emoji';
 import SBStore from '../../stores/sbStore';
 import SBActions from '../../actions/sbActions';
@@ -36,37 +35,16 @@ class sbChat extends Reflux.Component {
     const { chatOpen, otherUser, otherUserNick, message, prevMessages, messages, isTyping }
      = this.state;
 
-    const style = {
-      width: '30pc',
-      margin: 15,
-      textAlign: 'center',
-      display:'inline-block',
-      color: 'gray',
-      transitionEnabled: false
-    };
-    const styleMessage = {
-     width: '30pc',
-     margin: 0,
-     textAlign: 'center',
-     display: 'inline-block',
-     color: 'black',
-    };
-    const styleMessage2 = {
-     width: '25pc',
-     margin: 0,
-     textAlign: 'center',
-     display: 'inline-block',
-     color: 'black',
-    };
+
 
     if (chatOpen) {
       return (
         <div>
-          <Paper style={style} zDepth={1} >
+          <Paper className="paperStyle" zDepth={1} >
             <h5>SendBird Chat with {otherUserNick} ({otherUser})</h5>
 
             <div>
-               <Paper style={styleMessage} zDepth={0}>
+               <Paper className="messageStyle" zDepth={0}>
               <div className="messages">
                 <ul className="old-messages" style={{ listStyle: 'none' }}>
                   {prevMessages.map(msg => <li key={`${msg.messageId}`}>
@@ -75,7 +53,7 @@ class sbChat extends Reflux.Component {
                 </ul>
 
               </div>
-              <Paper style={styleMessage2}>
+              <Paper className="textFieldStyle">
                 <span className="messageDividerLine" id="divider-left" />
                 <p id="messageDividerLabel">New messages</p>
                 <span className="messageDividerLine" id="divider-right" />

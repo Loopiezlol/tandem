@@ -16,24 +16,15 @@ class sbUserList extends Reflux.Component {
   }
   render() {
     const { userList } = this.state;
-    const style = {
-      width: '30pc',
-      margin: 15,
-      textAlign: 'center',
-      display: 'inline-block',
-    };
-    const buttonStyle = {
-      margin: 12,
-    };
     return (
       <div className="wrapper-sb">
 
-        <Paper style={style} zDepth={2}>
+        <Paper className="paperStyle" zDepth={2}>
           <RaisedButton
             label="Refresh User List"
             onClick={() => SBActions.loadOnlineUsersList()}
             onTap={() => SBActions.loadOnlineUsersList()}
-            primary style={buttonStyle}
+            primary style={{ margin: '12px' }}
           />
           <br />
           <List>
