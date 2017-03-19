@@ -1,3 +1,5 @@
+//eslint-disable-next-line
+import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import path from 'path';
 
@@ -15,10 +17,6 @@ export default {
   module: {
     loaders: [
       {
-        test: /\.(png|jpg)$/,
-        loader: 'url-loader',
-      },
-      {
         test: /\.jsx?$/,
         loader: ['react-hot-loader', 'babel-loader'],
         exclude: [/node_modules/, /dist/],
@@ -29,14 +27,21 @@ export default {
         exclude: [/node_modules/, /dist/],
       },
       {
-        test: /\.scss$/,
-        loader: ['style-loader', 'css-loader?sourceMap', 'sass-loader?sourceMap'],
+        test: /\.(scss|css)$/,
+        loader: [
+          'style-loader',
+          'css-loader?sourceMap',
+          'sass-loader?sourceMap',
+        ],
         exclude: [/node_modules/, /dist/],
       },
-      { 
-	test: /\.(png|jpg)$/,
- 	loader: 'file-loader?name=public/[name].[ext]' 
-      }
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        loaders: [
+          'file-loader?hash=sha512&digest=hex&name=[hash].[ext]',
+          'image-webpack-loader?bypassOnDebug',
+        ],
+      },
     ],
   },
   resolve: {

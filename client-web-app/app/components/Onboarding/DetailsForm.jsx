@@ -73,29 +73,23 @@ class DetailsForm extends Reflux.Component {
       fontFamily: "'Abel', sans-serif",
     };
     // Avatars for all the male characters
-    const userManWrap = ['man', 'man-1', 'man-2', 'man-3', 'man-4'].map((man) => {
-      const source = `./manSmall/${man}.png`;
-      return (
-        <Avatar
-          className={this.state.charactersState}
-          src={source}
-          name={man}
-          onClick={e => this.selectCharacter(e)}
-        />
-      );
-    });
+    const userManWrap = ['man', 'man-1', 'man-2', 'man-3', 'man-4'].map(man => (
+      <Avatar
+        className={this.state.charactersState}
+        src={require(`../../../public/manSmall/${man}.png`)}
+        name={man}
+        onClick={e => this.selectCharacter(e)}
+      />
+      ));
     // Avatars for all the female characters
-    const userWomanWrap = ['woman', 'woman-1', 'woman-2', 'woman-3', 'woman-4'].map((woman) => {
-      const source = `./womanSmall/${woman}.png`;
-      return (
-        <Avatar
-          className={this.state.charactersState}
-          src={source}
-          name={woman}
-          onClick={e => this.selectCharacter(e)}
-        />
-      );
-    });
+    const userWomanWrap = ['woman', 'woman-1', 'woman-2', 'woman-3', 'woman-4'].map(woman => (
+      <Avatar
+        className={this.state.charactersState}
+        src={require(`../../../public/womanSmall/${woman}.png`)}
+        name={woman}
+        onClick={e => this.selectCharacter(e)}
+      />
+      ));
     // Avatar for both male and female characters
     const userProfileCharacters = [userManWrap, userWomanWrap];
     const firstNameError = (
