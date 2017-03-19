@@ -22,28 +22,28 @@ class Onboarding extends Reflux.Component {
     this.store = OnboardingStore;
   }
 
-  finish () {
+  finish() {
     console.log(this.state.userInfo);
   }
 
   render() {
     const userInfoError = (
       <div className={this.state.langErrorWrap}>
-        <img src="errorMsgBubble.png" id="errorUserInfoIcon" />
+        <img src={require('../../../public/errorMsgBubble.png')} id="errorUserInfoIcon" />
         <p id="errorUserInfoText">Please fill in all the required fields</p>
       </div>
     );
 
     const motherLangError = (
       <div className={this.state.langErrorWrap}>
-        <img src="errorMsgBubble.png" id="errorMotherLangIcon" />
+        <img src={require('../../../public/errorMsgBubble.png')} id="errorMotherLangIcon" />
         <p id="errorMotherLangText">Please enter your mother language</p>
       </div>
     );
 
     const famLangError = (
       <div className={this.state.langErrorWrap}>
-        <img src="errorMsgBubble.png" id="errorFamLangIcon" />
+        <img src={require('../../../public/errorMsgBubble.png')} id="errorFamLangIcon" />
         <p id="errorFamLangText">Please specify the languages you <br /> want to practice</p>
       </div>
     );
@@ -51,7 +51,7 @@ class Onboarding extends Reflux.Component {
 
     const interestsError = (
       <div className={this.state.langErrorWrap}>
-        <img src="errorMsgBubble.png" id="errorInterestsIcon" />
+        <img src={require('../../../public/errorMsgBubble.png')} id="errorInterestsIcon" />
         <p id="errorInterestsText">Please choose at least 3 topics</p>
       </div>
     );

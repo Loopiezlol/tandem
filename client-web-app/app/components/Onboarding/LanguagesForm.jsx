@@ -19,7 +19,7 @@ class LanguagesForm extends Reflux.Component {
       askLanguages: false,
       inputContainer: 'inputContainer',
       bubbleState: 'speechBubbleGreeting',
-      bubbleSrc: './speechBubbleGreeting.png',
+      bubbleSrc: '/speechBubbleGreeting.png',
       inputFieldState: 'inputMotherLangField',
       okBtn: 'okBtn',
       languageAddedLabel: 'languageAddedLabel',
@@ -47,7 +47,7 @@ class LanguagesForm extends Reflux.Component {
     function changeState() {
       x.setState({
         inputContainer: 'inputContainer inputContainer-expanded',
-        bubbleSrc: './speechBubbleLanguages.png',
+        bubbleSrc: '/speechBubbleLanguages.png',
         bubbleState: 'speechBubbleLanguages',
         askLanguages: true,
         okBtn: 'okBtn',
@@ -85,7 +85,7 @@ class LanguagesForm extends Reflux.Component {
     }
 
     function changeState() {
-      x.setState({ bubbleSrc: './speechBubbleGreeting.png', bubbleState: 'speechBubbleInstruction' });
+      x.setState({ bubbleSrc: '/speechBubbleGreeting.png', bubbleState: 'speechBubbleInstruction' });
     }
 
 
@@ -196,21 +196,21 @@ class LanguagesForm extends Reflux.Component {
 
     const langLevelError = (
       <div className={this.state.langErrorWrap}>
-        <img src="errorMsgBubble-rotated.png" className="errorBubbleLanguages" id="langLevelErrorIcon" />
+        <img src={require('../../../public/errorMsgBubble-rotated.png')} className="errorBubbleLanguages" id="langLevelErrorIcon" />
         <p className="errorTextLanguages" id="langLevelErrorText">Please specify level of competency</p>
       </div>
     );
 
     const addedLangError = (
       <div className={this.state.langErrorWrap}>
-        <img src="errorMsgBubble-rotated.png" className="errorBubbleLanguages" id="addedLangErrorIcon" />
+        <img src={require('../../../public/errorMsgBubble-rotated.png')} className="errorBubbleLanguages" id="addedLangErrorIcon" />
         <p className="errorTextLanguages" id="addedLangErrorText">{this.state.currLang} is already added</p>
       </div>
     );
 
     const validLangError = (
       <div className={this.state.langErrorWrap}>
-        <img src="errorMsgBubble-rotated.png" className="errorBubbleLanguages" id="addedLangErrorIcon" />
+        <img src={require('../../../public/errorMsgBubble-rotated.png')} className="errorBubbleLanguages" id="addedLangErrorIcon" />
         <p className="errorTextLanguages" id="validLangErrorText">Please enter a valid language</p>
       </div>
     );
@@ -237,7 +237,7 @@ class LanguagesForm extends Reflux.Component {
         </div>
 
         <div>
-          <span><img className={this.state.bubbleState} src={this.state.bubbleSrc} /></span>
+          <span><img className={this.state.bubbleState} src={require(`../../../public${this.state.bubbleSrc}`)} /></span>
         </div>
         {this.state.greetUser && greeting}
         {this.state.askLanguages && askLanguage}

@@ -64,10 +64,10 @@ class Ineterests extends Reflux.Component {
 
     // Container for all the interests that the user has chosen
     const chosenInterests = this.state.userInfo.interests.map((hobby) => {
-      const source = `./png/${hobby.icon}.png`;
+      const source = `/png/${hobby.icon}.png`;
       return (
         <span>
-          <Avatar src={source} className="singleInterest" onClick={e => this.selectInterest(e, hobby)} />
+          <Avatar src={require(`../../../public${source}`)} className="singleInterest" onClick={e => this.selectInterest(e, hobby)} />
         </span>
       );
     });
@@ -93,7 +93,7 @@ class Ineterests extends Reflux.Component {
             marginTop: '5px',
             color: '#1d5e5b' }}
         >
-        speaker_notes
+          speaker_notes
         </i>
 
         <p id="picksLabel"> Your picks </p>
@@ -112,14 +112,14 @@ class Ineterests extends Reflux.Component {
           <MuiThemeProvider>
             <Paper className="notesFieldContainer" zDepth={1}>
               <span>
-                <img src="./notesColor.png" className="notesDisplayIcon" />
+                <img src={require('../../../public/notesColor.png')} className="notesDisplayIcon" />
                 <p id="toAddNotesLabel">Share something connected to <span id="toAddNotesInterest">{(this.state.toAddNotes || {}).label.toLowerCase()}</span></p>
               </span>
               <TextField
                 hintText={'Add you story here'}
                 value={this.state.notesInputValue}
                 multiLine
-                onChange={(e) => this.showBtn(e)}
+                onChange={e => this.showBtn(e)}
                 onBlur={e => OnboardingActions.updateNotes(e)}
                 rows={1}
                 rowsMax={6}

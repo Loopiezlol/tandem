@@ -28,9 +28,9 @@ class DetailsForm extends Reflux.Component {
     const character = e.target.name;
     let source = '';
     if (character.includes('woman')) {
-      source = `./womanBig/${character}.png`;
+      source = require(`../../../public/womanBig/${character}.png`);
     } else if (character.includes('man')) {
-      source = `./manBig/${character}.png`;
+      source = require(`../../../public/manBig/${character}.png`);
     }
     function updateChar(self) {
       self.setState({ selectedChar: e.target }, () => {
@@ -127,11 +127,11 @@ class DetailsForm extends Reflux.Component {
         <span className={this.state.sexSelected} />
         <div className="sexWrap">
           <span className="sexIconLabelWrap">
-            <img src="./male.png" name="male" className="sexIcon" onClick={e => this.selectSex(e)} />
+            <img src={require('../../../public/male.png')} name="male" className="sexIcon" onClick={e => this.selectSex(e)} />
             <p className="sexLabel" >Male</p>
           </span>
           <span>
-            <img src="./female.png" name="female" className="sexIcon" onClick={e => this.selectSex(e)} />
+            <img src={require('../../../public/female.png')} name="female" className="sexIcon" onClick={e => this.selectSex(e)} />
             <p className="sexLabel" >Female</p>
           </span>
         </div>
@@ -194,8 +194,8 @@ class DetailsForm extends Reflux.Component {
               marginTop: '5px',
               color: '#d3d3d3' }}
           >
-                  account_circle
-                  </i>
+            account_circle
+          </i>
         </div>
         {this.state.newProfileEnabled && newProfile}
         {this.state.showCharacters && charactersWrap}
