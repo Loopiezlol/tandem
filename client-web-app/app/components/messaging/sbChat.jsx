@@ -14,7 +14,6 @@ class sbChat extends Reflux.Component {
     super(props);
     this.state = {
       message: '',
-      hello: true,
       usernameLabel: 'username-hidden',
     };
     this.store = SBStore;
@@ -105,12 +104,14 @@ class sbChat extends Reflux.Component {
   }
 
   handleSendButton() {
-    const { currentChannel } = this.state;
-    currentChannel.endTyping();
-    SBActions.sendMessage(this.state.message);
-    this.setState({
-      message: '',
-    });
+    if (this.state.message) {
+      const { currentChannel } = this.state;
+      currentChannel.endTyping();
+      SBActions.sendMessage(this.state.message);
+      this.setState({
+        message: '',
+      });
+    }
   }
 
   renderMessage(message) {
