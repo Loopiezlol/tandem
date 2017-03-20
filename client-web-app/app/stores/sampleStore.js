@@ -1,5 +1,3 @@
-
-
 import Reflux from 'reflux';
 import request from 'superagent';
 import actions from '../actions';

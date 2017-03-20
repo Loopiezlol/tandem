@@ -1,4 +1,19 @@
 import React from 'react';
+import Discover from './discover';
+import Messaging from './messaging/messaging';
+import '../styles/appStyles.scss';
+
+const renderMainComponent = (componentName) => {
+  switch (componentName) {
+    case 'messaging':
+      return <Messaging />;
+    case 'profile':
+      return <div>profile  :)</div>;
+    case 'discover':
+    default:
+      return <Discover />;
+  }
+};
 
 class PaneControl extends React.Component {
   constructor(props) {
@@ -11,7 +26,7 @@ class PaneControl extends React.Component {
 
   handleOpen(opened) {
     this.setState({
-      opened, 
+      opened,
     });
   }
 
@@ -20,19 +35,17 @@ class PaneControl extends React.Component {
     return (
       <div className="main-wrapper">
         <div className="control-tabs">
-          <div className="control-discover" onClick={() => this.handleOpen('discover')}>
-            <p>Click me</p>
+          <div onClick={() => this.handleOpen('discover')}>
+            <p>Discover</p>
           </div>
-          <div className="control-messaging" onClick={() => this.handleOpen('messaging')}>
-            <p>Click me</p>
+          <div onClick={() => this.handleOpen('messaging')}>
+            <p>Messaging</p>
           </div>
-          <div className="control-profile" onClick={() => this.handleOpen('profile')}>
-            <p>Click me</p>
+          <div onClick={() => this.handleOpen('profile')}>
+            <p>Profile</p>
           </div>
         </div>
-        {opened === 'discover' && <p>discover component should go here</p>}
-        {opened === 'messaging' && <p>message component should go here</p>}
-        {opened === 'profile' && <p>profile component should go here</p>}
+        {renderMainComponent(opened)}
       </div>
     );
   }

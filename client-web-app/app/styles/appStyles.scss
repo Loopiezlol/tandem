@@ -1,0 +1,18 @@
+.main-wrapper {
+  // height: 100vh;
+  // display: inline-block;
+
+  .control-tabs {
+    top: 50%;
+    height: 30vh;
+    z-index: 2000;
+    background-color: green;
+    // display: inline-block;
+    position: absolute;
+  }
+
+  .control-discover {
+    background-color: yellow;
+    // height: inherit;
+  }
+}

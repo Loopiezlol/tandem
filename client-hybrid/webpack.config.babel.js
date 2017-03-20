@@ -4,20 +4,16 @@ import path from 'path';
 export default {
   entry: path.resolve(__dirname, 'app/app.jsx'),
   output: {
-    path: path.resolve(__dirname, 'dist/'),
+    path: path.resolve(__dirname, '.dist'),
     filename: 'index_bundle.js',
   },
-  devtool: 'source-map',
+  devtool: 'eval-source-map',
   devServer: {
     inline: true,
-    port: 3001,
+    port: 3002,
   },
   module: {
     loaders: [
-      {
-        test: /\.(png|jpg)$/,
-        loader: 'url-loader',
-      },
       {
         test: /\.jsx?$/,
         loader: ['react-hot-loader', 'babel-loader'],
