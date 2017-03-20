@@ -10,8 +10,6 @@ import './styles/example2.scss';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
-console.log('sfdggfsg');
-
 ReactDOM.render(
   <div className="view">
     <Discover />

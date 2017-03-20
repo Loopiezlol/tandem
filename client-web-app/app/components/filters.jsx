@@ -4,6 +4,8 @@ import Paper from 'material-ui/Paper';
 import CheckBox from 'material-ui/Checkbox';
 import FlatButton from 'material-ui/FlatButton';
 import ChipInput from 'material-ui-chip-input';
+import IconButton from 'material-ui/IconButton';
+import ActionHome from 'material-ui/svg-icons/action/home';
 
 import React from 'react';
 import Reflux from 'reflux';
@@ -16,6 +18,7 @@ const me = {
     { id: '58b9cdafe80f944ec8f14716', name: 'Spanish' },
   ],
 };
+const interestsIcons = [...Array(12).keys()].map(x => (`interest_${x}`));
 
 class Filters extends Reflux.Component {
   constructor(props) {
@@ -25,17 +28,18 @@ class Filters extends Reflux.Component {
       genderBoxContent: false,
       languageBoxContent: false,
       chips: [],
-      interests: [],
+      interests: interestsIcons.map(x => ({ name: x, selected: false })),
     };
   }
 
   render() {
-    const { searchText, genderBoxContent, languageBoxContent, chips } = this.state;
+    const { searchText, genderBoxContent, languageBoxContent, chips, interests } = this.state;
     const queryParameters = {
       name: searchText,
       sameGender: genderBoxContent,
       matchLanguages: languageBoxContent,
       languagesToMatch: chips.map(chip => chip.id),
+      interests: interests.filter(x => x.selected).map(x => x.name),
     };
     return (
       <Paper className="control-discover-filter">
@@ -64,6 +68,17 @@ class Filters extends Reflux.Component {
           onRequestAdd={chip => this.handleAddChip(chip)}
           onRequestDelete={(chip, index) => this.handleDeleteChip(chip, index)}
         />
+        <div>
+          Choose interests:<br />
+          {interests.map(interest => (
+            <IconButton
+              tooltip={interest.name}
+              onTouchTap={() => this.handleInterest(interest)}
+            >
+              <ActionHome className={interest.selected ? 'selected' : ''} />
+            </IconButton>
+          ))}
+        </div>
         <FlatButton
           style={{ width: '100%' }}
           fullWidth
@@ -73,6 +88,18 @@ class Filters extends Reflux.Component {
         />
       </Paper>
     );
+  }
+
+  handleInterest(interest) {
+    console.log(`interest:${interest.name} `);
+    const { interests } = this.state;
+    const foundIndex = interests.findIndex(x => x.name === interest.name);
+    if (foundIndex !== -1) {
+      interests[foundIndex].selected = !interests[foundIndex].selected;
+    }
+    this.setState({
+      interests,
+    });
   }
 
   handleAddChip(chip) {
