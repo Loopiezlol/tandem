@@ -23,6 +23,7 @@ const User = new mongoose.Schema({
       notes: { type: String },
     },
   ],
+  onboardingDone: { type: Boolean, default: false },
 });
 
 module.exports = mongoose.model('User', User);

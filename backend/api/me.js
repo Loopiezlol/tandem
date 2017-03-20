@@ -48,7 +48,10 @@ function* finishOnboarding(req, res) {
   if (me) {
     // TODO: use db values for mainLanguage and other Languages
     // TODO: also update languagesTolearn
-    yield User.update({ _id: userId }, userInfo);
+    const update = Object.assign({}, userInfo, {
+      onboardingDone: true,
+    });
+    yield User.update({ _id: userId }, update);
     return res.json({
       success: true,
     });

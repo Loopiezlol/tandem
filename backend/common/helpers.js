@@ -23,6 +23,7 @@ module.exports = {
       lastName: u.lastName,
       interests: u.interests.map(interest => ({ name: interest.name,
         notes: interest.notes })),
+      onboardingDone: u.onboardingDone,
     };
   },
 };

@@ -14,20 +14,33 @@ class AuthHandler extends Reflux.Component {
   }
 
   componentDidMount() {
-    if (this.state.status === 'in' && this.props.children === null) {
+    const { status, me } = this.state;
+    if (status === 'in' && this.props.children === null) {
       // could be improved with indexroute I guess
       // Currently set the main page as /message because we didn't have another one
-      hashHistory.push('/message');
-    } else if (this.state.status === 'off') {
+      console.log(me);
+      if (me || me.onboardingDone) {
+        hashHistory.push('/');
+      } else {
+        hashHistory.push('/onboarding');
+      }
+    } else if (status === 'off') {
       hashHistory.push('/login');
     }
   }
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.status !== this.state.status ||
+    const { status, me } = this.state;
+    if (prevState.status !== status ||
       this.props.children === null) {
-      if (this.state.status === 'in') {
+      if (status === 'in') {
+        console.log(me);
         // must change main route here as well
-        hashHistory.push('/message');
+        // if (me.onboardingDone) {
+        //   hashHistory.push('/');
+        // } else {
+        //   hashHistory.push('/onboarding');
+        // }
+        hashHistory.push('/onboarding');
       } else {
         hashHistory.push('/login');
       }
