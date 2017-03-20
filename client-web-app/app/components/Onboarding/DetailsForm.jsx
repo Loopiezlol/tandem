@@ -17,6 +17,9 @@ class DetailsForm extends Reflux.Component {
     super(props);
     this.store = OnboardingStore;
     this.state = { defaultIcon: 'userDefault', charPromptLabel: 'characterPromptLabel', selectedChar: null, selectedCharacterSrc: '', charactersState: 'charAvatar', carouselState: 'carouselWrap', charactersWrapState: 'charactersWrap', sexSelected: '', goBtnState: 'goBtn', showForm: false, newProfileEnabled: false, showCharacters: false };
+  }
+
+  componentDidMount() {
     const x = this;
     function change() {
       x.setState({ showCharacters: true });

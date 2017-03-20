@@ -31,12 +31,8 @@ class Onboarding extends Reflux.Component {
 
   renderOnboarding() {
     const { onboardingFinishStatus } = this.state;
-    if (onboardingFinishStatus === null) return;
-    if (onboardingFinishStatus === 'ok') {
-      hashHistory.push('/');
-    } else {
-      window.alert('Something went wrong. Sorry :(');
-    }
+    if (onboardingFinishStatus === null || onboardingFinishStatus === 'ok') return;
+    window.alert('Something went wrong. Sorry :(');
   }
 
   render() {
