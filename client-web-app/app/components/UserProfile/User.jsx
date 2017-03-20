@@ -1,6 +1,5 @@
 import React from 'react';
 import Reflux from 'reflux';
-import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
 import SelectField from 'material-ui/SelectField';
@@ -21,7 +20,6 @@ class User extends Reflux.Component {
 
   constructor(props) {
     super(props);
-    injectTapEventPlugin();
     this.store = MeStore;
     this.famLangArr = [{ name: 'English', level: 'A2' }, { name: 'Spanish', level: 'B1' }, { name: 'Bulgarian', level: 'C2' }, { name: 'Russian', level: 'B2' }];
     this.state = { selectorBg: 'bg-info', addNewFamLangBtnLabel: 'Add', famLanguage: 'English', interestsSelectorHeader: 'selectorHeader', carouselIndex: 0, btnLabel: 'Save notes', btnState: 'updateNotesBtn-appear' };
@@ -131,11 +129,9 @@ class User extends Reflux.Component {
     const selectors = ['info', 'chatting', 'heart'].map((selector, index) => {
       const source = `${selector}.png`;
       return (
-        <img src={source} className="selector" onClick={() => this.changeSelector(index)} />
+        <img src={require(`../../../public/userProfile/${source}`)} className="selector" onClick={() => this.changeSelector(index)} />
       );
     });
-
-
     const infoSelector = (
       <div className="genericSelectorWrap">
         <h1 className="selectorHeader">Information</h1>
@@ -252,9 +248,9 @@ class User extends Reflux.Component {
           <div>
             <p className="interestLabel notesInterestLabel">{(this.state.addNotes || {}).label}</p>
           </div>
-          <span><img className="chosenInterestNotes" src="./notes-selected.png" /></span>
+          <span><img className="chosenInterestNotes" src={require('../../../public/notes-selected.png')} /></span>
         </Paper>
-        <span id="notesBubbleWrap"> <img src="./notesBubble.png" id="notesBubbleIcon" onClick={this.closeNotes} />
+        <span id="notesBubbleWrap"> <img src={require('../../../public/notesBubble.png')} id="notesBubbleIcon" onClick={this.closeNotes} />
 
           <TextField
             hintText={`Share something about ${(this.state.addNotes || {}).label}`}
@@ -286,14 +282,14 @@ class User extends Reflux.Component {
     ];
 
     const interests = this.state.userInfo.interests.map((hobby, index) => {
-      const source = `./png/${hobby.icon}.png`;
+      const source = `/png/${hobby.icon}.png`;
       return (
         <Paper className="interestCardWrap">
           <Paper className="cardHeaderWrap">
-            <img src={source} className="interestCardIcon" />
+            <img src={require(`../../../public${source}`)} className="interestCardIcon" />
           </Paper>
 
-          <span className="circleNotesWrap" onClick={() => this.addNotes(hobby, index)}><img src="notes.png" className="circleNotesIcon" /></span>
+          <span className="circleNotesWrap" onClick={() => this.addNotes(hobby, index)}><img src={require('../../../public/notes.png')} className="circleNotesIcon" /></span>
 
           <Paper className="cardFooterWrap">
             <p className="cardLabel">{hobby.label}</p>
@@ -306,7 +302,7 @@ class User extends Reflux.Component {
     const plusSign = (
       <Paper className="addInterestWrap" onClick={this.showInterestsList}>
         <span>
-          <img src="./png/add.png" className="interestCardIcon" />
+          <img src={require('../../../public/png/add.png')} className="interestCardIcon" />
         </span>
         <p id="addInterestLabel">Add more</p>
       </Paper>
@@ -315,7 +311,7 @@ class User extends Reflux.Component {
 
 
     const listContent = this.state.allInterests.map((interest) => {
-      const source = `./png/${interest.icon}.png`;
+      const source = `/png/${interest.icon}.png`;
       const checked = [];
       this.state.userInfo.interests.forEach((userInterest) => {
         if (!checked.includes(interest)) {
@@ -329,7 +325,7 @@ class User extends Reflux.Component {
       });
       return (
         <ListItem id="singleInterestContainer" onClick={() => MeActions.addInterest(interest)}>
-          <Avatar id="interestAvatarIcon" src={source} />
+          <Avatar id="interestAvatarIcon" src={require(`../../../public${source}`)} />
           <p id="interestListLabel">{interest.label}</p>
 
           <p className="heartIcon" id={`interest-${interest.state}`} >❤</p>
@@ -378,7 +374,7 @@ class User extends Reflux.Component {
 
     return (
       <div className="userProfileWrap">
-        <img src="./boss.png" className="profileImg" />
+        <img src={require('../../../public/boss.png')} className="profileImg" />
         <MuiThemeProvider>
           <Paper className="userInfoWrap" zDepth={1}>
             <div className="selectorsWrap" >
