@@ -33,6 +33,11 @@ class sbStore extends Reflux.Store {
     // 2a) If YES, JOIN and load previous messages.
     // 2b) If NO, create the new channel and event handlers and JOIN.
 
+    // Clear the current messages array of old user messages which were sent in the last session
+    this.setState({
+      messages: [],
+    });
+
     // 1) First query using SendBird to get the list of channels user participating in...
     if (this.state.loggedIn) {
       const channelListQuery = sb.GroupChannel.createMyGroupChannelListQuery();

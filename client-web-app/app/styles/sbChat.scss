@@ -1,3 +1,8 @@
+.content-wrapper {
+  display:block !important;
+  text-align:center !important;
+}
+
 .usernameLabel {
   position: relative;
   font-size: 12px;
@@ -90,4 +95,32 @@
     border-color: #E5E4E9 ;
     left: -48px ;
     transform: rotateY(180deg);
+}
+.paperStyle{
+  width: 30pc;
+  margin: 15px;
+  text-align:center;
+  display: inline-block;
+  color: gray;
+
+}
+.ULpaperStyle{
+  width: 30pc;
+  margin: 1pc;
+  text-align: left;
+  display: inline-block;
+}
+.messageStyle  {
+  width: 30pc;
+  margin: 0;
+  text-align:center;
+  display: inline-block;
+  color: black;
+}
+.textFieldStyle {
+  width: 25pc;
+  margin: 0;
+  text-align:center;
+  display: inline-block;
+  color: black;
 }

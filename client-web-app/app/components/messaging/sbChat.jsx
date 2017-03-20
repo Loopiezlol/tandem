@@ -1,13 +1,14 @@
+import moment from 'moment';
 import React from 'react';
 import Reflux from 'reflux';
 import Paper from 'material-ui/Paper';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
-import Chip from 'material-ui/Chip';
 import ReactEmoji from 'react-emoji';
+import Divider from 'material-ui/Divider';
 import SBStore from '../../stores/sbStore';
-import SBActions from '../../actions/sbActions';
 import '../../styles/sbChat.scss';
+import SBActions from '../../actions/sbActions';
 /* eslint-disable*/
 
 class sbChat extends Reflux.Component {
@@ -15,7 +16,6 @@ class sbChat extends Reflux.Component {
     super(props);
     this.state = {
       message: '',
-      hello: true,
       usernameLabel: 'username-hidden',
     };
     this.store = SBStore;
@@ -36,37 +36,16 @@ class sbChat extends Reflux.Component {
     const { chatOpen, otherUser, otherUserNick, message, prevMessages, messages, isTyping }
      = this.state;
 
-    const style = {
-      width: '30pc',
-      margin: 15,
-      textAlign: 'center',
-      display:'inline-block',
-      color: 'gray',
-      transitionEnabled: false
-    };
-    const styleMessage = {
-     width: '30pc',
-     margin: 0,
-     textAlign: 'center',
-     display: 'inline-block',
-     color: 'black',
-    };
-    const styleMessage2 = {
-     width: '25pc',
-     margin: 0,
-     textAlign: 'center',
-     display: 'inline-block',
-     color: 'black',
-    };
+
 
     if (chatOpen) {
       return (
         <div>
-          <Paper style={style} zDepth={1} >
-            <h5>SendBird Chat with {otherUserNick} ({otherUser})</h5>
-
+          <Paper className="paperStyle" zDepth={1} >
+            <h5>Chat with {otherUserNick} ({otherUser})</h5>
+            <Divider />
             <div>
-               <Paper style={styleMessage} zDepth={0}>
+               <Paper className="messageStyle" zDepth={0}>
               <div className="messages">
                 <ul className="old-messages" style={{ listStyle: 'none' }}>
                   {prevMessages.map(msg => <li key={`${msg.messageId}`}>
@@ -75,7 +54,7 @@ class sbChat extends Reflux.Component {
                 </ul>
 
               </div>
-              <Paper style={styleMessage2}>
+              <Paper className="textFieldStyle" zDepth={0}>
                 <span className="messageDividerLine" id="divider-left" />
                 <p id="messageDividerLabel">New messages</p>
                 <span className="messageDividerLine" id="divider-right" />
@@ -115,8 +94,7 @@ class sbChat extends Reflux.Component {
 
   handleMessageType(e) {
     const { currentChannel } = this.state;
-    console.log(currentChannel.isTyping());
-    if (e.target.value && e.target.value.length) {
+     if (e.target.value && e.target.value.length) {
       currentChannel.startTyping();
     } else {
       currentChannel.endTyping();
@@ -127,19 +105,23 @@ class sbChat extends Reflux.Component {
   }
 
   handleSendButton() {
-    const { currentChannel } = this.state;
-    currentChannel.endTyping();
-    SBActions.sendMessage(this.state.message);
-    this.setState({
-      message: '',
-    });
+      if (this.state.message) {
+      const { currentChannel } = this.state;
+      currentChannel.endTyping();
+      SBActions.sendMessage(this.state.message);
+      this.setState({
+        message: '',
+      });
+    }
   }
 
   renderMessage(message) {
     if (message.sender.userId === this.store.state.userID) {
+      var timeStamp = moment(message.createdAt).fromNow();
       return (
         <div>
           <p className="usernameLabel" style={{ paddingLeft: '340px' }} id={this.state.usernameLabel}> {message.sender.nickname} </p>
+          <p> {timeStamp} </p>
           <div onClick={e => this.showUserName(e)} className="message to">
             {ReactEmoji.emojify(message.message) || message.message}
           </div>
