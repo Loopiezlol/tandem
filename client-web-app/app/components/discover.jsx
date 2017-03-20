@@ -1,7 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import SampleStore from '../stores/sampleStore';
-import actions from '../actions';
+import actions from '../actions/actions';
 
 class Discover extends Reflux.Component {
   constructor(props) {

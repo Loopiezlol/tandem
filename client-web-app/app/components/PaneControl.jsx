@@ -35,17 +35,19 @@ class PaneControl extends React.Component {
     return (
       <div className="main-wrapper">
         <div className="control-tabs">
-          <div onClick={() => this.handleOpen('discover')}>
+          <div onClick={() => this.handleOpen('discover')} className="wrapper-control-button">
             <p>Discover</p>
           </div>
-          <div onClick={() => this.handleOpen('messaging')}>
+          <div onClick={() => this.handleOpen('messaging')} className="wrapper-control-button">
             <p>Messaging</p>
           </div>
-          <div onClick={() => this.handleOpen('profile')}>
+          <div onClick={() => this.handleOpen('profile')} className="wrapper-control-button">
             <p>Profile</p>
           </div>
         </div>
-        {renderMainComponent(opened)}
+        <div className="opened-wrapper" >
+          {renderMainComponent(opened)}
+        </div>
       </div>
     );
   }

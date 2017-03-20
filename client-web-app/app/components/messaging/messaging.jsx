@@ -52,7 +52,6 @@ class messaging extends Reflux.Component {
               transform: 'translateX(-50%)',
               display: 'flex',
               flexDirection: 'row',
-              justifyContent: 'center',
               alignItems: 'flex-start',
             }}
           >

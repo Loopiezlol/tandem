@@ -32,7 +32,7 @@ class AuthHandler extends Reflux.Component {
       (prevProps.location.pathname !== this.props.location.pathname && this.props.location.pathname === '/onboarding')) {
       if (status === 'in') {
         if (me.onboardingDone) {
-          hashHistory.push('/message');
+          hashHistory.push('/home');
         } else {
           hashHistory.push('/onboarding');
         }
