@@ -59,7 +59,7 @@ class Ineterests extends Reflux.Component {
 
 
     return (
-      <div>
+      <div className="transitionComponent">
         <div style={label} >What do you love?</div>
         <i
           className="material-icons"

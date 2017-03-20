@@ -52,7 +52,7 @@
   -webkit-spinAndAppear: animation 1500ms linear both;
   position: absolute;
   animation: swoosh 1600ms linear both;
-  font-size:60px;
+  font-size:60px !important;
   padding-top: 270px;
   margin-left: -32px;
   color: #4E826A;
@@ -213,7 +213,7 @@
 .languageAddedLabel {
   position: absolute;
   margin-top: -60px;
-  margin-left: 235px;
+  margin-left: 195px;
   width: 200px;
   font-size: 13px;
   color : white;
@@ -365,6 +365,7 @@
   position: absolute !important;
   margin-top : 60px !important;
   margin-left: -44px !important;
+  z-index: 1 !important;
 }
 
 .okBtn-show {
@@ -384,6 +385,7 @@
   width: 200px;
   height: 100px;
   transition: 0.5s ease-in-out;
+  z-index: 2 !important;
 }
 
 .inputContainer-expanded {
@@ -451,18 +453,19 @@
 }
 
 #validLangErrorText {
-  margin-left: -5px;
+  margin-left: -40px;
   margin-top: 37px;
   font-size: 17px;
 }
 
 #addedLangErrorIcon {
-  margin-left: -320px;
+  position: absolute;
+  margin-left: -355px;
   margin-top: -15px;
 }
 
 #addedLangErrorText {
-  margin-top: 35px;
+  padding-right: 20px !important;
   font-size: 18px;
 }
 
