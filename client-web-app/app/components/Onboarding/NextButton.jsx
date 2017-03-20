@@ -23,7 +23,6 @@ function NextButton({ disabled, onClick: _onClick }) {
 }
 
 NextButton.propTypes = {
-  disabled: React.PropTypes.bool.isRequired,
   onClick: React.PropTypes.func.isRequired,
 };
 

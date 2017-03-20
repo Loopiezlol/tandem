@@ -11,6 +11,8 @@ import DetailsForm from './DetailsForm';
 import InterestsNotes from './InterestsNotes';
 import OnboardingActions from '../../actions/OnboardingActions';
 import OnboardingStore from '../../stores/OnboardingStore';
+import LevelStore from '../../stores/levelStore';
+import LanguageStore from '../../stores/languageStore';
 import Auth from '../../stores/auth';
 import actions from '../../actions/actions';
 import '../../styles/Onboarding/Onboarding.scss';
@@ -21,7 +23,14 @@ class Onboarding extends Reflux.Component {
   constructor(props) {
     super(props);
     this.state = { errorBubble: 'errorMsgInfoWrap' };
-    this.stores = [OnboardingStore, Auth];
+    this.stores = [OnboardingStore, Auth, LevelStore, LanguageStore];
+    actions.fetchLanguages();
+    actions.fetchLevels();
+  }
+
+  componentDidMount() {
+    // actions.fetchLanguages();
+    // actions.fetchLevels();
   }
 
   componentDidUpdate(prevProps, prevState) {

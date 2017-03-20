@@ -78,6 +78,7 @@ class DetailsForm extends Reflux.Component {
     // Avatars for all the male characters
     const userManWrap = ['man', 'man-1', 'man-2', 'man-3', 'man-4'].map(man => (
       <Avatar
+        key={`avatar-man-${man}`}
         className={this.state.charactersState}
         src={require(`../../../public/manSmall/${man}.png`)}
         name={man}
@@ -87,6 +88,7 @@ class DetailsForm extends Reflux.Component {
     // Avatars for all the female characters
     const userWomanWrap = ['woman', 'woman-1', 'woman-2', 'woman-3', 'woman-4'].map(woman => (
       <Avatar
+        key={`avatar-woman-${woman}`}
         className={this.state.charactersState}
         src={require(`../../../public/womanSmall/${woman}.png`)}
         name={woman}

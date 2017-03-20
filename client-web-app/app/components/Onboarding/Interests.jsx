@@ -49,7 +49,7 @@ class Ineterests extends Reflux.Component {
     const hobbies = this.state.interests.map((hobby) => {
       const source = `/png/${hobby.icon}.png`;
       return (
-        <div className="iconsWrap" onTouchTap={this.openDescModal}>
+        <div className="iconsWrap" onTouchTap={this.openDescModal} key={`hobby-${hobby.icon}`}>
           <img className="interestsIcons" src={require(`../../../public${source}`)} />
           <p className="hobbyLabel">{hobby.label}</p>
           <div className={hobby.state} onClick={() => OnboardingActions.selectInterest(hobby)} />

@@ -1,7 +1,10 @@
 const router = require('express').Router();
+const mongoose = require('mongoose');
 const config = require('../../common/config');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const Level = require('../models/level');
+const Language = require('../models/language');
 const wrap = require('co-express');
 const helpers = require('../common/helpers');
 
@@ -48,8 +51,21 @@ function* finishOnboarding(req, res) {
   if (me) {
     // TODO: use db values for mainLanguage and other Languages
     // TODO: also update languagesTolearn
+    const mainLanguageId = yield Language.findOne({ name: userInfo.mainLanguage });
+    const wantsToLearn = [];
+    for (const item of userInfo.wantsToLearn) {
+      console.log(item);
+      const languageId = yield Language.findOne({ name: item.name });
+      const levelId = yield Level.findOne({ name: item.level });
+      wantsToLearn.push({
+        languageId,
+        levelId,
+      });
+    }
     const update = Object.assign({}, userInfo, {
       onboardingDone: true,
+      mainLanguage: mainLanguageId._id,
+      wantsToLearn,
     });
     yield User.update({ _id: userId }, update);
     return res.json({

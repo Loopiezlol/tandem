@@ -4,8 +4,8 @@ const Language = require('../models/language');
 
 // using co-express wraper -> note how we can store async values
 function* getLanguages(req, res) {
-  const users = yield Language.find({});
-  res.json(users);
+  const languages = yield Language.find({});
+  res.json(languages);
 }
 
 router.get('/', wrap(getLanguages));

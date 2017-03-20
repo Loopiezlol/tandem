@@ -2,18 +2,21 @@ import React from 'react';
 import Reflux from 'reflux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import FlatButton from 'material-ui/FlatButton';
+import MenuItem from 'material-ui/MenuItem';
+import DropDownMenu from 'material-ui/DropDownMenu';
 import Paper from 'material-ui/Paper';
 import AutoComplete from 'material-ui/AutoComplete';
-import LanguageLevel from './LanguageLevel';
 import OnboardingActions from '../../actions/OnboardingActions';
 import OnboardingStore from '../../stores/OnboardingStore';
+import LanguageStore from '../../stores/languageStore';
+import LevelStore from '../../stores/levelStore';
 import '../../styles/Onboarding/LanguagesForm.scss';
 
 class LanguagesForm extends Reflux.Component {
 
   constructor(props) {
     super(props);
-    this.store = OnboardingStore;
+    this.stores = [OnboardingStore, LanguageStore, LevelStore];
     this.state = {
       greetUser: true,
       askLanguages: false,
@@ -32,17 +35,15 @@ class LanguagesForm extends Reflux.Component {
 
   // Event listener to show button if mother language is provided
   showOkBtn(input) {
-    OnboardingActions.updateLanguage(input);
-    // If input is more than 5 characters long, show the button
-    if (!this.state.askLanguages && input.length > 5) {
+    if (input && this.state.languages.map(l => l.name).indexOf(input) !== -1) {
+      OnboardingActions.updateLanguage(input);
       this.setState({ okBtn: 'okBtn okBtn-show' });
     }
   }
-
   // Event, which prompts the user to
   // add the languages he/she is familiar with
   askLanguages() {
-    OnboardingActions.addLanguage();
+    OnboardingActions.addLanguage(this.state.languages, this.state.levels);
     const x = this;
     function changeState() {
       x.setState({
@@ -66,7 +67,6 @@ class LanguagesForm extends Reflux.Component {
 
   // Add a language the user is familiar with the list
   addLanguage() {
-    console.log(this);
     const userInfoState = this.state.userInfo;
     const stateLangList = userInfoState.familiarLanguages;
     const newLang = this.state.currLang;
@@ -102,7 +102,7 @@ class LanguagesForm extends Reflux.Component {
       setTimeout(() => { x.setState({ langErrorWrap: 'languagesErrorWrap-leave' }); }, 3000);
       setTimeout(() => { x.setState({ langErrorWrap: 'languagesErrorWrap-appear', addedLangError: false }); }, 3400);
     } else {
-      OnboardingActions.addLanguage();
+      OnboardingActions.addLanguage(this.state.languages, this.state.levels);
       this.setState({ currLang: '', famLangInput: '', langLevel: 'Level', languageAddedLabel: 'languageAddedLabel languageAddedLabel-finished' });
       setTimeout(() => { x.setState({ languageAddedLabel: 'languageAddedLabel' }); }, 2000);
 
@@ -140,7 +140,7 @@ class LanguagesForm extends Reflux.Component {
     // user to enter his/her mother language
     const motherLanguage = (
       <AutoComplete
-        dataSource={this.state.allLanguages}
+        dataSource={this.state.languages.map(language => language.name)}
         hintText="E.g Italian"
         hintStyle={{ marginLeft: '20px', fontSize: '20px' }}
         className={this.state.inputFieldState}
@@ -158,7 +158,7 @@ class LanguagesForm extends Reflux.Component {
         <AutoComplete
           hintText="Language"
           searchText={this.state.currLang}
-          dataSource={this.state.allLanguages}
+          dataSource={this.state.languages.map(l => l.name)}
           onUpdateInput={e => OnboardingActions.updateLanguage(e)}
           className="inputFamLangField"
         />
@@ -167,11 +167,17 @@ class LanguagesForm extends Reflux.Component {
           <p className={this.state.languageAddedLabel}>Language added </p>
         </span>
         <span >
-          <LanguageLevel
-            value={this.state.langLevel}
+          <DropDownMenu
             className="levelSelector"
+            value={this.state.langLevel}
             onChange={OnboardingActions.changeLangLevel}
-          />
+          >
+            <MenuItem value={'Level'} primaryText="Level" disabled />
+            {this.state.levels.map(l => <MenuItem
+              key={`menu-item-${l.name}`}
+              value={l.name} primaryText={l.name}
+            />)}
+          </DropDownMenu>
         </span>
 
         <FlatButton
