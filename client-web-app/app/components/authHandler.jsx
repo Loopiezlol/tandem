@@ -28,7 +28,8 @@ class AuthHandler extends Reflux.Component {
     const { status, me } = this.state;
     if (prevState.status !== status ||
       this.props.children === null ||
-      me.onboardingDone !== prevState.me.onboardingDone) {
+      me.onboardingDone !== prevState.me.onboardingDone ||
+      prevProps.location.pathname !== this.props.location.pathname) {
       if (status === 'in') {
         if (me.onboardingDone) {
           hashHistory.push('/message');
