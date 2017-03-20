@@ -2,6 +2,7 @@ import { hashHistory } from 'react-router';
 import Reflux from 'reflux';
 // import React from 'react';
 import Auth from '../stores/auth';
+import actions from '../actions/actions';
 
 class AuthHandler extends Reflux.Component {
   constructor(props) {
@@ -29,13 +30,11 @@ class AuthHandler extends Reflux.Component {
       this.props.children === null ||
       me.onboardingDone !== prevState.me.onboardingDone) {
       if (status === 'in') {
-        console.log(me);
         if (me.onboardingDone) {
           hashHistory.push('/message');
         } else {
           hashHistory.push('/onboarding');
         }
-        // hashHistory.push('/onboarding');
       } else {
         hashHistory.push('/login');
       }
