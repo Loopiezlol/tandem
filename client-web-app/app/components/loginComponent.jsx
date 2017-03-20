@@ -1,11 +1,11 @@
 import React from 'react';
 import Reflux from 'reflux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { Link, hashHistory } from 'react-router';
+import { Link } from 'react-router';
 import { Card, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import actions from '../actions';
+import actions from '../actions/actions';
 import LoginStore from '../stores/loginStore';
 import Auth from '../stores/auth';
 
@@ -66,7 +66,7 @@ class LoginComponent extends Reflux.Component {
                 Sign in!
               </RaisedButton>
             </div>
-            <CardText>Don't have an account? <Link to={'/register'}>Sign up!</Link></CardText>
+            <CardText>{"Don't have an account? "}<Link to={'/register'}>Sign up!</Link></CardText>
           </form>
         </Card>
       </MuiThemeProvider>

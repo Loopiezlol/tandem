@@ -1,6 +1,6 @@
 import Reflux from 'reflux';
 import request from 'superagent';
-import actions from '../actions';
+import actions from '../actions/actions';
 
 class Auth extends Reflux.Store {
   constructor() {
@@ -11,8 +11,8 @@ class Auth extends Reflux.Store {
       status: jwt ? 'in' : 'off',
       me: {},
     };
-    if (this.jwt) {
-      actions.meFromToken(this.jwt);
+    if (this.jwt || Object.keys(this.state.me).length === 0) {
+      actions.meFromToken(jwt);
     }
   }
 
