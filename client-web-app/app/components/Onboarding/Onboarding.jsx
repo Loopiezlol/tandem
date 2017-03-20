@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-// import injectTapEventPlugin from 'react-tap-event-plugin';
+import { hashHistory } from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
 import NextButton from './NextButton';
@@ -11,6 +11,7 @@ import DetailsForm from './DetailsForm';
 import InterestsNotes from './InterestsNotes';
 import OnboardingActions from '../../actions/OnboardingActions';
 import OnboardingStore from '../../stores/OnboardingStore';
+import Auth from '../../stores/auth';
 import '../../styles/Onboarding/Onboarding.scss';
 
 
@@ -19,11 +20,23 @@ class Onboarding extends Reflux.Component {
   constructor(props) {
     super(props);
     this.state = { errorBubble: 'errorMsgInfoWrap' };
-    this.store = OnboardingStore;
+    this.stores = [OnboardingStore, Auth];
   }
 
   finish() {
     console.log(this.state.userInfo);
+    const { userInfo, me } = this.state;
+    OnboardingActions.finish(userInfo, me._id);
+  }
+
+  renderOnboarding() {
+    const { onboardingFinishStatus } = this.state;
+    if (onboardingFinishStatus === null) return;
+    if (onboardingFinishStatus === 'ok') {
+      hashHistory.push('/');
+    } else {
+      window.alert('Something went wrong. Sorry :(');
+    }
   }
 
   render() {
@@ -58,6 +71,7 @@ class Onboarding extends Reflux.Component {
 
     return (
       <div className="mainWrap">
+        {this.renderOnboarding()}
         <MuiThemeProvider>
           <Paper className="basicContainer" zDepth={1}>
             {this.state.stage === 'userInfoStage' && <DetailsForm />}

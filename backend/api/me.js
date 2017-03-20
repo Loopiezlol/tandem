@@ -2,6 +2,7 @@ const router = require('express').Router();
 const config = require('../../common/config');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const wrap = require('co-express');
 const helpers = require('../common/helpers');
 
 // eslint-disable-next-line
@@ -41,6 +42,24 @@ function getUserFromToken(req, res) {
   }
 }
 
+function* finishOnboarding(req, res) {
+  const { info: userInfo, id: userId } = req.body;
+  const me = yield User.findOne({ _id: userId });
+  if (me) {
+    // TODO: use db values for mainLanguage and other Languages
+    // TODO: also update languagesTolearn
+    yield User.update({ _id: userId }, userInfo);
+    return res.json({
+      success: true,
+    });
+  }
+  return res.status(404).json({
+    message: 'No user found',
+    success: false,
+  });
+}
+
 router.put('/', getUserFromToken);
+router.put('/finish-onboarding', wrap(finishOnboarding));
 
 module.exports = router;

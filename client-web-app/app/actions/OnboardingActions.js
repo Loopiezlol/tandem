@@ -12,6 +12,7 @@ const OnboardingActions = Reflux.createActions({
   saveNotes: {},
   goNext: {},
   goBack: {},
+  finish: { asyncResult: true },
 });
 
 

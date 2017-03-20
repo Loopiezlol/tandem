@@ -1,6 +1,6 @@
 import Reflux from 'reflux';
+import request from 'superagent';
 import OnboardingActions from '../actions/OnboardingActions';
-
 
 class OnboardingStore extends Reflux.Store {
   constructor() {
@@ -80,7 +80,24 @@ class OnboardingStore extends Reflux.Store {
         notes: '',
       },
     ];
-    this.state = { allLanguages: langs, userInfo: { firstName: null, lastName: null, sex: null, age: null, errorMsgInfo: '', motherLanguage: null, familiarLanguages: [], interests: [] }, langLevel: 'Level', currLang: null, interests: iconsWithLabels, stage: 'userInfoStage' };
+    this.state = {
+      allLanguages: langs,
+      userInfo: {
+        firstName: null,
+        lastName: null,
+        sex: null,
+        age: null,
+        errorMsgInfo: '',
+        motherLanguage: null,
+        familiarLanguages: [],
+        interests: [],
+      },
+      langLevel: 'Level',
+      currLang: null,
+      interests: iconsWithLabels,
+      stage: 'userInfoStage',
+      onboardingFinishStatus: null,
+    };
     this.listenables = OnboardingActions;
   }
 
@@ -242,6 +259,43 @@ class OnboardingStore extends Reflux.Store {
       default:
     }
   }
+
+  finishCompleted(res) {
+    this.setState({
+      onboardingFinishStatus: res.body.success ? 'ok' : 'fail',
+    });
+  }
+  finishFailed(err) {
+    console.log(err);
+    this.setState({
+      onboardingFinishStatus: 'fail',
+    });
+  }
 }
+
+OnboardingActions.finish.listen((userInfo, id) => {
+  const interests = userInfo.interests.map(i => ({
+    name: i.label,
+    notes: i.notes,
+  }));
+  const info = {
+    gender: userInfo.sex === 'male' ? 'M' : 'F',
+    firstName: userInfo.firstName,
+    lastName: userInfo.lastName,
+    age: userInfo.age,
+    interests,
+    // TODO: add main language + languages to learn
+  };
+  request.put('http://localhost:3000/me/finish-onboarding')
+    .send({ info, id })
+    .set('x-access-token', localStorage.getItem('jwt'))
+    .end((err, res) => {
+      if (err) {
+        OnboardingActions.finish.failed(err);
+      } else {
+        OnboardingActions.finish.completed(res);
+      }
+    });
+});
 
 export default OnboardingStore;
