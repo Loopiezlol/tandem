@@ -12,6 +12,7 @@ import InterestsNotes from './InterestsNotes';
 import OnboardingActions from '../../actions/OnboardingActions';
 import OnboardingStore from '../../stores/OnboardingStore';
 import Auth from '../../stores/auth';
+import actions from '../../actions/actions';
 import '../../styles/Onboarding/Onboarding.scss';
 
 
@@ -23,10 +24,20 @@ class Onboarding extends Reflux.Component {
     this.stores = [OnboardingStore, Auth];
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.onboardingFinishStatus !== this.state.onboardingFinishStatus
+      && this.state.onboardingFinishStatus === 'ok') {
+      hashHistory.push('/');
+    }
+  }
+
   finish() {
-    console.log(this.state.userInfo);
     const { userInfo, me } = this.state;
     OnboardingActions.finish(userInfo, me._id);
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      actions.meFromToken(jwt);
+    }
   }
 
   renderOnboarding() {

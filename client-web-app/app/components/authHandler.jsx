@@ -2,6 +2,7 @@ import { hashHistory } from 'react-router';
 import Reflux from 'reflux';
 // import React from 'react';
 import Auth from '../stores/auth';
+import actions from '../actions/actions';
 
 class AuthHandler extends Reflux.Component {
   constructor(props) {
@@ -27,15 +28,14 @@ class AuthHandler extends Reflux.Component {
     const { status, me } = this.state;
     if (prevState.status !== status ||
       this.props.children === null ||
-      me.onboardingDone !== prevState.me.onboardingDone) {
+      me.onboardingDone !== prevState.me.onboardingDone ||
+      (prevProps.location.pathname !== this.props.location.pathname && this.props.location.pathname === '/onboarding')) {
       if (status === 'in') {
-        console.log(me);
         if (me.onboardingDone) {
           hashHistory.push('/message');
         } else {
           hashHistory.push('/onboarding');
         }
-        // hashHistory.push('/onboarding');
       } else {
         hashHistory.push('/login');
       }
