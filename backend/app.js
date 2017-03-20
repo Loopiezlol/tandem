@@ -19,6 +19,8 @@ app.use(morgan('dev'));
 app.use('/', require('./api/login'));
 app.use('/', require('./api/register'));
 app.use('/', require('./api/verify'));
+app.use('/', require('./api/levels'));
+app.use('/', require('./api/languages'));
 
 // auth middleware
 //eslint-disable-next-line
