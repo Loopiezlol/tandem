@@ -4,11 +4,11 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const config = require('../common/config.js');
-const Language = require('./models/language');
-const Level = require('./models/level');
-
 const jwt = require('jsonwebtoken');
-const wrap = require('co-express');
+
+// const Language = require('./models/language');
+// const Level = require('./models/level');
+// const wrap = require('co-express');
 
 const app = express();
 
@@ -64,44 +64,45 @@ app.listen(3000, () => {
   console.log('Server started on port 3000!');
 });
 
-function* createLanguages() {
-  const currentLanguages = yield Language.find({});
-  console.log(currentLanguages);
-  if (currentLanguages.length === 0) {
-    yield Language.create({
-      name: 'Spanish',
-      abbreviation: 'ES',
-    });
-    yield Language.create({
-      name: 'English',
-      abbreviation: 'EN',
-    });
-    yield Language.create({
-      name: 'Romanian',
-      abbreviation: 'RO',
-    });
-    console.log('done');
-  }
-}
-
-function* createLevels() {
-  const currentLevels = yield Level.find({});
-  if (currentLevels.length === 0) {
-    yield Level.create({
-      name: 'C2',
-      level: 5,
-    });
-    yield Level.create({
-      name: 'C1',
-      level: 4,
-    });
-    yield Level.create({
-      name: 'B2',
-      level: 3,
-    });
-    console.log('done');
-  }
-}
-
-wrap(createLanguages)();
-wrap(createLevels)();
+// UNCOMMENT THIS TO GENERATE SOME LANGUAGES AND LEVELS
+// function* createLanguages() {
+//   const currentLanguages = yield Language.find({});
+//   console.log(currentLanguages);
+//   if (currentLanguages.length === 0) {
+//     yield Language.create({
+//       name: 'Spanish',
+//       abbreviation: 'ES',
+//     });
+//     yield Language.create({
+//       name: 'English',
+//       abbreviation: 'EN',
+//     });
+//     yield Language.create({
+//       name: 'Romanian',
+//       abbreviation: 'RO',
+//     });
+//     console.log('done');
+//   }
+// }
+//
+// function* createLevels() {
+//   const currentLevels = yield Level.find({});
+//   if (currentLevels.length === 0) {
+//     yield Level.create({
+//       name: 'C2',
+//       level: 5,
+//     });
+//     yield Level.create({
+//       name: 'C1',
+//       level: 4,
+//     });
+//     yield Level.create({
+//       name: 'B2',
+//       level: 3,
+//     });
+//     console.log('done');
+//   }
+// }
+//
+// wrap(createLanguages)();
+// wrap(createLevels)();

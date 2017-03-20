@@ -54,7 +54,6 @@ function* finishOnboarding(req, res) {
     const mainLanguageId = yield Language.findOne({ name: userInfo.mainLanguage });
     const wantsToLearn = [];
     for (const item of userInfo.wantsToLearn) {
-      console.log(item);
       const languageId = yield Language.findOne({ name: item.name });
       const levelId = yield Level.findOne({ name: item.level });
       wantsToLearn.push({
