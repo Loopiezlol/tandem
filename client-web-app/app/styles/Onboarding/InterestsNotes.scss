@@ -17,6 +17,10 @@
   background-color: #cecece;
 }
 
+#picksLabel {
+  font-size: 20px;
+  font-family: 'Rubik', sans-serif;
+}
 
 .picksWrap {
   position: relative;
@@ -53,10 +57,7 @@
   position: relative;
   color:#707377;
   margin-top: 20px;
-}
-
-.notesFieldWrap {
-
+  font-size: 17px;
 }
 
 .notesFieldContainer {
@@ -82,10 +83,14 @@
 
 .notesInput {
   width: 400px !important;
+  display: block !important;
+  margin-left: 70px;
 }
 
 .saveNotesBtn {
-  margin-top: 10px;
+  position: absolute !important;
+  margin-top: -45px;
+  margin-left: -65px;
   animation: textAppear 1s linear both;
 }
 

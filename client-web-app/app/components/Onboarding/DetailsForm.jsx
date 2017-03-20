@@ -95,6 +95,7 @@ class DetailsForm extends Reflux.Component {
       ));
     // Avatar for both male and female characters
     const userProfileCharacters = [userManWrap, userWomanWrap];
+
     const firstNameError = (
       <span className="firstNameError">
         <span className="nameLineError" />

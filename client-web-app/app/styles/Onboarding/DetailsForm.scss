@@ -8,6 +8,10 @@
   transition: 1s ease-in-out;
 }
 
+.userInputFormWrap {
+  // margin-top: -20px;
+}
+
 .nameInputWrap{
   position: absolute;
   margin-left: 90px;
@@ -203,7 +207,7 @@
   height: 50px;
   margin: auto;
   display: block;
-  margin-top: 25px;
+  margin-top: 20px;
   max-width: 200px;
   -webkit-animation: expandWidth 1000ms linear both;
   animation: expandWidth 1000ms linear both;
@@ -217,7 +221,7 @@
   display: block;
   max-width: 200px;
   animation: expandHeight 1000ms linear both;
-  margin-top: 190px;
+  margin-top: 180px;
 }
 
 @keyframes expandWidth {

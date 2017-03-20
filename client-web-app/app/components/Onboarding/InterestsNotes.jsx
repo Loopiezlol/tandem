@@ -11,7 +11,7 @@ import OnboardingActions from '../../actions/OnboardingActions';
 import OnboardingStore from '../../stores/OnboardingStore';
 
 
-class Ineterests extends Reflux.Component {
+class IneterestsNotes extends Reflux.Component {
 
   constructor(props) {
     super(props);
@@ -22,27 +22,15 @@ class Ineterests extends Reflux.Component {
 
   showBtn(e) {
     this.setState({ notesInputValue: e.target.value });
-    if (e.target.value.length > 10) {
+    if (e.target.value.length > 1) {
       this.setState({ showSaveNotesBtn: true, notesInput: e.target.value });
+    }else {
+      this.setState({showSaveNotesBtn : false});
     }
   }
 
-  selectInterest(e, hobby) {
-    const selected = this.state.selectedInterest;
-
-    function updateInterest(self) {
-      self.setState({ selectedInterest: e.target }, () => {
-        self.state.selectedInterest.className += ' singleInterest-selected'; //eslint-disable-line
-      });
-    }
-
-    OnboardingActions.expandNotes(hobby);
-    if (selected === null) {
-      updateInterest(this);
-    } else if (e.target !== selected) {
-      selected.className = 'singleInterest';
-      updateInterest(this);
-    }
+  selectInterest(hobby) {
+    this.setState({toAddNotes:hobby});
   }
 
   saveNotes() {
@@ -65,9 +53,10 @@ class Ineterests extends Reflux.Component {
     // Container for all the interests that the user has chosen
     const chosenInterests = this.state.userInfo.interests.map((hobby) => {
       const source = `/png/${hobby.icon}.png`;
+      console.log(`${hobby.label} === ${this.state.toAddNotes.label}`);
       return (
         <span>
-          <Avatar src={require(`../../../public${source}`)} className="singleInterest" onClick={e => this.selectInterest(e, hobby)} />
+          <Avatar src={require(`../../../public${source}`)} className={hobby.label === this.state.toAddNotes.label ? 'singleInterest singleInterest-selected' : 'singleInterest'} onClick={() => this.selectInterest(hobby)} />
         </span>
       );
     });
@@ -84,7 +73,7 @@ class Ineterests extends Reflux.Component {
 
 
     return (
-      <div className="notesWrap">
+      <div className="notes">
         <div style={label}> Tell us a bit more</div>
         <i
           className="material-icons"
@@ -122,7 +111,7 @@ class Ineterests extends Reflux.Component {
                 onChange={e => this.showBtn(e)}
                 onBlur={e => OnboardingActions.updateNotes(e)}
                 rows={1}
-                rowsMax={6}
+                rowsMax={4}
                 className="notesInput"
               />
             </Paper>
@@ -136,4 +125,4 @@ class Ineterests extends Reflux.Component {
 
 }
 
-export default Ineterests;
+export default IneterestsNotes;

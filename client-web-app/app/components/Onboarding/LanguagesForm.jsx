@@ -36,6 +36,8 @@ class LanguagesForm extends Reflux.Component {
     // If input is more than 5 characters long, show the button
     if (!this.state.askLanguages && input.length > 5) {
       this.setState({ okBtn: 'okBtn okBtn-show' });
+    } else if (this.state.okBtn === 'okBtn okBtn-show') {
+      this.setState({ okBtn: 'okBtn' });
     }
   }
 
@@ -221,7 +223,7 @@ class LanguagesForm extends Reflux.Component {
     const instruction = (
       <div className="labelWrap">
         <p id="instruction"><span id="languageLabel">{(this.state.userInfo.familiarLanguages[0] || {}).name}!</span> <br />That&#39;s great. <br />
-          Add more languages <br /> or click <span id="nextLabel">Next</span> to continue. </p>
+          Add more languages <br />          or click <span id="nextLabel">Next</span>          to continue. </p>
       </div>
     );
 
@@ -232,7 +234,7 @@ class LanguagesForm extends Reflux.Component {
         <div>
           <i
             className="material-icons smileyIcon"
-          >sentiment_very_satisfied</i>
+          >            sentiment_very_satisfied</i>
 
         </div>
 
