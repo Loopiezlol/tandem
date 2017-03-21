@@ -8,10 +8,10 @@
         width: 28px;
         height: 28px;
     }
-    img {
+    img.interest-icon {
        filter:grayscale(100%);
     }
-    img.selected {
+    img.selected.interest-icon {
       filter: drop-shadow(2px 2px 2px black);
     }
   }

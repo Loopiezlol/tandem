@@ -40,8 +40,7 @@
     "sass-loader": "^6.0.0",
     "style-loader": "^0.13.1",
     "webpack": "^2.2.1",
-    "webpack-dev-server": "^2.4.1",
-    "webpack-stream": "^3.2.0"
+    "webpack-dev-server": "^2.4.1"
   },
   "eslintConfig": {
     "extends": "airbnb",
@@ -113,9 +112,9 @@
     "react-tap-event-plugin": "^2.0.1",
     "reflux": "^6.0.0",
     "resources": "^0.4.3",
-    "url-loader": "^0.5.8",
     "sendbird": "^3.0.26",
     "superagent": "^3.4.1",
+    "url-loader": "^0.5.8",
     "validator": "^6.2.1"
   }
 }

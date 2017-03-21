@@ -1,6 +1,7 @@
 //eslint-disable-next-line
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import path from 'path';
 
 export default {
@@ -26,13 +27,21 @@ export default {
         loader: ['babel-loader', 'eslint-loader'],
         exclude: [/node_modules/, /dist/],
       },
+      // {
+      //   test: /\.(scss|css)$/,
+      //   loader: [
+      //     'style-loader',
+      //     'css-loader?sourceMap',
+      //     'sass-loader?sourceMap',
+      //   ],
+      //   exclude: [/node_modules/, /dist/],
+      // },
       {
         test: /\.(scss|css)$/,
-        loader: [
-          'style-loader',
-          'css-loader?sourceMap',
-          'sass-loader?sourceMap',
-        ],
+        loader: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: 'css-loader?sourceMap!sass-loader?sourceMap',
+        }),
         exclude: [/node_modules/, /dist/],
       },
       {
@@ -51,6 +60,10 @@ export default {
   plugins: [
     new HtmlWebpackPlugin({
       template: '../common/templates/index.template.html',
+    }),
+    new ExtractTextPlugin({
+      filename: 'style.css',
+      allChunks: true,
     }),
   ],
 };
