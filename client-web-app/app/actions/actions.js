@@ -18,6 +18,7 @@ const actions = Reflux.createActions({
   handleLogOut: {},
   fetchLanguages: { asyncResult: true },
   fetchLevels: { asyncResult: true },
+  getResults: { asyncResult: true },
 });
 
 export default actions;
