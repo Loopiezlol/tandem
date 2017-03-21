@@ -35,11 +35,13 @@ class LanguagesForm extends Reflux.Component {
 
   // Event listener to show button if mother language is provided
   showOkBtn(input) {
-    if (input && this.state.languages.map(l => l.name).indexOf(input) !== -1) {
-      OnboardingActions.updateLanguage(input);
+    if (input.length > 1) {
       this.setState({ okBtn: 'okBtn okBtn-show' });
     } else if (this.state.okBtn === 'okBtn okBtn-show') {
       this.setState({ okBtn: 'okBtn' });
+    }
+    if (input && this.state.languages.map(l => l.name).indexOf(input) !== -1) {
+      OnboardingActions.updateLanguage(input);
     }
   }
   // Event, which prompts the user to
