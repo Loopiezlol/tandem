@@ -6,18 +6,11 @@ import FlatButton from 'material-ui/FlatButton';
 import ChipInput from 'material-ui-chip-input';
 import IconButton from 'material-ui/IconButton';
 import ActionHome from 'material-ui/svg-icons/action/home';
-
 import React from 'react';
 import Reflux from 'reflux';
-import actions from '../actions';
+import actions from '../actions/actions';
+import Auth from '../stores/auth';
 
-const me = {
-  languages: [
-    { id: '58b9ccf16a4efb4d7b96d5ba', name: 'English' },
-    { id: '58b9cda0bb447f4e95953092', name: 'French' },
-    { id: '58b9cdafe80f944ec8f14716', name: 'Spanish' },
-  ],
-};
 const interestsIcons = [...Array(12).keys()].map(x => (`interest_${x}`));
 
 class Filters extends Reflux.Component {
@@ -30,15 +23,16 @@ class Filters extends Reflux.Component {
       chips: [],
       interests: interestsIcons.map(x => ({ name: x, selected: false })),
     };
+    this.stores = [Auth];
   }
 
   render() {
-    const { searchText, genderBoxContent, languageBoxContent, chips, interests } = this.state;
+    const { searchText, genderBoxContent, languageBoxContent, chips, interests, me } = this.state;
     const queryParameters = {
       name: searchText,
       sameGender: genderBoxContent,
       matchLanguages: languageBoxContent,
-      languagesToMatch: chips.map(chip => chip.id),
+      languagesToMatch: chips.map(chip => chip._id),
       interests: interests.filter(x => x.selected).map(x => x.name),
     };
     return (
@@ -63,8 +57,8 @@ class Filters extends Reflux.Component {
           openOnFocus
           hintText="Just type in languages"
           value={this.state.chips}
-          dataSource={me.languages}
-          dataSourceConfig={{ text: 'name', value: 'id' }}
+          dataSource={me.wantsToLearn}
+          dataSourceConfig={{ text: 'name', value: '_id' }}
           onRequestAdd={chip => this.handleAddChip(chip)}
           onRequestDelete={(chip, index) => this.handleDeleteChip(chip, index)}
         />
@@ -84,7 +78,7 @@ class Filters extends Reflux.Component {
           fullWidth
           label="Search"
           primary
-          onTouchTap={() => actions.getResults(queryParameters)}
+          onTouchTap={() => actions.getResults(queryParameters, this.state.me._id)}
         />
       </Paper>
     );
@@ -103,7 +97,7 @@ class Filters extends Reflux.Component {
   }
 
   handleAddChip(chip) {
-    const foundLanguage = me.languages.find(language => language.name.match(new RegExp(`^${chip.name}`, 'i')));
+    const foundLanguage = this.state.me.wantsToLearn.find(language => language.name.match(new RegExp(`^${chip.name}`, 'i')));
     if (!foundLanguage) {
       alert('No such language!');
       return;

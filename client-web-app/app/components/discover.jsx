@@ -9,7 +9,8 @@ import Reflux from 'reflux';
 import Filters from './filters';
 import UserCard from './discover-search-result';
 import DiscoverStore from '../stores/discoverStore';
-import actions from '../actions';
+import Auth from '../stores/auth';
+import actions from '../actions/actions';
 
 import '../styles/discover.scss';
 
@@ -19,9 +20,9 @@ class Discover extends Reflux.Component {
     this.state = {
       filtersVisible: false,
     };
-    this.store = DiscoverStore;
+    this.stores = [DiscoverStore, Auth];
 
-    actions.getResults();
+    actions.getResults({}, ((this.state || {}).me || {})._id);
   }
 
   render() {

@@ -5,7 +5,7 @@ const helpers = require('../helpers/query-generator');
 
 // using co-express wraper -> note how we can store async values
 function* getUsers(req, res) {
-  const query = helpers.dbQuery(req.query);
+  const query = yield helpers.dbQuery(req.query, req.headers.id);
 
   const users = yield User.find(query)
   .populate('mainLanguage')

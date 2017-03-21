@@ -16,7 +16,8 @@ function getUserFromToken(req, res) {
     jwt.verify(token, config.secret, (err, user) => {
       if (!err) {
         //eslint-disable-next-line
-        User.findOne({ _id: user._doc._id }, (err1, found) => {
+        User.findOne({ _id: user._doc._id }).populate('mainLanguage wantsToLearn.languageId wantsToLearn.levelId')
+        .exec((err1, found) => {
           if (err) {
             return res.json({
               success: false,
@@ -27,7 +28,7 @@ function getUserFromToken(req, res) {
           // const token = helpers.signJWTToken(found)
           return res.json({
             token,
-            user: helpers.getCleanUser(found),
+            user: helpers.getCleanUser(found.populate('wantsToLearn.languageId mainLanguage')),
           });
         });
       } else {

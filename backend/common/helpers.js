@@ -24,6 +24,11 @@ module.exports = {
       interests: u.interests.map(interest => ({ name: interest.name,
         notes: interest.notes })),
       onboardingDone: u.onboardingDone,
+      mainLanguage: u.mainLanguage,
+      wantsToLearn: u.wantsToLearn.map(language => ({
+        name: language.languageId.name,
+        _id: language.languageId._id,
+      })),
     };
   },
 };

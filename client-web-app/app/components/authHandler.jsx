@@ -1,8 +1,8 @@
 import { hashHistory } from 'react-router';
+import Loading from 'react-loading';
 import Reflux from 'reflux';
-// import React from 'react';
+import React from 'react';
 import Auth from '../stores/auth';
-import actions from '../actions/actions';
 
 class AuthHandler extends Reflux.Component {
   constructor(props) {
@@ -11,7 +11,7 @@ class AuthHandler extends Reflux.Component {
   }
 
   render() {
-    return this.props.children;
+    return this.state.me ? this.props.children : <Loading type="cyclon" />;
   }
 
   componentDidMount() {

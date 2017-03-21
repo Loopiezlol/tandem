@@ -1,22 +1,36 @@
 const User = require('../models/user');
-const mongoose = require('mongoose');
+const wrap = require('co-express');
+const Language = require('../models/language');
+const Level = require('../models/level');
+
+
+function* _populateDB(n) {
+  const interests = [...Array(12).keys()].map(i => ({ name: `interest_${i}`, notes: 'BLAH!' }));
+  const languages = yield Language.find({});
+  const levels = yield Level.find({});
+  console.log(languages[0]._id);
+  [...Array(n).keys()].forEach((i) => {
+    User.create({
+      username: `user${i}`,
+      email: `user_${i}@kcl.ac.uk`,
+      gender: ['M', 'F'][Math.floor(Math.random() * 2)],
+      mainLanguage: languages[Math.floor(Math.random() * languages.length)]._id,
+      wantsToLearn: [{
+        languageId: languages[Math.floor(Math.random() * languages.length)]._id,
+        levelId: levels[Math.floor(Math.random() * levels.length)]._id,
+        // levelId:
+      }],
+      interests: [interests[Math.floor(Math.random() * 12)],
+        interests[Math.floor(Math.random() * 12)]],
+    }, (err, doc) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log(doc);
+    });
+  });
+}
 
 module.exports = {
-  populateDB(n) {
-    const ObjectId = mongoose.Types.ObjectId;
-    const interests = [...Array(12).keys()].map(i => ({ name: `interest_${i}`, notes: 'BLAH!' }));
-    const someLanguages = [new ObjectId('58b9ccf16a4efb4d7b96d5ba'), new ObjectId('58b9cda0bb447f4e95953092'), new ObjectId('58b9cdafe80f944ec8f14716')];
-    [...Array(n).keys()].forEach((i) => {
-      User.create({
-        username: `user${i}`,
-        gender: ['M', 'F'][Math.floor(Math.random() * 2)],
-        mainLanguage: someLanguages[Math.floor(Math.random() * 3)],
-        wantsToLearn: [{
-          languageId: someLanguages[Math.floor(Math.random() * 3)],
-          // levelId:
-        }],
-        interests: [interests[Math.floor(Math.random() * 12)], interests[Math.floor(Math.random() * 12)]],
-      });
-    });
-  },
+  populateDB: wrap(_populateDB),
 };
