@@ -64,6 +64,8 @@ app.listen(3000, () => {
   console.log('Server started on port 3000!');
 });
 
+//require('./helpers/usergenerator').populateDBwithLanguages();
+
 // require('./helpers/usergenerator').populateDB(50);
 // UNCOMMENT THIS TO GENERATE SOME LANGUAGES AND LEVELS
 // function* createLanguages() {

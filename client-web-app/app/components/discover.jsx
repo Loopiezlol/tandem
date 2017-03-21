@@ -51,7 +51,7 @@ class Discover extends Reflux.Component {
           <div className="control-discover-results">
             {results && results.length ?
               results.map(user =>
-                <UserCard className="result" me={user} />,
+                <UserCard className="results" me={user} />,
               )
               :
               <div className="control-discover-results-emptypage">No matches!</div>

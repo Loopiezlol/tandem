@@ -29,3 +29,33 @@
   // }height: 100%;width: 100%;position: absolute;top: 0px;left: 0px;overflow: hidden;/* color: blanchedalmond; */pointer-events: none;
 
 }
+.containerSmall {
+  max-width: 250px;
+  display: inline-block;
+  margin: 40px;
+  border-radius: 15px;
+  // resize: horizontal;
+}
+.overlay {
+}
+.text {
+  width: 100%;
+  padding-bottom: 2px;
+}
+.imagine {
+  width: 100%;
+  padding-bottom: 2%;
+  object-fit: cover;
+  position: relative;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+.speaks {
+  position: relative;
+  background-color: yellow;
+  background: yellow;
+  text-align: left;
+}
+.result {
+  border-radius: 15px;
+}
