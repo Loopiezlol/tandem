@@ -123,7 +123,7 @@ class sbStore extends Reflux.Store {
     });
   }
 
-  loginUser(userid) {
+  loginUserCompleted(userid) {
     sb.connect(userid, (user, error) => {
       if (error) {
         alert(`Could not log in as user ${userid}`);
@@ -142,6 +142,11 @@ class sbStore extends Reflux.Store {
         sbactions.loadOnlineUsersList();
         sbactions.makeChannelHandler();
       }
+    });
+  }
+  loginUserFailed() {
+    this.setState({
+      loggedIn: false,
     });
   }
 
@@ -304,6 +309,9 @@ sbactions.loadOnlineUsersList.listen(() => {
         sbactions.loadOnlineUsersList.completed(res);
       }
     });
+});
+sbactions.loginUser.listen((userID) => {
+  sbactions.loginUser.completed(userID);
 });
 
 // sbactions.createChannel.listen((userID, otherUserID) => {
