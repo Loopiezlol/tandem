@@ -20,7 +20,7 @@ nev.configure({
     service: 'Gmail',
     auth: {
       user: 'daybreak.vk@gmail.com',
-      pass: 'daybreak1',                       //ADD E-MAIL USERNAMER HERE
+      pass: 'theyfoundmypassword',                       //ADD E-MAIL USERNAMER HERE
     },
   },
 
