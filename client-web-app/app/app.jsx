@@ -5,7 +5,7 @@ import { Router, Route, hashHistory } from 'react-router';
 import PaneControl from './components/PaneControl';
 import RegisterComponent from './components/registerComponent';
 import LoginComponent from './components/loginComponent';
-
+import Onboarding from './components/Onboarding/Onboarding';
 import './styles/main.scss';
 
 import AuthHandler from './components/authHandler';
@@ -26,6 +26,7 @@ ReactDOM.render(
   <Router history={hashHistory}>
     <Route path="/" component={AuthHandler} >
       <Route path="/home" component={PaneControl} />
+      <Route path="/onboarding" component={Onboarding} />
       {/* <Route path="/onboarding" component={Onboarding} />
       <Route path="/message" component={SBMessaging} />
       <Route path="/user" component={UserCard} />
