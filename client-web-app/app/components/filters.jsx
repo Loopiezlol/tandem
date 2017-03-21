@@ -11,7 +11,7 @@ import Reflux from 'reflux';
 import actions from '../actions/actions';
 import Auth from '../stores/auth';
 
-const interestsIcons = [...Array(12).keys()].map(x => (`interest_${x}`));
+import iconsWithLabels from '../interests';
 
 class Filters extends Reflux.Component {
   constructor(props) {
@@ -21,7 +21,7 @@ class Filters extends Reflux.Component {
       genderBoxContent: false,
       languageBoxContent: false,
       chips: [],
-      interests: interestsIcons.map(x => ({ name: x, selected: false })),
+      interests: iconsWithLabels.map(x => ({ name: x.label, selected: false, icon: x.icon })),
     };
     this.stores = [Auth];
   }
@@ -66,10 +66,13 @@ class Filters extends Reflux.Component {
           Choose interests:<br />
           {interests.map(interest => (
             <IconButton
+              key={`interest-${interest.name}`}
               tooltip={interest.name}
               onTouchTap={() => this.handleInterest(interest)}
             >
-              <ActionHome className={interest.selected ? 'selected' : ''} />
+              {/* <ActionHome className={interest.selected ? 'selected' : ''} /> */}
+              <img className={`interest-icon ${interest.selected ? 'selected' : ''}`} src={require(`../../public//png/${interest.icon}.png`)} />
+
             </IconButton>
           ))}
         </div>

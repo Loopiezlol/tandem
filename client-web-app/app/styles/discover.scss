@@ -4,8 +4,15 @@
   $filterheight: 64px;
 
   .control-discover-filter {
-    svg.selected {
-      color: orange !important;
+    .interest-icon {
+        width: 28px;
+        height: 28px;
+    }
+    img {
+       filter:grayscale(100%);
+    }
+    img.selected {
+      filter: drop-shadow(2px 2px 2px black);
     }
   }
 
@@ -21,10 +28,4 @@
   //   position: relative;
   // }height: 100%;width: 100%;position: absolute;top: 0px;left: 0px;overflow: hidden;/* color: blanchedalmond; */pointer-events: none;
 
-  .control-discover-results {
-    position: relative;
-    height: calc(98vh - #{$filterheight});
-    overflow-y: auto;
-    text-align: center;
-  }
 }
