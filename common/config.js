@@ -2,5 +2,5 @@ module.exports = {
   secret: 'toblazeornottoblazethatisthequestion',
   db: 'mongodb://localhost/tandem',
   mailerLogin: 'daybreak.vk@gmail.com',
-  mailerPassword: 'daybreak1',
+  mailerPassword: 'theyfoundmypassword',
 };

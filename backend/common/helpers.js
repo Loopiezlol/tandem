@@ -18,6 +18,17 @@ module.exports = {
       _id: u._id,
       username: u.username,
       email: u.email,
+      gender: u.gender,
+      firstName: u.firstName,
+      lastName: u.lastName,
+      interests: u.interests.map(interest => ({ name: interest.name,
+        notes: interest.notes })),
+      onboardingDone: u.onboardingDone,
+      mainLanguage: u.mainLanguage,
+      wantsToLearn: u.wantsToLearn.map(language => ({
+        name: language.languageId.name,
+        _id: language.languageId._id,
+      })),
     };
   },
 };
