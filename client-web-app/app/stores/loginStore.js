@@ -1,7 +1,6 @@
 import Reflux from 'reflux';
 import request from 'superagent';
 import actions from '../actions/actions';
-import SBActions from '../actions/sbActions';
 
 class LoginStore extends Reflux.Store {
   constructor() {
@@ -29,9 +28,6 @@ class LoginStore extends Reflux.Store {
   }
 
   submitClickLCompleted(res) {
-    if (res.body.message === 'Success!') {
-      SBActions.loginUser(this.state.emailL);
-    }
     this.setState({
       messageL: res.body.message,
       errorEmL: res.body.errors.email,

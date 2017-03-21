@@ -2,6 +2,7 @@ import Reflux from 'reflux';
 import SendBird from 'sendbird';
 import request from 'superagent';
 import sbactions from '../actions/sbActions';
+// import auth from './auth';
 
 const APP_ID = '78A3DDF9-3396-4088-95C3-A5E8CBDF9AD3';
 const API_TOKEN = 'ff8bf5060352c01ce575287f25def5be4b02fd6d';
@@ -26,6 +27,7 @@ class sbStore extends Reflux.Store {
       isTyping: false,
     };
     this.listenables = sbactions;
+    //  sbactions.loginUser(auth.state.me.email);
   }
 
   openChat(userid, userNick) {

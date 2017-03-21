@@ -8,13 +8,13 @@ import TextField from 'material-ui/TextField';
 import actions from '../actions/actions';
 import LoginStore from '../stores/loginStore';
 import Auth from '../stores/auth';
-import sbStore from '../stores/sbStore';
+
 
 class LoginComponent extends Reflux.Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.stores = [LoginStore, Auth, sbStore];
+    this.stores = [LoginStore, Auth];
   }
 
   componentDidMount() {
