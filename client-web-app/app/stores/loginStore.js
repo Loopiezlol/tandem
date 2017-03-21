@@ -52,8 +52,10 @@ actions.submitClickL.listen((email, password) => {
   .end((err, res) => {
     if (err) {
       actions.submitClickL.failed(res);
+      actions.handleLogin.failed(res);
     } else {
       actions.submitClickL.completed(res);
+      actions.handleLogin.completed(res);
     }
   });
 });

@@ -2,57 +2,46 @@ import React from 'react';
 import Reflux from 'reflux';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
+import Divider from 'material-ui/Divider';
 import { List, ListItem } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import ChatIcon from 'material-ui/svg-icons/communication/chat-bubble';
 import SBStore from '../../stores/sbStore';
 import SBActions from '../../actions/sbActions';
-import SBChat from '../messaging/sbChat';
 
 class sbUserList extends Reflux.Component {
   constructor(props) {
     super(props);
     this.store = SBStore;
+    SBActions.loadOnlineUsersList();
   }
   render() {
     const { userList } = this.state;
-    const style = {
-      width: '30pc',
-      margin: 15,
-      textAlign: 'center',
-      display: 'inline-block',
-    };
-    const buttonStyle = {
-      margin: 12,
-    };
     return (
       <div className="wrapper-sb">
-
-        <Paper style={style} zDepth={2}>
+        <Paper className="ULpaperStyle" zDepth={2}>
           <RaisedButton
             label="Refresh User List"
             onClick={() => SBActions.loadOnlineUsersList()}
-            onTap={() => SBActions.loadOnlineUsersList()}
-            primary style={buttonStyle}
+            onTouchTap={() => SBActions.loadOnlineUsersList()}
+            primary style={{ margin: 16 }}
           />
           <br />
+          <Divider />
           <List>
             {userList.map(user =>
               <ListItem
                 key={`${user.user_id}`}
                 primaryText={user.user_id}
                 secondaryText={user.nickname}
-                leftIcon={sbUserList.isOnlineIcon(user.is_online)}
+                rightIcon={sbUserList.isOnlineIcon(user.is_online)}
+                leftAvatar={<Avatar src={`${user.profile_url}`} />}
                 onClick={() => this.openChat(user.user_id, user.nickname)}
+                onTouchTap={() => this.openChat(user.user_id, user.nickname)}
               />,
             )}
           </List>
         </Paper>
-
-        <div className="chat">
-          <SBChat />
-        </div>
-
       </div>
     );
   }

@@ -6,7 +6,7 @@ import sbactions from '../actions/sbActions';
 const APP_ID = '78A3DDF9-3396-4088-95C3-A5E8CBDF9AD3';
 const API_TOKEN = 'ff8bf5060352c01ce575287f25def5be4b02fd6d';
 const sb = new SendBird({ appId: APP_ID });
-
+/* eslint-disable*/
 class sbStore extends Reflux.Store {
   constructor() {
     super();
@@ -32,6 +32,11 @@ class sbStore extends Reflux.Store {
     // 1) Check if a channel with the other user already exists.
     // 2a) If YES, JOIN and load previous messages.
     // 2b) If NO, create the new channel and event handlers and JOIN.
+
+    // Clear the current messages array of old user messages which were sent in the last session
+    this.setState({
+      messages: [],
+    });
 
     // 1) First query using SendBird to get the list of channels user participating in...
     if (this.state.loggedIn) {
@@ -113,7 +118,7 @@ class sbStore extends Reflux.Store {
       console.log(`Got the previous messages: ${messageList}`);
       console.log(messageList);
       this.setState({
-        prevMessages: messageList,
+        prevMessages: messageList.reverse(),
       });
     });
   }

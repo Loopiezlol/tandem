@@ -8,6 +8,7 @@ function registerUser(req, res) {
     email: req.body.email,
     password: req.body.password,
   });
+  const { email } = req.body;
 
   // SENDS EMAIL WHEN YOU REGISTER
   nev.createTempUser(user, (err, existingPersistentUser, newTempUser) => {
@@ -30,7 +31,8 @@ function registerUser(req, res) {
       // new user created
     if (newTempUser) {
       const URL = newTempUser[nev.options.URLFieldName];
-      return nev.sendVerificationEmail(req.body.email, URL, (err1) => {
+
+      return nev.sendVerificationEmail(email, URL, (err1) => {
         if (err1) {
           return res.status(404).json({
             message: 'ERROR: sending verification email FAILED',
@@ -59,7 +61,8 @@ function validateSignupForm(req) {
   let isFormValid = true;
   let message = '';
 
-  if (!email || typeof email !== 'string' || !validator.isEmail(email) || !email.endsWith('kcl.ac.uk')) {
+  if (!email || typeof email !== 'string' || !validator.isEmail(email)
+    || !email.endsWith('kcl.ac.uk')) {
     isFormValid = false;
     errors.email = 'Please provide a valid KCL e-mail.';
   }

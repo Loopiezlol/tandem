@@ -13,6 +13,12 @@ const actions = Reflux.createActions({
   passwordActionL: {},
   submitClick: { asyncResult: true },
   submitClickL: { asyncResult: true },
+  handleLogin: { asyncResult: true },
+  meFromToken: { asyncResult: true },
+  handleLogOut: {},
+  fetchLanguages: { asyncResult: true },
+  fetchLevels: { asyncResult: true },
+  getResults: { asyncResult: true },
 });
 
 export default actions;

@@ -1,9 +1,13 @@
 import React from 'react';
 import Reflux from 'reflux';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Card, CardMedia, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
+
+import '../styles/discover.scss';
+import '../styles/flags.min.css';
+
+require('../../public/flags.png');
 
 class UserCard extends Reflux.Component {
   constructor(props) {
@@ -11,22 +15,49 @@ class UserCard extends Reflux.Component {
     this.state = {};
   }
   render() {
+    const { me } = this.props;
+    const imgUrl = 'https://facebook.github.io/react/img/logo_og.png';
     return (
-      <MuiThemeProvider >
-        <Card className="containerSmall">
-          <CardMedia
-            overlay={<p className="overlay"> John Doe, 69 </p>}
+      <Card className="containerSmall" >
+        <CardMedia
+          overlay={<p className="overlay"> {me.username} </p>}
+        />
+        <div >
+          <img
+            className="imagine"
+            src={imgUrl}
+            alt="bb"
           />
-          <CardText>
-            <p>
-            Send nudes? Porfavor mi amor! And so on...
-            </p>
-            <Divider className="cardDivider" />
-            <p> Speaks: GB     Practices: FR </p>
-          </CardText>
-          <RaisedButton className="overlay" primary="1" fullWidth="true"> Chat! </RaisedButton>
-        </Card>
-      </MuiThemeProvider>
+        </div>
+        <Divider className="cardDivider" />
+        <div className="speaks">
+          Speaks: {me.mainLanguage.name}
+          <img
+            src={require('../../public/transperant.png')}
+            className={me.mainLanguage.abbreviation.toLowerCase() ? `flag flag-${me.mainLanguage.abbreviation.toLowerCase()}` : ''}
+            alt={me.mainLanguage.name}
+            style={{ backgroundImage: require('../../public/flags.png') }}
+          />
+          <br />
+          Practices: {me.wantsToLearn.map(l =>
+          (<span>
+            {`${l.languageId.name}`.toString()}
+            <img
+              src={require('../../public/transperant.png')}
+              className={l.languageId.abbreviation.toLowerCase() ? `flag flag-${l.languageId.abbreviation.toLowerCase()}` : ''}
+              alt={l.languageId.name}
+              style={{ backgroundImage: require('../../public/flags.png') }}
+            />
+          </span>))}
+        </div>
+        <Divider className="cardDivider" />
+        <CardText>
+          <div className="text description">
+            {me.description}
+          </div>
+        </CardText>
+        <RaisedButton onTouchTap={() => console.log(me)} className="overlay" primary fullWidth="true"> Chat! </RaisedButton>
+      </Card>
     );
   }
 }

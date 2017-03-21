@@ -1,11 +1,18 @@
 const router = require('express').Router();
 const wrap = require('co-express');
 const User = require('../models/user');
+const helpers = require('../helpers/query-generator');
 
 // using co-express wraper -> note how we can store async values
 function* getUsers(req, res) {
-  const users = yield User.find({});
+  const query = yield helpers.dbQuery(req.query, req.headers.id);
+
+  const users = yield User.find(query)
+  .populate('mainLanguage')
+  .populate('wantsToLearn.languageId');
   res.json(users);
+
+  // console.log(users.map(user => user.wantsToLearn.map(x => `L: ${x.languageId.name}`)));
 }
 
 // standard api method, using callbakcs
