@@ -12,10 +12,7 @@ import SBUserList from '../messaging/sbUserList';
 class sbMessaging extends Reflux.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      sbUser: '',
-      sbNick: '',
-    };
+    this.state = {};
     this.store = SBStore;
   }
   render() {
@@ -30,7 +27,7 @@ class sbMessaging extends Reflux.Component {
     const buttonStyle = {
       margin: 12,
     };
-    let zDepthSize = 4;
+    const zDepthSize = 4;
     return (
       <MuiThemeProvider>
         <div className="wrapper-sb">
