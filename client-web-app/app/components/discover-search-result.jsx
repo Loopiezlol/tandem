@@ -7,8 +7,7 @@ import Divider from 'material-ui/Divider';
 import '../styles/discover.scss';
 import '../styles/flags.min.css';
 
-
-// const flagUrl = require('../resources/flags.png');
+require('../../public/flags.png');
 
 class UserCard extends Reflux.Component {
   constructor(props) {
@@ -34,18 +33,20 @@ class UserCard extends Reflux.Component {
         <div className="speaks">
           Speaks: {me.mainLanguage.name}
           <img
-            src={require('../resources/transperant.png')}
+            src={require('../../public/transperant.png')}
             className={me.mainLanguage.abbreviation.toLowerCase() ? `flag flag-${me.mainLanguage.abbreviation.toLowerCase()}` : ''}
             alt={me.mainLanguage.name}
+            style={{ backgroundImage: require('../../public/flags.png') }}
           />
           <br />
           Practices: {me.wantsToLearn.map(l =>
           (<span>
             {`${l.languageId.name}`.toString()}
             <img
-              src={require('../resources/transperant.png')}
+              src={require('../../public/transperant.png')}
               className={l.languageId.abbreviation.toLowerCase() ? `flag flag-${l.languageId.abbreviation.toLowerCase()}` : ''}
               alt={l.languageId.name}
+              style={{ backgroundImage: require('../../public/flags.png') }}
             />
           </span>))}
         </div>

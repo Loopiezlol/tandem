@@ -4,10 +4,14 @@ import Paper from 'material-ui/Paper';
 import CheckBox from 'material-ui/Checkbox';
 import FlatButton from 'material-ui/FlatButton';
 import ChipInput from 'material-ui-chip-input';
-
+import IconButton from 'material-ui/IconButton';
+import ActionHome from 'material-ui/svg-icons/action/home';
 import React from 'react';
 import Reflux from 'reflux';
-import actions from '../actions';
+import actions from '../actions/actions';
+import Auth from '../stores/auth';
+
+import iconsWithLabels from '../interests';
 
 class Filters extends Reflux.Component {
   constructor(props) {
@@ -17,22 +21,19 @@ class Filters extends Reflux.Component {
       genderBoxContent: false,
       languageBoxContent: false,
       chips: [],
-      interests: [],
+      interests: iconsWithLabels.map(x => ({ name: x.label, selected: false, icon: x.icon })),
     };
+    this.stores = [Auth];
   }
 
   render() {
-    const { searchText, genderBoxContent, languageBoxContent, chips } = this.state;
-    const dataSource = [
-      { text: 'English', value: '58b9ccf16a4efb4d7b96d5ba' },
-      { text: 'French', value: '58b9cda0bb447f4e95953092' },
-      { text: 'Spanish', value: '58b9cdafe80f944ec8f14716' },
-    ];
+    const { searchText, genderBoxContent, languageBoxContent, chips, interests, me } = this.state;
     const queryParameters = {
       name: searchText,
       sameGender: genderBoxContent,
       matchLanguages: languageBoxContent,
-      languagesToMatch: chips.map(chip => chip.value),
+      languagesToMatch: chips.map(chip => chip._id),
+      interests: interests.filter(x => x.selected).map(x => x.name),
     };
     return (
       <Paper className="control-discover-filter">
@@ -56,25 +57,60 @@ class Filters extends Reflux.Component {
           openOnFocus
           hintText="Just type in languages"
           value={this.state.chips}
-          dataSource={dataSource}
-          dataSourceConfig={{ text: 'text', value: 'value' }}
+          dataSource={me.wantsToLearn}
+          dataSourceConfig={{ text: 'name', value: '_id' }}
           onRequestAdd={chip => this.handleAddChip(chip)}
           onRequestDelete={(chip, index) => this.handleDeleteChip(chip, index)}
         />
+        <div>
+          Choose interests:<br />
+          {interests.map(interest => (
+            <IconButton
+              key={`interest-${interest.name}`}
+              tooltip={interest.name}
+              onTouchTap={() => this.handleInterest(interest)}
+            >
+              {/* <ActionHome className={interest.selected ? 'selected' : ''} /> */}
+              <img className={`interest-icon ${interest.selected ? 'selected' : ''}`} src={require(`../../public//png/${interest.icon}.png`)} />
+
+            </IconButton>
+          ))}
+        </div>
         <FlatButton
           style={{ width: '100%' }}
           fullWidth
           label="Search"
           primary
-          onTouchTap={() => actions.getResults(queryParameters)}
+          onTouchTap={() => actions.getResults(queryParameters, this.state.me._id)}
         />
       </Paper>
     );
   }
 
-  handleAddChip(chip) {
+  handleInterest(interest) {
+    console.log(`interest:${interest.name} `);
+    const { interests } = this.state;
+    const foundIndex = interests.findIndex(x => x.name === interest.name);
+    if (foundIndex !== -1) {
+      interests[foundIndex].selected = !interests[foundIndex].selected;
+    }
     this.setState({
-      chips: [...this.state.chips, chip],
+      interests,
+    });
+  }
+
+  handleAddChip(chip) {
+    const foundLanguage = this.state.me.wantsToLearn.find(language => language.name.match(new RegExp(`^${chip.name}`, 'i')));
+    if (!foundLanguage) {
+      alert('No such language!');
+      return;
+    }
+    if (this.state.chips.includes(foundLanguage)) {
+      return;
+    }
+
+    this.setState({
+      chips: [...this.state.chips, foundLanguage],
     });
   }
 

@@ -1,14 +1,13 @@
 //eslint-disable-next-line
 import webpack from 'webpack';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 import path from 'path';
-
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 export default {
   entry: path.resolve(__dirname, 'app/app.jsx'),
   output: {
     path: path.resolve(__dirname, 'dist/'),
-    filename: 'client-bundle.js',
+    filename: 'index_bundle.js',
   },
   devtool: 'source-map',
   devServer: {
@@ -29,10 +28,11 @@ export default {
       },
       {
         test: /\.(scss|css)$/,
-        loader: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader?sourceMap!sass-loader?sourceMap',
-        }),
+        loader: [
+          'style-loader',
+          'css-loader?sourceMap',
+          'sass-loader?sourceMap',
+        ],
         exclude: [/node_modules/, /dist/],
       },
       {
@@ -41,16 +41,16 @@ export default {
           'file-loader?hash=sha512&digest=hex&name=[hash].[ext]',
           'image-webpack-loader?bypassOnDebug',
         ],
+        exclude: [/node_modules/, /dist/],
       },
     ],
   },
-  plugins: [
-    new ExtractTextPlugin({
-      filename: 'style.css',
-      allChunks: true,
-    }),
-  ],
   resolve: {
     extensions: ['*', '.js', '.jsx', 'scss', 'css'],
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: '../common/templates/index.template.html',
+    }),
+  ],
 };

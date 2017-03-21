@@ -1,14 +1,16 @@
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import FlatButton from 'material-ui/FlatButton';
+import IconButton from 'material-ui/IconButton';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
+import ContentFilterList from 'material-ui/svg-icons/content/filter-list';
 
 import React from 'react';
 import Reflux from 'reflux';
 import Filters from './filters';
 import UserCard from './discover-search-result';
 import DiscoverStore from '../stores/discoverStore';
-import actions from '../actions';
+import Auth from '../stores/auth';
+import actions from '../actions/actions';
 
 import '../styles/discover.scss';
 
@@ -18,9 +20,9 @@ class Discover extends Reflux.Component {
     this.state = {
       filtersVisible: false,
     };
-    this.store = DiscoverStore;
+    this.stores = [DiscoverStore, Auth];
 
-    actions.getResults();
+    actions.getResults({}, ((this.state || {}).me || {})._id);
   }
 
   render() {
@@ -28,7 +30,12 @@ class Discover extends Reflux.Component {
     return (
       <MuiThemeProvider>
         <div className="control-discover">
-          <Drawer open={this.state.filtersVisible} openSecondary>
+          <Drawer
+            open={this.state.filtersVisible}
+            openSecondary
+            docked={false}
+            onRequestChange={filtersVisible => this.handleSwipeDrawer(filtersVisible)}
+          >
             <AppBar
               title="Hide filters"
               onLeftIconButtonTouchTap={() => this.handleToggleDrawer()}
@@ -38,7 +45,7 @@ class Discover extends Reflux.Component {
           </Drawer>
           <AppBar
             className="appbar"
-            iconElementRight={<FlatButton label="Show Filters" />}
+            iconElementRight={<IconButton><ContentFilterList /></IconButton>}
             onRightIconButtonTouchTap={() => this.handleToggleDrawer()}
           />
           <div className="control-discover-results">
@@ -53,6 +60,10 @@ class Discover extends Reflux.Component {
         </div>
       </MuiThemeProvider>
     );
+  }
+
+  handleSwipeDrawer(filtersVisible) {
+    this.setState({ filtersVisible });
   }
 
   handleToggleDrawer() {
