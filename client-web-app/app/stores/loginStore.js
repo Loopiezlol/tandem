@@ -29,7 +29,7 @@ class LoginStore extends Reflux.Store {
   }
 
   submitClickLCompleted(res) {
-    SBActions.loginUser(this.state.emailL);
+    if (res.body.message === 'This should get you to the dashboard now') SBActions.loginUser(this.state.emailL);
     this.setState({
       messageL: res.body.message,
       errorEmL: res.body.errors.email,

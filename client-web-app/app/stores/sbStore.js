@@ -306,7 +306,6 @@ sbactions.loadOnlineUsersList.listen(() => {
     });
 });
 sbactions.loginUser.listen((userID) => {
-  if (userID !== 'undefinded') sbactions.loginUser.failed();
   sbactions.loginUser.completed(userID);
 });
 
