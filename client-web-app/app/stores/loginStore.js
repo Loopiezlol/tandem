@@ -1,6 +1,6 @@
 import Reflux from 'reflux';
 import request from 'superagent';
-import actions from '../actions';
+import actions from '../actions/actions';
 import SBActions from '../actions/sbActions';
 
 class LoginStore extends Reflux.Store {
