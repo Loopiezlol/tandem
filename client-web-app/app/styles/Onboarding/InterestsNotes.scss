@@ -1,0 +1,103 @@
+
+#dividerHor {
+  width: 620px;
+  height: 1px;
+  position: absolute;
+  margin-top: 50px;
+  margin-left: 15px;
+  background-color: #e8e8e8;
+}
+
+#dividerHor2 {
+  width: 620px;
+  height: 1px;
+  position: absolute;
+  margin-top: -50px;
+  margin-left: 15px;
+  background-color: #cecece;
+}
+
+#picksLabel {
+  font-size: 20px;
+  font-family: 'Rubik', sans-serif;
+}
+
+.picksWrap {
+  position: relative;
+  display: block;
+  text-align: center;
+  margin-top:0px;
+}
+
+.singleInterest {
+  margin-left:20px;
+  margin-right: 20px;
+  margin-top: 7px;
+  z-index: 2;
+}
+
+.singleInterest-selected {
+  box-shadow: 1px 1px 20px 4px rgba(196,127,49,1);
+}
+
+.pickSelector {
+  position: absolute;
+  display: inline-block;
+  margin-left:-65px;
+  margin-top: -5px;
+  z-index: 1;
+  background-color: #3b5784;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+#toAddNotesLabel {
+  font-family: 'Muli', sans-serif;
+  position: relative;
+  color:#707377;
+  margin-top: 20px;
+  font-size: 17px;
+}
+
+.notesFieldContainer {
+  height: 300px;
+  width: 550px;
+  margin: auto;
+  margin-top: 30px;
+  display: block;
+  text-align: center;
+  z-index:-1;
+}
+
+.notesDisplayIcon {
+  display: block;
+  margin: auto;
+  padding-top: 20px;
+}
+
+#notesPromptLabel {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 17px;
+}
+
+.notesInput {
+  width: 400px !important;
+  display: block !important;
+  margin-left: 70px;
+}
+
+.saveNotesBtn {
+  position: absolute !important;
+  margin-top: -45px;
+  margin-left: -65px;
+  animation: textAppear 1s linear both;
+}
+
+.saveNotesBtn-saved {
+  animation: bounceOut 0.3s linear both;
+}
+
+#toAddNotesInterest {
+  color : #468480;
+}
