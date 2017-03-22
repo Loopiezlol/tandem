@@ -1,5 +1,6 @@
 import Reflux from 'reflux';
 import MeActions from '../actions/MeActions';
+import actions from '../actions/actions';
 
 
 class MeStore extends Reflux.Store {
@@ -84,8 +85,10 @@ class MeStore extends Reflux.Store {
       },
     ];
     this.listenables = MeActions;
-    this.state = { allLanguages: langs,
-      newFamLangLevel: 'Level',
+    this.listenTo(actions.meFromToken);
+    this.state = {
+      allLanguages: langs,
+      // newFamLangLevel: 'Level',
       userInfo: { firstName: 'Radoslav',
         lastName: 'Naydenov',
         age: 20,

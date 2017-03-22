@@ -19,6 +19,7 @@ module.exports = {
       username: u.username,
       email: u.email,
       gender: u.gender,
+      age: u.age,
       firstName: u.firstName,
       lastName: u.lastName,
       interests: u.interests.map(interest => ({ name: interest.name,
@@ -27,7 +28,8 @@ module.exports = {
       mainLanguage: u.mainLanguage,
       wantsToLearn: u.wantsToLearn.map(language => ({
         name: language.languageId.name,
-        _id: language.languageId._id,
+        // _id: language.languageId._id,
+        level: language.levelId.name,
       })),
     };
   },
