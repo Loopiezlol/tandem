@@ -3,6 +3,7 @@ import IconButton from 'material-ui/IconButton';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 import ContentFilterList from 'material-ui/svg-icons/content/filter-list';
+import RefreshIndicator from 'material-ui/RefreshIndicator';
 
 import React from 'react';
 import Reflux from 'reflux';
@@ -19,6 +20,7 @@ class Discover extends Reflux.Component {
     super(props);
     this.state = {
       filtersVisible: false,
+      showLoading: true,
     };
     this.stores = [DiscoverStore, Auth];
 
@@ -26,7 +28,7 @@ class Discover extends Reflux.Component {
   }
 
   render() {
-    const { results } = this.state;
+    const { results, showLoading } = this.state;
     return (
       <MuiThemeProvider>
         <div className="control-discover">
@@ -41,22 +43,28 @@ class Discover extends Reflux.Component {
               onLeftIconButtonTouchTap={() => this.handleToggleDrawer()}
               onTitleTouchTap={() => this.handleToggleDrawer()}
             />
-            <Filters />
+            <Filters showLoadingCircle={() => this.setState({ showLoading: true })} />
           </Drawer>
           <AppBar
             className="control-discover-appbar"
             iconElementRight={<IconButton><ContentFilterList /></IconButton>}
             onRightIconButtonTouchTap={() => this.handleToggleDrawer()}
           />
-          <div className="control-discover-results">
-            {results && results.length ?
-              results.map(user =>
-                <UserCard className="results" me={user} />,
-              )
-              :
-              <div className="control-discover-results-emptypage">No matches!</div>
-            }
-          </div>
+          {showLoading ?
+            <div className="loading-circle">
+              <RefreshIndicator status="loading" left={0} top={0} />
+            </div>
+            :
+            <div className="control-discover-results">
+              {results && results.length ?
+                results.map(user =>
+                  <UserCard className="results" me={user} />,
+                )
+                :
+                <div className="control-discover-results-emptypage">No matches!</div>
+              }
+            </div>
+          }
         </div>
       </MuiThemeProvider>
     );

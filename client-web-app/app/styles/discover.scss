@@ -1,12 +1,23 @@
 .control-discover {
   height: 100%;
 
+  .loading-circle {
+    top: 50%;
+    left: 50%;
+    position: relative;
+
+    * {
+      position: relative !important;
+    }
+  }
+
   .control-discover-appbar {
   }
 
   .control-discover-results {
     height: calc(100% - 64px);
     overflow-y: auto;
+    text-align: center;
   }
 
   .control-discover-filter {

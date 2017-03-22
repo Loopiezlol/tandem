@@ -80,10 +80,15 @@ class Filters extends Reflux.Component {
           fullWidth
           label="Search"
           primary
-          onTouchTap={() => actions.getResults(queryParameters, this.state.me._id)}
+          onTouchTap={() => this.handleSearch(queryParameters, this.state.me._id, this.props.showLoadingCircle)}
         />
       </Paper>
     );
+  }
+
+  handleSearch(queryParameters, id, showLoadingCircle) {
+    showLoadingCircle();
+    actions.getResults(queryParameters, id);
   }
 
   handleInterest(index) {
