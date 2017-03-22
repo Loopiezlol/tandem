@@ -10,7 +10,7 @@ import LoginStore from '../stores/loginStore';
 import Auth from '../stores/auth';
 import '../styles/login.scss';
 //import BackgroundImage from 'react-background-image-loader';
-import Background from '../public/alexis-brown-85793.jpg';
+// import Background from '../public/alexis-brown-85793.jpg';
 
 class LoginComponent extends Reflux.Component {
   constructor(props) {
@@ -35,7 +35,7 @@ class LoginComponent extends Reflux.Component {
   render() {
     const { emailL, passwordL, messageL, errorEmL, errorPassL } = this.state;
     return (
-      <BackgroundImage img = {'../public/alexis-brown-85793.jpg'}>
+      <div >
         <MuiThemeProvider >
           <Card className="mainLoginContainer">
             <h2 className="card-heading"> Login </h2>
@@ -75,7 +75,7 @@ class LoginComponent extends Reflux.Component {
             </form>
           </Card>
         </MuiThemeProvider>
-      </BackgroundImage>
+      </div>
     );
   }
 }

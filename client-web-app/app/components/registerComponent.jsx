@@ -7,6 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import RegisterStore from '../stores/registerStore';
 import actions from '../actions/actions';
+import '../styles/login.scss';
 
 
 class RegisterComponent extends Reflux.Component {
@@ -20,7 +21,7 @@ class RegisterComponent extends Reflux.Component {
     = this.state;
     return (
       <MuiThemeProvider >
-        <Card className="container">
+        <Card className="mainRegisterContainer">
           <h2 className="card-heading"> Register </h2>
           { message && <p className="error-message" id = 'errorRegister'>{message}</p> }
           <form action="/">

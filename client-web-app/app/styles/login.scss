@@ -8,7 +8,6 @@
   display: block;
   text-align: center;
   font-size: 1.1pc;
- background-image: "url('../public/alexis-brown-85793.jpg');
 }
 
 a {
@@ -85,4 +84,12 @@ a:hover {
   padding: 0 16px;
   color: green;
   font-family: 'Dosis', sans-serif;
+}
+
+.mainRegisterContainer{
+  width: 420px;
+  height: 700px;
+  display: block;
+  text-align: center;
+  margin: auto;
 }
