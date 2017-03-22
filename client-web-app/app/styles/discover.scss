@@ -1,7 +1,13 @@
 .control-discover {
-  height: 100%; // for now
-  background-color: #F0E7BB;
-  $filterheight: 64px;
+  height: 100%;
+
+  .control-discover-appbar {
+  }
+
+  .control-discover-results {
+    height: calc(100% - 64px);
+    overflow-y: auto;
+  }
 
   .control-discover-filter {
     .interest-icon {
@@ -15,18 +21,6 @@
       filter: drop-shadow(2px 2px 2px black);
     }
   }
-
-
-  // .control-discover-filter {
-  //   // width: 30vw;
-  //   height: $filterheight;
-  //   border-radius: 3pt;
-  //   margin: 0 auto;
-  //   background-color: #DAE14E;
-  //   box-shadow: 0px 7px 9px;
-  //   z-index: 1;
-  //   position: relative;
-  // }height: 100%;width: 100%;position: absolute;top: 0px;left: 0px;overflow: hidden;/* color: blanchedalmond; */pointer-events: none;
 
 }
 .containerSmall {

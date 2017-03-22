@@ -44,7 +44,7 @@ class Discover extends Reflux.Component {
             <Filters />
           </Drawer>
           <AppBar
-            className="appbar"
+            className="control-discover-appbar"
             iconElementRight={<IconButton><ContentFilterList /></IconButton>}
             onRightIconButtonTouchTap={() => this.handleToggleDrawer()}
           />
