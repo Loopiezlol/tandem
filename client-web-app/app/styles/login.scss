@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css?family=Dosis:200|Hind:300');
+
+.mainLoginContainer {
+  height: 470px;
+  width: 420px;
+  margin: auto;
+  margin-top: 100px;
+  display: block;
+  text-align: center;
+  font-size: 1.1pc;
+ background-image: "url('../public/alexis-brown-85793.jpg');
+}
+
+a {
+  color: #4775C3;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.4s;
+}
+
+a:hover {
+  color: #2D4671;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.top-bar {
+  padding: 10px 15px;
+  margin-bottom: 50px;
+}
+.top-bar::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.top-bar-left {
+  float: left;
+  font-size: 1.5em;
+}
+
+.top-bar-right {
+  float: right;
+}
+
+.top-bar a, .nav a {
+  margin: 0 8px;
+}
+
+.card-heading {
+  padding: 16px;
+  padding-top: 50px;
+  font-size: 40px;
+  font-family:'Dosis', sans-serif;
+}
+
+.field-line{
+ padding: 16px;
+
+}
+
+.signWrap {
+  position: absolute !important;
+}
+
+#errorRegister{
+  padding-left: 100px;
+}
+
+#errorLogin{
+  padding-left: 130px;
+}
+
+.error-message {
+  position: absolute !important;
+  padding-left: 120px;
+  margin-top: -20px;
+  color: #a83030;
+  font-family: 'Dosis', sans-serif;
+}
+
+.success-message {
+  padding: 0 16px;
+  color: green;
+  font-family: 'Dosis', sans-serif;
+}

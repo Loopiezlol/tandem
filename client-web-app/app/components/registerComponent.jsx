@@ -22,7 +22,7 @@ class RegisterComponent extends Reflux.Component {
       <MuiThemeProvider >
         <Card className="container">
           <h2 className="card-heading"> Register </h2>
-          { message && <p className="error-message">{message}</p> }
+          { message && <p className="error-message" id = 'errorRegister'>{message}</p> }
           <form action="/">
             <div className="field-line">
               <TextField
@@ -38,6 +38,7 @@ class RegisterComponent extends Reflux.Component {
                 floatingLabelText="E-mail"
                 value={email}
                 errorText={errorEm}
+                errorStyle =  {{position:'absolute' , marginBottom:'-20px'}}
                 onChange={actions.emailAction}
               />
             </div>
@@ -48,6 +49,7 @@ class RegisterComponent extends Reflux.Component {
                 floatingLabelText="Password"
                 value={password}
                 errorText={errorPass}
+                errorStyle =  {{position:'absolute' , marginBottom:'-20px'}}
                 onChange={actions.passwordAction}
               />
             </div>
@@ -58,6 +60,7 @@ class RegisterComponent extends Reflux.Component {
                 floatingLabelText="Repeat password"
                 value={repassword}
                 errorText={errorRepass}
+                errorStyle =  {{position:'absolute' , marginBottom:'-20px'}}
                 onChange={actions.repPA}
               />
             </div>

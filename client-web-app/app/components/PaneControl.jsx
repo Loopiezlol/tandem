@@ -35,20 +35,23 @@ class PaneControl extends React.Component {
     return (
       <div className="main-wrapper">
         <div className="control-tabs">
-          <div onClick={() => this.handleOpen('discover')} className="wrapper-control-button" id = "paneColor-aqua">
-            {/* <span className="paneTabBg" id="paneColor-aqua" /> */}
-            <img src={require('../../public/PaneControl/discover.svg')} className="paneTabIcon" />
-            <p className="paneTabLabel">Discover</p>
+          <div onClick={() => this.handleOpen('discover')} className="wrapper-control-button" >
+            <span className="paneTabBg" id="paneColor-warm">
+              <img src={require('../../public/PaneControl/discover.svg')} className="paneTabIcon" />
+              <p className="paneTabLabel">Discover</p>
+            </span>
           </div>
-          <div onClick={() => this.handleOpen('messaging')} className="wrapper-control-button">
-            {/* <span className="paneTabBg" id="paneColor-tan" /> */}
-            <img src={require('../../public/PaneControl/messaging.svg')} className="paneTabIcon" />
-            <p className="paneTabLabel">Messaging</p>
+          <div onClick={() => this.handleOpen('messaging')} className="wrapper-control-button" >
+             <span className="paneTabBg" id="paneColor-powder">
+                <img src={require('../../public/PaneControl/messaging.svg')} className="paneTabIcon" />
+                <p className="paneTabLabel">Messaging</p>
+              </span>
           </div>
           <div onClick={() => this.handleOpen('profile')} className="wrapper-control-button">
-            {/* <span className="paneTabBg" id="paneColor-aqua" /> */}
-            <img src={require('../../public/PaneControl/myProfile.svg')} className="paneTabIcon" />
-            <p className="paneTabLabel">Profile</p>
+           <span className="paneTabBg" id="paneColor-peach">
+              <img src={require('../../public/PaneControl/myProfile.svg')} className="paneTabIcon" />
+              <p className="paneTabLabel">Profile</p>
+            </span>
           </div>
         </div>
         <div className="opened-wrapper" >
