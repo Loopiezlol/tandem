@@ -67,7 +67,11 @@ app.listen(3000, () => {
 //require('./helpers/usergenerator').populateDBwithLanguages();
 
 // require('./helpers/usergenerator').populateDB(50);
-// UNCOMMENT THIS TO GENERATE SOME LANGUAGES AND LEVELS
+// // UNCOMMENT THIS TO GENERATE SOME LANGUAGES AND LEVELS
+// const Language = require('./models/language');
+// const Level = require('./models/level');
+// const wrap = require('co-express');
+//
 // function* createLanguages() {
 //   const currentLanguages = yield Language.find({});
 //   console.log(currentLanguages);
