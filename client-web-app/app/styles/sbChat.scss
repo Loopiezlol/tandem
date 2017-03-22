@@ -124,3 +124,17 @@
   display: inline-block;
   color: black;
 }
+.timeStampLabel {
+  position: relative;
+  // bottom: -15px;
+  /* background-color: red !important; */
+
+  font-size: 9px;
+  color: #bababa;
+}
+#timeStamp-hidden{
+  display: none;
+}
+#timeStamp-visible{
+  display: block;
+}

@@ -6,10 +6,11 @@ import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import ReactEmoji from 'react-emoji';
 import Divider from 'material-ui/Divider';
+import Avatar from 'material-ui/Avatar';
 import SBStore from '../../stores/sbStore';
 import '../../styles/sbChat.scss';
 import SBActions from '../../actions/sbActions';
-/* eslint-disable*/
+// /* eslint-disable*/
 
 class sbChat extends Reflux.Component {
   constructor(props) {
@@ -37,7 +38,6 @@ class sbChat extends Reflux.Component {
      = this.state;
 
 
-
     if (chatOpen) {
       return (
         <div>
@@ -45,28 +45,28 @@ class sbChat extends Reflux.Component {
             <h5>Chat with {otherUserNick} ({otherUser})</h5>
             <Divider />
             <div>
-               <Paper className="messageStyle" zDepth={0}>
-              <div className="messages">
-                <ul className="old-messages" style={{ listStyle: 'none' }}>
-                  {prevMessages.map(msg => <li key={`${msg.messageId}`}>
-                    {this.renderMessage(msg)}
-                  </li>)}
-                </ul>
+              <Paper className="messageStyle" zDepth={0}>
+                <div className="messages">
+                  <ul className="old-messages" style={{ listStyle: 'none' }}>
+                    {prevMessages.map(msg => <li key={`${msg.messageId}`}>
+                      {this.renderMessage(msg, Avatar)}
+                    </li>)}
+                  </ul>
 
-              </div>
-              <Paper className="textFieldStyle" zDepth={0}>
-                <span className="messageDividerLine" id="divider-left" />
-                <p id="messageDividerLabel">New messages</p>
-                <span className="messageDividerLine" id="divider-right" />
+                </div>
+                <Paper className="textFieldStyle" zDepth={0}>
+                  <span className="messageDividerLine" id="divider-left" />
+                  <p id="messageDividerLabel">New messages</p>
+                  <span className="messageDividerLine" id="divider-right" />
                 </Paper>
-              <div className="currentMsg">
-                <ul className="new-messages" style={{ listStyle: 'none' }}>
-                  {messages.map(msg => <li key={`${msg.messageId}`}>
-                    {this.renderMessage(msg)}
-                  </li>)}
-                </ul>
-              </div>
-             </Paper>
+                <div className="currentMsg">
+                  <ul className="new-messages" style={{ listStyle: 'none' }}>
+                    {messages.map(msg => <li key={`${msg.messageId}`}>
+                      {this.renderMessage(msg, Avatar)}
+                    </li>)}
+                  </ul>
+                </div>
+              </Paper>
             </div>
 
             { isTyping ? <div>typing...</div> : <div />}
@@ -94,7 +94,7 @@ class sbChat extends Reflux.Component {
 
   handleMessageType(e) {
     const { currentChannel } = this.state;
-     if (e.target.value && e.target.value.length) {
+    if (e.target.value && e.target.value.length) {
       currentChannel.startTyping();
     } else {
       currentChannel.endTyping();
@@ -105,7 +105,7 @@ class sbChat extends Reflux.Component {
   }
 
   handleSendButton() {
-      if (this.state.message) {
+    if (this.state.message) {
       const { currentChannel } = this.state;
       currentChannel.endTyping();
       SBActions.sendMessage(this.state.message);
@@ -116,21 +116,21 @@ class sbChat extends Reflux.Component {
   }
 
   renderMessage(message) {
+    const timeStamp = moment(message.createdAt).fromNow();
     if (message.sender.userId === this.store.state.userID) {
-      var timeStamp = moment(message.createdAt).fromNow();
       return (
         <div>
-          <p className="usernameLabel" style={{ paddingLeft: '340px' }} id={this.state.usernameLabel}> {message.sender.nickname} </p>
-          <p> {timeStamp} </p>
+          <p className="usernameLabel" style={{ paddingLeft: '340px' }} id={this.state.usernameLabel}> {message.sender.nickname}{timeStamp} </p>
           <div onClick={e => this.showUserName(e)} className="message to">
-            {ReactEmoji.emojify(message.message) || message.message}
+            {ReactEmoji.emojify(message.message) || message.message || Avatar}
           </div>
         </div>
       );
     }
+
     return (
       <div>
-        <p className="usernameLabel" style={{ paddingRight: '360px' }} id={this.state.usernameLabel}> {message.sender.nickname} </p>
+        <p className="usernameLabel" style={{ paddingRight: '360px' }} id={this.state.usernameLabel}> {message.sender.nickname}{timeStamp} </p>
         <div onClick={e => this.showUserName(e)} className="message from">
           {ReactEmoji.emojify(message.message) || message.message}
         </div>
