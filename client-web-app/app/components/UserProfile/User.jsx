@@ -3,6 +3,7 @@ import Reflux from 'reflux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
 import SelectField from 'material-ui/SelectField';
+import DropDownMenu from 'material-ui/DropDownMenu';
 import Avatar from 'material-ui/Avatar';
 import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
@@ -13,6 +14,11 @@ import Infinite from 'react-infinite';
 import LanguageLevel from '../Onboarding/LanguageLevel';
 import CustomCarousel from '../Onboarding/CustomCarousel';
 import MeStore from '../../stores/MeStore';
+import LevelStore from '../../stores/levelStore';
+
+import Auth from '../../stores/auth';
+
+import actions from '../../actions/actions';
 import MeActions from '../../actions/MeActions';
 import '../../styles/User/User.scss';
 
@@ -20,9 +26,11 @@ class User extends Reflux.Component {
 
   constructor(props) {
     super(props);
-    this.store = MeStore;
+    this.stores = [Auth, MeStore, LevelStore];
     this.famLangArr = [{ name: 'English', level: 'A2' }, { name: 'Spanish', level: 'B1' }, { name: 'Bulgarian', level: 'C2' }, { name: 'Russian', level: 'B2' }];
     this.state = { selectorBg: 'bg-info', addNewFamLangBtnLabel: 'Add', famLanguage: 'English', interestsSelectorHeader: 'selectorHeader', carouselIndex: 0, btnLabel: 'Save notes', btnState: 'updateNotesBtn-appear' };
+    actions.fetchLanguages();
+    actions.fetchLevels();
   }
 
   changeSelector = (idx) => {
@@ -125,6 +133,12 @@ class User extends Reflux.Component {
     }
   }
 
+  changeCurrentLanguageLevel = (e, i, v) => {
+    this.setState({
+      currentLanguageLevel: v,
+    });
+  }
+
   render() {
     const selectors = ['info', 'chatting', 'heart'].map((selector, index) => {
       const source = `${selector}.png`;
@@ -135,38 +149,45 @@ class User extends Reflux.Component {
     const infoSelector = (
       <div className="genericSelectorWrap">
         <h1 className="selectorHeader">Information</h1>
-        {this.state.showEdit && <p className="editPromptLabel">Edit</p>}
         <div className="nameWrap">
           <p className="propLabel" id="nameLabel">Name</p>
-          <p className="dataLabel" id="nameData">{this.state.userInfo.firstName} {this.state.userInfo.lastName}</p>
+          <p className="dataLabel" id="nameData">{this.state.me.firstName} {this.state.me.lastName}</p>
         </div>
         <div className="ageWrap">
           <p className="propLabel" id="ageLabel" >Age</p>
-          <p className="dataLabel" id="ageData">{this.state.userInfo.age}</p>
+          <p className="dataLabel" id="ageData">{this.state.me.age}</p>
         </div>
+        {/* <div className="genderWrap">
+          <p className="propLabel" id="genderLabel">Gender</p>
+          <p className="dataLabel" id="genderData">{this.state.me.age ?
+           this.state.me.age : 'please update your age'}</p>
+        </div> */}
+        {this.state.showEdit && <p className="editPromptLabel">Edit</p>}
       </div>
     );
 
-    const familiarLanguages = this.state.userInfo.familiarLanguages.map(lang => (
+    const familiarLanguages = this.state.me.wantsToLearn.map(lang => (
       <MenuItem
         value={lang.name}
         primaryText={lang.name}
       />
       ));
 
-    const languageLevels = () => {
-      for (const lang of this.state.userInfo.familiarLanguages) {
-        if (this.state.famLanguage === lang.name) {
-          return (
-            <LanguageLevel
-              value={lang.level}
-              className="famLangLevel"
-            />
-          );
-        }
-      }
-    };
-
+    const languageLevels = () => (this.state.me || {}).wantsToLearn
+    .filter(l => this.state.famLanguage === l.name)
+    .map(lang =>
+      <DropDownMenu
+        className="famLangLevel"
+        value={lang.level}
+        onChange={this.changeCurrentLanguageLevel}
+      >
+        <MenuItem value={'Level'} primaryText="Level" disabled />
+        {this.state.levels.map(l => <MenuItem
+          key={`menu-item-${l.name}`}
+          value={l.name} primaryText={l.name}
+        />)}
+      </DropDownMenu>,
+      );
 
     const newFamLangBox = (
       <Paper className="newFamLangContainer" >
