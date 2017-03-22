@@ -64,48 +64,52 @@ app.listen(3000, () => {
   console.log('Server started on port 3000!');
 });
 
-//require('./helpers/usergenerator').populateDBwithLanguages();
+// require('./helpers/usergenerator').populateDBwithLanguages();
 
-// require('./helpers/usergenerator').populateDB(50);
+require('./helpers/usergenerator').populateDB(50);
 // UNCOMMENT THIS TO GENERATE SOME LANGUAGES AND LEVELS
-// function* createLanguages() {
-//   const currentLanguages = yield Language.find({});
-//   console.log(currentLanguages);
-//   if (currentLanguages.length === 0) {
-//     yield Language.create({
-//       name: 'Spanish',
-//       abbreviation: 'ES',
-//     });
-//     yield Language.create({
-//       name: 'English',
-//       abbreviation: 'EN',
-//     });
-//     yield Language.create({
-//       name: 'Romanian',
-//       abbreviation: 'RO',
-//     });
-//     console.log('done');
-//   }
-// }
-//
-// function* createLevels() {
-//   const currentLevels = yield Level.find({});
-//   if (currentLevels.length === 0) {
-//     yield Level.create({
-//       name: 'C2',
-//       level: 5,
-//     });
-//     yield Level.create({
-//       name: 'C1',
-//       level: 4,
-//     });
-//     yield Level.create({
-//       name: 'B2',
-//       level: 3,
-//     });
-//     console.log('done');
-//   }
-// }
-//
-// wrap(createLanguages)();
-// wrap(createLevels)();
+const wrap = require('co-express');
+const Language = require('./models/language');
+const Level = require('./models/level');
+
+function* createLanguages() {
+  const currentLanguages = yield Language.find({});
+  // console.log(currentLanguages);
+  if (currentLanguages.length === 0) {
+    yield Language.create({
+      name: 'Spanish',
+      abbreviation: 'ES',
+    });
+    yield Language.create({
+      name: 'English',
+      abbreviation: 'EN',
+    });
+    yield Language.create({
+      name: 'Romanian',
+      abbreviation: 'RO',
+    });
+    console.log('done');
+  }
+}
+
+function* createLevels() {
+  const currentLevels = yield Level.find({});
+  if (currentLevels.length === 0) {
+    yield Level.create({
+      name: 'C2',
+      level: 5,
+    });
+    yield Level.create({
+      name: 'C1',
+      level: 4,
+    });
+    yield Level.create({
+      name: 'B2',
+      level: 3,
+    });
+    console.log('done');
+  }
+}
+
+wrap(createLanguages)();
+wrap(createLevels)();
