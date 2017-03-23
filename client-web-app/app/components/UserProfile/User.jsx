@@ -148,6 +148,27 @@ class User extends Reflux.Component {
     });
   }
 
+  updateMotherLanguage = (e) => {
+    // if (this.state.languages.find(l => l === e.target.value)) {
+    //   this.setState({
+    //     updateMotherLanguage
+    //   })
+    // }
+    console.log(e.target.value);
+    this.setState({
+      updatingMotherLang: e.target.value,
+    }, () => {
+      if (this.state.languages.find(l => l.name === this.state.updatingMotherLang)) {
+        const tempUser = this.state.tempUser;
+        tempUser.mainLanguage = this.state.languages
+          .find(l => l.name === this.state.updatingMotherLang);
+        this.setState({
+          tempUser,
+        });
+      }
+    });
+  }
+
 
   showFamLangPopUp = () => {
     this.setState({ addNewFamLang: true, famLangBoxAppear: 'popUpBewFamLangBox-appear', isBlurred: 'selector-blurred' });
@@ -216,14 +237,13 @@ class User extends Reflux.Component {
         <div className="ageWrap">
           <p className="propLabel" id="ageLabel" >Age</p>
           <p className="dataLabel" id="ageData">{this.state.tempUser.age ?
-            this.state.tempUser.age : 'please update your age'}</p>
+            this.state.tempUser.age : 'please contact us to update your age'}</p>
         </div>
         <div className="genderWrap">
           <p className="propLabel" id="genderLabel">Gender</p>
           <p className="dataLabel" id="genderData">{this.state.tempUser.gender ?
-           this.state.tempUser.gender : 'please update your gender'}</p>
+           this.state.tempUser.gender : 'please contact us to update your gender'}</p>
         </div>
-        {this.state.showEdit && <p className="editPromptLabel">Edit</p>}
       </div>
     );
 
@@ -295,9 +315,8 @@ class User extends Reflux.Component {
               this.state.enableEdit ? <div id="motherLanguaeEdit">
                 <TextField
                   className="data motherLangInputEdit"
-                  value={this.state.updatingMotherLang ||
-                     (this.state.tempUser.mainLanguage || {}).name}
-                  onChange={e => MeActions.updateMotherLanguage(e)}
+                  value={(this.state.updatingMotherLang)}
+                  onChange={this.updateMotherLanguage}
                 />
               </div> :
               <p className="dataLabel" id="motherLangDataLabel">{(this.state.tempUser.mainLanguage || {}).name} </p>
