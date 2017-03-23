@@ -15,6 +15,7 @@ class DiscoverStore extends Reflux.Store {
     this.setState({
       results: res.body,
       showLoading: false,
+      filtersVisible: false,
     });
   }
 

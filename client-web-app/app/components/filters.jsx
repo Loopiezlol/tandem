@@ -1,6 +1,5 @@
 import TextField from 'material-ui/TextField';
 import Divider from 'material-ui/Divider';
-import Paper from 'material-ui/Paper';
 import CheckBox from 'material-ui/Checkbox';
 import FlatButton from 'material-ui/FlatButton';
 import ChipInput from 'material-ui-chip-input';
@@ -25,7 +24,7 @@ class Filters extends Reflux.Component {
   }
 
   render() {
-    const { onSearch: search } = this.props;
+    const { onSearch: search, visible } = this.props;
     const { searchText, genderBoxContent, languageBoxContent, chips, interests, me } = this.state;
 
     const queryParameters = {
@@ -40,7 +39,7 @@ class Filters extends Reflux.Component {
     };
 
     return (
-      <Paper className="control-discover-filter">
+      <div className={`control-discover-filter ${visible ? 'visible' : 'hidden'}`}>
         <TextField
           hintText="username:"
           onChange={e => this.handleType(e)}
@@ -82,7 +81,7 @@ class Filters extends Reflux.Component {
           primary
           onTouchTap={() => search(queryParameters, this.state.me._id)}
         />
-      </Paper>
+      </div>
     );
   }
 
