@@ -181,7 +181,8 @@ class User extends Reflux.Component {
   }
 
   saveTempUser = () => {
-    console.log(this.state.tempUser);
+    console.log('updating temp user');
+    actions.updateTempUser(this.state.tempUser);
   }
 
   saveNotes = () => {
