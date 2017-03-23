@@ -35,7 +35,7 @@ class LoginComponent extends Reflux.Component {
   render() {
     const { emailL, passwordL, messageL, errorEmL, errorPassL } = this.state;
     return (
-      <div >
+      <div className = "mainLoginWrap">
         <MuiThemeProvider >
           <Card className="mainLoginContainer">
             <h2 className="card-heading"> Login </h2>
