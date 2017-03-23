@@ -180,6 +180,10 @@ class User extends Reflux.Component {
     }
   }
 
+  saveTempUser = () => {
+    console.log(this.state.tempUser);
+  }
+
   saveNotes = () => {
     const { addNotes, tempUser, updatingNotes } = this.state;
     addNotes.notes = updatingNotes;
@@ -512,6 +516,9 @@ class User extends Reflux.Component {
                 </Paper>
               </MuiThemeProvider>
             </div>
+            <FlatButton className="saveButton" onClick={this.saveTempUser}>
+              Save user here
+            </FlatButton>
           </Paper>
         </MuiThemeProvider>
       </div>
