@@ -6,6 +6,10 @@
 .usernameLabel {
   position: relative;
   font-size: 12px;
+  /* display: block; */
+  padding-right: 50px;
+  bottom: -25px;
+
 }
 
 #username-visible {
@@ -14,6 +18,16 @@
 
 #username-hidden {
   display: none;
+}
+.timeStampLabel {
+  position: relative;
+  /* background-color: red !important; */
+  font-size: 9px;
+  width: 70px;
+  opacity: 0.65;
+  display: block;
+  color: #bababa;
+  margin-left: -8px;
 }
 
 .messageDividerLine {
@@ -40,24 +54,24 @@
 }
 
 .message {
-    box-sizing: border-box;
-    width: auto ;
-    max-width: 80% ;
-    position: relative ;
-    clear: both ;
-    border-radius: 20px 20px 20px 20px ;
-    background-color: #00bcd4  ;
-    margin-top:-7px  ;
-    margin-bottom: 10px  ;
-    position: relative ;
-
-    word-wrap: break-word ;         /* All browsers since IE 5.5+ */
-    overflow-wrap: break-word ;     /* Renamed property in CSS3 draft spec */
-    max-width:300px ;
-    font-size: 14px ;
-    padding : 3px 3px 3px 3px ;
-    z-index: 2 ;
-    min-width: 80px ;
+box-sizing: border-box;
+width: auto;
+max-width: 80%;
+position: relative;
+clear: both;
+border-radius: 20px 20px 20px 20px;
+background-color: #00bcd4;
+margin-top: -7px;
+margin-bottom: 10px;
+position: relative;
+word-wrap: break-word;
+overflow-wrap: break-word;
+max-width: 300px;
+font-size: 14px;
+padding: 6px 3px 3px 3px;
+z-index: 2;
+min-width: 80px;
+min-height: 30px;
 
 }
 .message.to {
@@ -124,17 +138,20 @@
   display: inline-block;
   color: black;
 }
-.timeStampLabel {
-  position: relative;
-  // bottom: -15px;
-  /* background-color: red !important; */
 
-  font-size: 9px;
-  color: #bababa;
+.avatarStyle {
+  width: 39pc;
+  margin: -20px;
+/* bottom: -19px; */
+display: inline-block;
+position: element(#username-visible);
+transform: translateY(65%);
+position: relative;
+
 }
-#timeStamp-hidden{
-  display: none;
+.avatarTo {
+  margin-right: -250px;
 }
-#timeStamp-visible{
-  display: block;
+.avatarFrom {
+  margin-left: -620px;
 }

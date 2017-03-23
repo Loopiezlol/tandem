@@ -49,7 +49,7 @@ class sbChat extends Reflux.Component {
                 <div className="messages">
                   <ul className="old-messages" style={{ listStyle: 'none' }}>
                     {prevMessages.map(msg => <li key={`${msg.messageId}`}>
-                      {this.renderMessage(msg, Avatar)}
+                      {this.renderMessage(msg)}
                     </li>)}
                   </ul>
 
@@ -62,7 +62,7 @@ class sbChat extends Reflux.Component {
                 <div className="currentMsg">
                   <ul className="new-messages" style={{ listStyle: 'none' }}>
                     {messages.map(msg => <li key={`${msg.messageId}`}>
-                      {this.renderMessage(msg, Avatar)}
+                      {this.renderMessage(msg)}
                     </li>)}
                   </ul>
                 </div>
@@ -75,13 +75,13 @@ class sbChat extends Reflux.Component {
               <TextField
                 floatingLabelText="Type Your Message"
                 value={message} onChange={e => this.handleMessageType(e)}
+                onKeyPress={e => this.handleMessageType(e)}
               />
               <FlatButton
                 primary style={{ margin: 5 }}
                 label="Send"
                 onClick={e => this.handleSendButton(e)}
                 onTap={e => this.handleSendButton(e)}
-
               />
             </div>
           </Paper>
@@ -102,6 +102,12 @@ class sbChat extends Reflux.Component {
     this.setState({
       message: e.target.value,
     });
+    if (e.key === 'Enter') {
+      SBActions.sendMessage(this.state.message);
+      this.setState({
+        message: '',
+      });
+    }
   }
 
   handleSendButton() {
@@ -120,7 +126,12 @@ class sbChat extends Reflux.Component {
     if (message.sender.userId === this.store.state.userID) {
       return (
         <div>
-          <p className="usernameLabel" style={{ paddingLeft: '340px' }} id={this.state.usernameLabel}> {message.sender.nickname}{timeStamp} </p>
+          <p className="usernameLabel" style={{ paddingLeft: '340px' }} id={this.state.usernameLabel}> {message.sender.nickname}
+            <span className="timeStampLabel">{timeStamp}</span>
+          </p>
+          <paper className="avatarStyle">
+            <Avatar className="avatarTo" src={`${message._sender.profileUrl}`} />
+          </paper>
           <div onClick={e => this.showUserName(e)} className="message to">
             {ReactEmoji.emojify(message.message) || message.message || Avatar}
           </div>
@@ -130,7 +141,12 @@ class sbChat extends Reflux.Component {
 
     return (
       <div>
-        <p className="usernameLabel" style={{ paddingRight: '360px' }} id={this.state.usernameLabel}> {message.sender.nickname}{timeStamp} </p>
+        <p className="usernameLabel" style={{ paddingRight: '360px' }} id={this.state.usernameLabel}> {message.sender.nickname}
+          <span className="timeStampLabel" style={{ paddingLeft: '12px' }}>{timeStamp}</span>
+        </p>
+        <paper className="avatarStyle">
+          <Avatar className="avatarFrom" src={`${message._sender.profileUrl}`} />
+        </paper>
         <div onClick={e => this.showUserName(e)} className="message from">
           {ReactEmoji.emojify(message.message) || message.message}
         </div>
