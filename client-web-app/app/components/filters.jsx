@@ -71,7 +71,7 @@ class Filters extends Reflux.Component {
               tooltip={interest.label}
               onTouchTap={() => this.handleInterest(index)}
             >
-              <img className={`interest-icon ${this.state.interests[index] ? 'selected' : ''}`} src={require(`../../public//png/${interest.icon}.png`)} />
+              <img className={`interest-icon ${this.state.interests[index] ? 'selected' : ''}`} src={require(`../../public/png/${interest.icon}.png`)} />
             </IconButton>
           ))}
         </div>

@@ -23,7 +23,8 @@
     border-radius: 5px;
     position: absolute;
     right: 10%;
-    transition: bottom 0.5s, opacity 0.5s, display;
+    transition: bottom 0.5s, opacity 0.5s;
+    box-shadow: 2px 2px 30px black;
 
     .interest-icon {
         width: 28px;
@@ -44,7 +45,7 @@
   }
 
   .visible {
-    bottom: 15%;
+    bottom: calc(10% + 70px);
     opacity: 1;
   }
 
