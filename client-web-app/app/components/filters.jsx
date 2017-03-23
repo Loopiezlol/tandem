@@ -7,7 +7,6 @@ import ChipInput from 'material-ui-chip-input';
 import IconButton from 'material-ui/IconButton';
 import React from 'react';
 import Reflux from 'reflux';
-import actions from '../actions/actions';
 import Auth from '../stores/auth';
 
 import iconsWithLabels from '../interests';
@@ -26,6 +25,7 @@ class Filters extends Reflux.Component {
   }
 
   render() {
+    const { onSearch: search } = this.props;
     const { searchText, genderBoxContent, languageBoxContent, chips, interests, me } = this.state;
 
     const queryParameters = {
@@ -80,15 +80,10 @@ class Filters extends Reflux.Component {
           fullWidth
           label="Search"
           primary
-          onTouchTap={() => this.handleSearch(queryParameters, this.state.me._id, this.props.showLoadingCircle)}
+          onTouchTap={() => search(queryParameters, this.state.me._id)}
         />
       </Paper>
     );
-  }
-
-  handleSearch(queryParameters, id, showLoadingCircle) {
-    showLoadingCircle();
-    actions.getResults(queryParameters, id);
   }
 
   handleInterest(index) {

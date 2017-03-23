@@ -27,7 +27,6 @@ function* _dbQuery(options, id) {
   }
 
   console.log('query: ', query);
-  [...Array(99999).keys()].forEach(x => console.log(x));
   return query;
 }
 

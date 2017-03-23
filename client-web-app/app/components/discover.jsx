@@ -43,7 +43,7 @@ class Discover extends Reflux.Component {
               onLeftIconButtonTouchTap={() => this.handleToggleDrawer()}
               onTitleTouchTap={() => this.handleToggleDrawer()}
             />
-            <Filters showLoadingCircle={() => this.setState({ showLoading: true })} />
+            <Filters onSearch={(queryParameters, id) => this.handleSearch(queryParameters, id)} />
           </Drawer>
           <AppBar
             className="control-discover-appbar"
@@ -68,6 +68,13 @@ class Discover extends Reflux.Component {
         </div>
       </MuiThemeProvider>
     );
+  }
+
+  handleSearch(queryParameters, id) {
+    this.setState({
+      showLoading: true,
+    });
+    actions.getResults(queryParameters, id);
   }
 
   handleSwipeDrawer(filtersVisible) {
