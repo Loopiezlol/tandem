@@ -21,8 +21,6 @@ class Discover extends Reflux.Component {
       showLoading: true,
     };
     this.stores = [DiscoverStore, Auth];
-
-    actions.getResults({}, ((this.state || {}).me || {})._id);
   }
 
   render() {
