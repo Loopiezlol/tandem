@@ -13,6 +13,8 @@ import SBChat from '../messaging/sbChat';
 import SBUserList from '../messaging/sbUserList';
 import LoginComponents from '../messaging/loginComponents';
 
+// The parent (container) for all of messaging
+
 class messaging extends Reflux.Component {
   constructor(props) {
     super(props);
@@ -56,9 +58,6 @@ class messaging extends Reflux.Component {
             }}
           >
             {this.state.showLoginComponents ? <LoginComponents /> : <div />}
-            {
-              // {this.state.showUserList ? <div /> : <SBUserList />}
-            }
             <SBUserList />
             <SBChat />
           </div>

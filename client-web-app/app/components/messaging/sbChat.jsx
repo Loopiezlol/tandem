@@ -2,26 +2,34 @@ import moment from 'moment';
 import React from 'react';
 import Reflux from 'reflux';
 import Paper from 'material-ui/Paper';
-import FlatButton from 'material-ui/FlatButton';
-import TextField from 'material-ui/TextField';
+import { BottomNavigation, BottomNavigationItem } from 'material-ui/BottomNavigation';
+import FontIcon from 'material-ui/FontIcon';
+import IconLocationOn from 'material-ui/svg-icons/communication/location-on';
 import ReactEmoji from 'react-emoji';
-import Divider from 'material-ui/Divider';
 import Avatar from 'material-ui/Avatar';
+import ChatComponent from '../messaging/chatComponent';
+import MeetingComponent from '../messaging/meetingComponent';
+import LibBookComponent from '../messaging/libBookingComponent';
+import AbuseComponent from '../messaging/abuseComponent';
 import SBStore from '../../stores/sbStore';
 import '../../styles/sbChat.scss';
 import SBActions from '../../actions/sbActions';
 // /* eslint-disable*/
+
+const messageIcon = <FontIcon className="material-icons">message</FontIcon>;
+const meetIcon = <FontIcon className="material-icons">people</FontIcon>;
+const nearbyIcon = <IconLocationOn />;
 
 class sbChat extends Reflux.Component {
   constructor(props) {
     super(props);
     this.state = {
       message: '',
+      selectedIndex: 0,
       usernameLabel: 'username-hidden',
     };
     this.store = SBStore;
   }
-
 
   showUserName(e) {
     console.log(e);
@@ -32,58 +40,44 @@ class sbChat extends Reflux.Component {
     }
   }
 
+  select = (index) => {
+    this.setState({ selectedIndex: index }, () => {
+      console.log(`Chat index selected: ${this.state.selectedIndex}`);
+    });
+  }
 
   render() {
-    const { chatOpen, otherUser, otherUserNick, message, prevMessages, messages, isTyping }
-     = this.state;
-
+    const { chatOpen } = this.state;
 
     if (chatOpen) {
       return (
         <div>
           <Paper className="paperStyle" zDepth={2} >
-            <h5>Chat with {otherUserNick} ({otherUser})</h5>
-            <Divider />
-            <div>
-              <Paper className="messageStyle" zDepth={0}>
-                <div className="messages">
-                  <ul className="old-messages" style={{ listStyle: 'none' }}>
-                    {prevMessages.map(msg => <li key={`${msg.messageId}`}>
-                      {this.renderMessage(msg, Avatar)}
-                    </li>)}
-                  </ul>
 
-                </div>
-                <Paper className="textFieldStyle" zDepth={0}>
-                  <span className="messageDividerLine" id="divider-left" />
-                  <p id="messageDividerLabel">New messages</p>
-                  <span className="messageDividerLine" id="divider-right" />
-                </Paper>
-                <div className="currentMsg">
-                  <ul className="new-messages" style={{ listStyle: 'none' }}>
-                    {messages.map(msg => <li key={`${msg.messageId}`}>
-                      {this.renderMessage(msg, Avatar)}
-                    </li>)}
-                  </ul>
-                </div>
-              </Paper>
-            </div>
+            <Paper style={{ overflow: 'scroll', height: '45pc' }}>
+              {(this.state.selectedIndex === 0) && <ChatComponent /> }
+              {(this.state.selectedIndex === 1) && <MeetingComponent /> }
+              {(this.state.selectedIndex === 2) && <LibBookComponent /> }
+              {(this.state.selectedIndex === 3) && <AbuseComponent />}
+            </Paper>
 
-            { isTyping ? <div>typing...</div> : <div />}
-
-            <div className="input">
-              <TextField
-                floatingLabelText="Type Your Message"
-                value={message} onChange={e => this.handleMessageType(e)}
+            <BottomNavigation selectedIndex={this.state.selectedIndex}>
+              <BottomNavigationItem
+                label="Messages"
+                icon={messageIcon}
+                onTouchTap={() => this.select(0)}
               />
-              <FlatButton
-                primary style={{ margin: 5 }}
-                label="Send"
-                onClick={e => this.handleSendButton(e)}
-                onTap={e => this.handleSendButton(e)}
-
+              <BottomNavigationItem
+                label="Start a Meeting"
+                icon={meetIcon}
+                onTouchTap={() => this.select(1)}
               />
-            </div>
+              <BottomNavigationItem
+                label="Book a Room"
+                icon={nearbyIcon}
+                onTouchTap={() => this.select(2)}
+              />
+            </BottomNavigation>
           </Paper>
 
         </div>
