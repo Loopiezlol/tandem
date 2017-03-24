@@ -20,7 +20,7 @@ class RegisterComponent extends Reflux.Component {
     const { username, email, password, repassword, message, errorEm, errorPass, errorRepass }
     = this.state;
     return (
-      <div className = "mainRegisterWrap">
+      <div className = "mainSignWrap">
         <MuiThemeProvider >
           <Card className="mainRegisterContainer">
             <h2 className="card-heading"> Register </h2>
