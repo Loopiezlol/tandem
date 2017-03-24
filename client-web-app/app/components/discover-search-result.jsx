@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import { Card, CardMedia, CardText } from 'material-ui/Card';
+import { Card, CardMedia, CardText, CardTitle } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
 
@@ -8,6 +8,8 @@ import '../styles/discover.scss';
 import '../styles/flags.min.css';
 
 require('../../public/flags.png');
+// const interests = require('../../app/interests.js');
+
 
 class UserCard extends Reflux.Component {
   constructor(props) {
@@ -18,43 +20,42 @@ class UserCard extends Reflux.Component {
     const { me } = this.props;
     const imgUrl = 'https://facebook.github.io/react/img/logo_og.png';
     return (
-      <Card className="containerSmall" >
-        <CardMedia
-          overlay={<p className="overlay"> {me.username} </p>}
-        />
-        <div >
+      <Card className="result" >
+        <CardMedia>
           <img
-            className="imagine"
+            className="img"
             src={imgUrl}
             alt="bb"
           />
-        </div>
-        <Divider className="cardDivider" />
-        <div className="speaks">
-          Speaks: {me.mainLanguage.name}
+        </CardMedia>
+        <CardTitle className="userName" title={me.username} />
+        <CardTitle subtitle="Speaks:" className="speaks" />
+        <CardText className="languages">
+          {me.mainLanguage.name}
           <img
             src={require('../../public/transperant.png')}
             className={me.mainLanguage.abbreviation.toLowerCase() ? `flag flag-${me.mainLanguage.abbreviation.toLowerCase()}` : ''}
             alt={me.mainLanguage.name}
             style={{ backgroundImage: require('../../public/flags.png') }}
           />
-          <br />
-          Practices: {me.wantsToLearn.map(l =>
-          (<span>
-            {`${l.languageId.name}`.toString()}
-            <img
-              src={require('../../public/transperant.png')}
-              className={l.languageId.abbreviation.toLowerCase() ? `flag flag-${l.languageId.abbreviation.toLowerCase()}` : ''}
-              alt={l.languageId.name}
-              style={{ backgroundImage: require('../../public/flags.png') }}
-            />
-          </span>))}
-        </div>
+        </CardText>
+        <Divider className="cardDivider" />
+        <CardTitle subtitle="Practices:" className="speaks" />
+        <CardText className="languages">
+          {me.wantsToLearn.map(l =>
+        (<span>
+          {`${l.languageId.name}`.toString()}
+          <img
+            src={require('../../public/transperant.png')}
+            className={l.languageId.abbreviation.toLowerCase() ? `flag flag-${l.languageId.abbreviation.toLowerCase()}` : ''}
+            alt={l.languageId.name}
+            style={{ backgroundImage: require('../../public/flags.png') }}
+          />
+        </span>))}
+        </CardText>
         <Divider className="cardDivider" />
         <CardText>
-          <div className="text description">
-            {me.description}
-          </div>
+          {me.interests.map(x => x.name)}
         </CardText>
         <RaisedButton onTouchTap={() => console.log(me)} className="overlay" primary fullWidth="true"> Chat! </RaisedButton>
       </Card>
