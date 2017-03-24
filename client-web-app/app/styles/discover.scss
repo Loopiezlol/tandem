@@ -15,12 +15,19 @@
 
   .control-discover-filter {
     z-index: 50;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-width: 60%;
     background: white;
     border-radius: 5px;
     position: absolute;
     right: 10%;
     transition: bottom 0.5s, opacity 0.5s;
     box-shadow: 2px 2px 30px black;
+
+    .filters-interests {
+      font-family: Roboto;
+    }
 
     .interest-icon {
         width: 28px;

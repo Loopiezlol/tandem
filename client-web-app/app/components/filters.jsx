@@ -63,7 +63,7 @@ class Filters extends Reflux.Component {
           onRequestAdd={chip => this.handleAddChip(chip)}
           onRequestDelete={(chip, index) => this.handleDeleteChip(chip, index)}
         />
-        <div>
+        <div className="filters-interests">
           Choose interests:<br />
           {iconsWithLabels.map((interest, index) => (
             <IconButton
