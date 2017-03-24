@@ -25,6 +25,7 @@ class sbStore extends Reflux.Store {
       messages: [],
       channelHandler: {},
       isTyping: false,
+      //unreadMessages: 0,
     };
     this.listenables = sbactions;
     //  sbactions.loginUser(auth.state.me.email);
@@ -61,13 +62,13 @@ class sbStore extends Reflux.Store {
               if (channelList[i].members[n].userId === userid) {
                 // 2a) If YES, JOIN and load previous messages.
                 console.log('Channel already exists, getting previous messages.');
-                sbactions.loadPreviousMessages(channelList[i]);
                 this.setState({
                   chatOpen: true,
                   otherUser: userid,
                   otherUserNick: userNick,
                   currentChannel: channelList[i],
                 });
+                sbactions.loadPreviousMessages(channelList[i]);
                 return;
               }
             }
@@ -123,6 +124,26 @@ class sbStore extends Reflux.Store {
         prevMessages: messageList.reverse(),
       });
     });
+
+    // if (prevMessages[prevMessages.length-1]._sender.userId !== this.state.userId) {
+    //   var lastMessageTestedIndex = -1;
+    //   for (var i = prevMessages.length - 1; i >= 0; i--) {
+    //     var unreadCount = currentChannel.getReadReceipt(prevMessages[i]);
+    //     if (i === prevMessages.length - 1 && unreadCount === 0) {
+    //       return;
+    //     }
+    //     if (unreadCount > 0) {
+    //       lastMessageTestedIndex = i;
+    //     }
+    //   }
+    //   if (lastMessageTestedIndex >= 0) {
+    //     this.setState({
+    //       unreadMessages : prevMessages.length - lastMessageTestedIndex,
+    //     })
+    //   }
+    //
+    //
+    // }
   }
 
   loginUser(userid) {
@@ -154,7 +175,8 @@ class sbStore extends Reflux.Store {
 
     const x = this;
 
-    this.state.channelHandler.onMessageReceived = function (channel, message) {
+    this.state.currentChannel.onMessageReceived = function (channel, message) {
+
       console.log('CHANNEL HANDLER: Got a message!! Here: ');
       console.log(channel, message);
 

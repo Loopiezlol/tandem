@@ -1,4 +1,5 @@
 import moment from 'moment';
+import Infinite from 'react-infinite';
 import React from 'react';
 import Reflux from 'reflux';
 import Paper from 'material-ui/Paper';
@@ -18,6 +19,7 @@ class sbChat extends Reflux.Component {
     this.state = {
       message: '',
       usernameLabel: 'username-hidden',
+      //newMessages: [],
     };
     this.store = SBStore;
   }
@@ -66,9 +68,9 @@ class sbChat extends Reflux.Component {
                     </li>)}
                   </ul>
                 </div>
+
               </Paper>
             </div>
-
             { isTyping ? <div>typing...</div> : <div />}
 
             <div className="input">
@@ -103,10 +105,7 @@ class sbChat extends Reflux.Component {
       message: e.target.value,
     });
     if (e.key === 'Enter') {
-      SBActions.sendMessage(this.state.message);
-      this.setState({
-        message: '',
-      });
+      this.handleSendButton(e);
     }
   }
 
@@ -120,6 +119,50 @@ class sbChat extends Reflux.Component {
       });
     }
   }
+
+  // showPreviousMessages() {
+  //   const { newMessages, unreadMessages, prevMessages } = this.state;
+  //   if (unreadMessages > 0) {
+  //     this.setState({
+  //       newMessages: {},
+  //     });
+  //     for (let i = prevMessages.length - 1; i > prevMessages.length - 1 - unreadMessages; i++) {
+  //       newMessages[i].push(prevMessages[i]);
+  //       prevMessages.splice(i, 1);
+  //     }
+  //   }
+  //   return (
+  //     <div className="messages">
+  //       <ul className="old-messages" style={{ listStyle: 'none' }}>
+  //         {prevMessages.map(msg => <li key={`${msg.messageId}`}>
+  //           {this.renderMessage(msg, Avatar)}
+  //         </li>)}
+  //       </ul>
+  //
+  //     </div>
+  //   );
+  // }
+  // showNewMessages() {
+  //   const { messages, newMessages } = this.state;
+  //   if (newMessages) {
+  //     return (
+  //       <div>
+  //         <Paper className="textFieldStyle" zDepth={0}>
+  //           <span className="messageDividerLine" id="divider-left" />
+  //           <p id="messageDividerLabel">New messages</p>
+  //           <span className="messageDividerLine" id="divider-right" />
+  //         </Paper>
+  //         <div>
+  //           <ul className="new-messages" style={{ listStyle: 'none' }}>
+  //             {newMessages.map(msg => <li key={`${msg.messageId}`}>
+  //               {this.renderMessage(msg, Avatar)}
+  //             </li>)}
+  //           </ul>
+  //         </div>
+  //       </div>
+  //     );
+  //   }
+  // }
 
   renderMessage(message) {
     const timeStamp = moment(message.createdAt).fromNow();
