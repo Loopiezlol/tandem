@@ -1,14 +1,10 @@
 .control-discover {
-  height: 100%;
+  overflow-y: auto;
+  max-height: 100%;
 
   .loading-circle {
-    top: 50%;
-    left: 50%;
-    position: relative;
-
-    * {
-      position: relative !important;
-    }
+    top: 50% !important;
+    left: 60% !important;
   }
 
   .toggle-filter-button {
@@ -50,8 +46,8 @@
   }
 
   .control-discover-results {
-    overflow-y: auto;
     text-align: center;
+    max-height: 100%;
   }
 
   .blur {

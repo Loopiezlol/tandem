@@ -24,7 +24,6 @@ class DiscoverStore extends Reflux.Store {
   }
 
   meFromTokenCompleted(res) {
-    console.log('id--------------', res.body.user._id);
     actions.getResults({}, res.body.user._id);
   }
 }
