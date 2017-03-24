@@ -5,9 +5,9 @@ const wrap = require('co-express');
 // const Language = require('../models/language');
 const Level = require('../models/level');
 
-
 function* _populateDB(n) {
-  const interests = [...Array(12).keys()].map(i => ({ name: `interest_${i}`, notes: 'BLAH!' }));
+  // const interests = [...Array(12).keys()].map(i => ({ name: `interest_${i}`, notes: 'BLAH!' }));
+  const interests = require('../../client-web-app/app/interests.js').map(x => x.name);
   const languages = yield Language.find({});
   const levels = yield Level.find({});
   [...Array(n).keys()].forEach((i) => {

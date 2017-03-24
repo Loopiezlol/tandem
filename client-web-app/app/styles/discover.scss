@@ -62,33 +62,47 @@
   }
 
 }
-.containerSmall {
+.result {
   max-width: 250px;
   display: inline-block;
   margin: 40px;
-  border-radius: 15px;
   // resize: horizontal;
 }
-.overlay {
+.userName {
+  background: #0D4D4D !important;
+  background-color: #0D4D4D !important;
+  text-align: left;
+  font-family: Roboto !important;
+  font-style: italic;
+  padding: 0px !important;
+  // .overlay {
+  //   text-align: left;
+  //   font-family: Gill Sans Extrabold, sans-serif;
+  //   font-style: italic;
+  //   font-size: 150%;
+  //   }
 }
-.text {
+.img {
+  height: 130px;
   width: 100%;
-  padding-bottom: 2px;
-}
-.imagine {
-  width: 100%;
-  padding-bottom: 2%;
   object-fit: cover;
-  position: relative;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
 }
 .speaks {
-  position: relative;
-  background-color: yellow;
-  background: yellow;
-  text-align: left;
+  background-color: #669999;
+  background: #669999;
+  text-align: center;
+  font-family: Roboto !important;
+  font-style: italic;
+  text-decoration-color: #000000 !important;
 }
-.result {
-  border-radius: 15px;
+.languages {
+  background-color: #669999;
+  background: #669999;
+  text-align: center;
+  padding: 2px !important;
+}
+.cardDivider {
+  background: #0D4D4D !important;
+  background-color: #0D4D4D !important;
+  padding: 1px !important;
 }
