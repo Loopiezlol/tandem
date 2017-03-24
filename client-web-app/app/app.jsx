@@ -24,9 +24,16 @@ function redirectIfLoggedIn() {
 
 ReactDOM.render(
   <Router history={hashHistory}>
-
+    <Route path="/" component={AuthHandler} >
+      <Route path="/home" component={PaneControl} />
       <Route path="/onboarding" component={Onboarding} />
-
+      {/* <Route path="/onboarding" component={Onboarding} />
+      <Route path="/message" component={SBMessaging} />
+      <Route path="/user" component={UserCard} />
+      <Route path="/myProfile" component={User} /> */}
+    </Route>
+    <Route path="/login" component={LoginComponent} onEnded={redirectIfLoggedIn} />
+    <Route path="/register" component={RegisterComponent} onEnter={redirectIfLoggedIn} />
   </Router>
   , document.querySelector('.app'),
 );
