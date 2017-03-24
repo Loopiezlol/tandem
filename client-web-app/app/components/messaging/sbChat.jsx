@@ -36,7 +36,8 @@ class sbChat extends Reflux.Component {
 
 
   render() {
-    const { chatOpen, otherUser, otherUserNick, message, prevMessages, messages, isTyping }
+    const { chatOpen, otherUser, otherUserNick, message, prevMessages, messages, isTyping,
+      otherUserProfileUrl }
      = this.state;
 
 
@@ -44,7 +45,12 @@ class sbChat extends Reflux.Component {
       return (
         <div>
           <Paper className="paperStyle" zDepth={2} >
-            <h5>Chat with {otherUserNick} ({otherUser})</h5>
+            <h5>
+              Chat with {otherUserNick} ({otherUser})
+              <paper className="avatarStyle">
+                <Avatar className="avatarTo" src={`${otherUserProfileUrl}`} />
+              </paper>
+            </h5>
             <Divider />
             <div>
               <Paper className="messageStyle" zDepth={0}>
@@ -164,6 +170,12 @@ class sbChat extends Reflux.Component {
   //   }
   // }
 
+  // renderProfileImage() {
+  //   const { currentChannel, otherUserProfileUrl } = this.state;
+  //
+  //   //  </paper>
+  //   );
+  // }
   renderMessage(message) {
     const timeStamp = moment(message.createdAt).fromNow();
     if (message.sender.userId === this.store.state.userID) {

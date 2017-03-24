@@ -21,6 +21,7 @@ class sbStore extends Reflux.Store {
       chatOpen: false,
       otherUser: '',
       otherUserNick: '',
+      otherUserProfileUrl: '',
       prevMessages: [],
       messages: [],
       channelHandler: {},
@@ -67,6 +68,7 @@ class sbStore extends Reflux.Store {
                   otherUser: userid,
                   otherUserNick: userNick,
                   currentChannel: channelList[i],
+                  otherUserProfileUrl: channelList[i].members[n].profileUrl,
                 });
                 sbactions.loadPreviousMessages(channelList[i]);
                 return;
@@ -155,7 +157,7 @@ class sbStore extends Reflux.Store {
         this.setState({
           userID: user.userId,
           userNick: user.nickname,
-          profileURL: user.profile_url,
+          profileURL: user.profileUrl,
         });
         console.log(`nickname is: ${this.state.userNick}, username is ${this.state.userID}`);
         console.log(user);
