@@ -71,12 +71,6 @@
   font-family: Roboto !important;
   font-style: italic;
   padding: 0px !important;
-  // .overlay {
-  //   text-align: left;
-  //   font-family: Gill Sans Extrabold, sans-serif;
-  //   font-style: italic;
-  //   font-size: 150%;
-  //   }
 }
 .img {
   height: 130px;
@@ -90,6 +84,9 @@
   font-family: Roboto !important;
   font-style: italic;
   text-decoration-color: #000000 !important;
+  padding-bottom: 0px !important;
+  padding-top: 2px !important;
+
 }
 .languages {
   background-color: #669999;
@@ -101,4 +98,8 @@
   background: #0D4D4D !important;
   background-color: #0D4D4D !important;
   padding: 1px !important;
+}
+.interests-img {
+  height: 30px;
+  width: 30px;
 }

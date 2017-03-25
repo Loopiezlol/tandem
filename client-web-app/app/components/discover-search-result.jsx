@@ -7,9 +7,9 @@ import Divider from 'material-ui/Divider';
 import '../styles/discover.scss';
 import '../styles/flags.min.css';
 
-require('../../public/flags.png');
-// const interests = require('../../app/interests.js');
+import interestsDetails from '../interests';
 
+require('../../public/flags.png');
 
 class UserCard extends Reflux.Component {
   constructor(props) {
@@ -54,8 +54,8 @@ class UserCard extends Reflux.Component {
         </span>))}
         </CardText>
         <Divider className="cardDivider" />
-        <CardText>
-          {me.interests.map(x => x.name)}
+        <CardText className="languages" >
+          {me.interests.map(x => <img className="interests-img" src={require(`../../public/png/${interestsDetails[interestsDetails.findIndex(det => det.label === x.name)].icon}.png`)} />)}
         </CardText>
         <RaisedButton onTouchTap={() => console.log(me)} className="overlay" primary fullWidth="true"> Chat! </RaisedButton>
       </Card>
