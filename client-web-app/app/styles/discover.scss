@@ -15,8 +15,6 @@
 
   .control-discover-filter {
     z-index: 50;
-    overflow-y: auto;
-    overflow-x: hidden;
     max-width: 60%;
     background: white;
     border-radius: 5px;
@@ -42,7 +40,7 @@
   }
 
   .hidden {
-    bottom: 10%;
+    bottom: calc(10% + 45px);
     opacity: 0;
     pointer-events: none;
   }
@@ -55,6 +53,8 @@
   .control-discover-results {
     text-align: center;
     max-height: 100%;
+    transition: filter 0.1s;
+    filter: none;
   }
 
   .blur {

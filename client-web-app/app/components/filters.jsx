@@ -41,7 +41,7 @@ class Filters extends Reflux.Component {
     return (
       <div className={`control-discover-filter ${visible ? 'visible' : 'hidden'}`}>
         <TextField
-          hintText="username:"
+          hintText="Search by name, username or email:"
           onChange={e => this.handleType(e)}
         />
         <Divider />
@@ -54,9 +54,10 @@ class Filters extends Reflux.Component {
           onCheck={(e, checked) => this.handleLanguageBox(checked)}
         />
         <ChipInput
-          floatingLabelText="Display users that speak:"
+          floatingLabelText="Limit results to users that speak"
           openOnFocus
-          hintText="Start typing..."
+          fullWidth
+          hintText="Leave empty to ignore languages"
           value={this.state.chips}
           dataSource={me.wantsToLearn}
           dataSourceConfig={{ text: 'name', value: '_id' }}

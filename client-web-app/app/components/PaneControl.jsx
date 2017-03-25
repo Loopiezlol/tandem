@@ -1,4 +1,3 @@
-import NavigationExpandMore from 'material-ui/svg-icons/navigation/expand-more';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import React from 'react';
