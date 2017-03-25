@@ -10,7 +10,6 @@ import Avatar from 'material-ui/Avatar';
 import ChatComponent from '../messaging/chatComponent';
 import MeetingComponent from '../messaging/meetingComponent';
 import LibBookComponent from '../messaging/libBookingComponent';
-import AbuseComponent from '../messaging/abuseComponent';
 import SBStore from '../../stores/sbStore';
 import '../../styles/sbChat.scss';
 import SBActions from '../../actions/sbActions';
@@ -58,7 +57,6 @@ class sbChat extends Reflux.Component {
               {(this.state.selectedIndex === 0) && <ChatComponent /> }
               {(this.state.selectedIndex === 1) && <MeetingComponent /> }
               {(this.state.selectedIndex === 2) && <LibBookComponent /> }
-              {(this.state.selectedIndex === 3) && <AbuseComponent />}
             </Paper>
 
             <BottomNavigation selectedIndex={this.state.selectedIndex}>
