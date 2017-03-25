@@ -1,8 +1,9 @@
 import React from 'react';
 import Reflux from 'reflux';
 import { Card, CardMedia, CardText, CardTitle } from 'material-ui/Card';
-import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
+import IconButton from 'material-ui/IconButton';
 
 import '../styles/discover.scss';
 import '../styles/flags.min.css';
@@ -21,43 +22,53 @@ class UserCard extends Reflux.Component {
     const imgUrl = 'https://facebook.github.io/react/img/logo_og.png';
     return (
       <Card className="result" >
-        <CardMedia>
-          <img
-            className="img"
-            src={imgUrl}
-            alt="bb"
-          />
+        <CardMedia
+          overlay={<CardTitle title={me.userName} className="userName" />}
+        >
+          <img className="img" src={imgUrl} />
         </CardMedia>
-        <CardTitle className="userName" title={me.username} />
-        <CardTitle subtitle="Speaks:" className="speaks" />
         <CardText className="languages">
-          {me.mainLanguage.name}
-          <img
-            src={require('../../public/transperant.png')}
-            className={me.mainLanguage.abbreviation.toLowerCase() ? `flag flag-${me.mainLanguage.abbreviation.toLowerCase()}` : ''}
-            alt={me.mainLanguage.name}
-            style={{ backgroundImage: require('../../public/flags.png') }}
-          />
+          <span className="speaks">Speaks:</span>
+          <IconButton
+            className="tooltip"
+            tooltip={<div> {me.mainLanguage.name} Level: {me.mainLanguage.level} </div>}
+          >
+            <img
+              src={require('../../public/transperant.png')}
+              className={me.mainLanguage.abbreviation ? `flag flag-${me.mainLanguage.abbreviation.toLowerCase()}` : ''}
+              alt={me.mainLanguage.name}
+              style={{ backgroundImage: require('../../public/flags.png') }}
+            />
+          </IconButton>
         </CardText>
         <Divider className="cardDivider" />
-        <CardTitle subtitle="Practices:" className="speaks" />
         <CardText className="languages">
+          <span className="speaks">Practices:</span>
           {me.wantsToLearn.map(l =>
-        (<span>
-          {`${l.languageId.name}`.toString()}
-          <img
-            src={require('../../public/transperant.png')}
-            className={l.languageId.abbreviation.toLowerCase() ? `flag flag-${l.languageId.abbreviation.toLowerCase()}` : ''}
-            alt={l.languageId.name}
-            style={{ backgroundImage: require('../../public/flags.png') }}
-          />
-        </span>))}
+          (<IconButton
+            className="tooltip"
+            tooltip={<div> {`${l.languageId.name}`.toString()} Level: {me.mainLanguage.level} </div>}
+          >
+            <img
+              src={require('../../public/transperant.png')}
+              className={l.languageId.abbreviation.toLowerCase() ? `flag flag-${l.languageId.abbreviation.toLowerCase()}` : ''}
+              alt={l.languageId.name}
+              style={{ backgroundImage: require('../../public/flags.png') }}
+            />
+          </IconButton>))}
         </CardText>
         <Divider className="cardDivider" />
         <CardText className="languages" >
-          {me.interests.map(x => <img className="interests-img" src={require(`../../public/png/${interestsDetails[interestsDetails.findIndex(det => det.label === x.name)].icon}.png`)} />)}
+          <span className="speaks">Interests:</span>
+          {me.interests.map(x =>
+            <IconButton tooltip={x.name} tooltipPosition="top-center">
+              <img
+                className="interests-img"
+                src={require(`../../public/png/${interestsDetails[interestsDetails.findIndex(det => det.label === x.name)].icon}.png`)}
+              />
+            </IconButton>)}
         </CardText>
-        <RaisedButton onTouchTap={() => console.log(me)} className="overlay" primary fullWidth="true"> Chat! </RaisedButton>
+        <FlatButton className="chatButton" onTouchTap={() => console.log(me)} primary fullWidth> Chat! </FlatButton>
       </Card>
     );
   }

@@ -18,7 +18,6 @@
   }
 
   .control-discover-filter {
-    z-index: 50;
     background: white;
     border-radius: 5px;
     position: absolute;
@@ -40,12 +39,13 @@
   .hidden {
     bottom: 10%;
     opacity: 0;
-    pointer-events: none;
+    z-index: -1;
   }
 
   .visible {
     bottom: 15%;
     opacity: 1;
+    z-index: 50;
   }
 
   .control-discover-results {
@@ -59,40 +59,40 @@
 
 }
 .result {
-  max-width: 250px;
+  max-width: 300px;
   display: inline-block;
   margin: 40px;
+  border: 3px solid #0D4D4D !important;
+  background-color: #669999 !important;
   // resize: horizontal;
 }
 .userName {
-  background: #0D4D4D !important;
-  background-color: #0D4D4D !important;
   text-align: left;
+  height: 20px !important;
   font-family: Roboto !important;
   font-style: italic;
-  padding: 0px !important;
+  padding-bottom: 0px !important;
+  bottom: 15px;
 }
 .img {
-  height: 130px;
+  height: 220px !important;
   width: 100%;
   object-fit: cover;
 }
 .speaks {
   background-color: #669999;
   background: #669999;
-  text-align: center;
+  text-align: left;
   font-family: Roboto !important;
   font-style: italic;
+  font-size: 20px !important;
   text-decoration-color: #000000 !important;
-  padding-bottom: 0px !important;
-  padding-top: 2px !important;
-
+  padding: 0px !important;
 }
 .languages {
-  background-color: #669999;
-  background: #669999;
-  text-align: center;
-  padding: 2px !important;
+  padding: 0px !important;
+  text-align: left;
+  bottom: 15px !important;
 }
 .cardDivider {
   background: #0D4D4D !important;
@@ -100,6 +100,14 @@
   padding: 1px !important;
 }
 .interests-img {
-  height: 30px;
-  width: 30px;
+  height: 25px;
+  width: 25px;
+  padding: 5px;
+  padding-bottom: 0px !important;
+}
+.interests {
+  text-align: left !important;
+}
+.chatButton {
+  z-index: 0 !important;
 }
