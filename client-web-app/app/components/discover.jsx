@@ -21,8 +21,6 @@ class Discover extends Reflux.Component {
       showLoading: true,
     };
     this.stores = [DiscoverStore, Auth];
-
-    actions.getResults({}, ((this.state || {}).me || {})._id);
   }
 
   render() {
@@ -31,9 +29,7 @@ class Discover extends Reflux.Component {
       <MuiThemeProvider>
         <div className="control-discover">
           {showLoading ?
-            <div className="loading-circle">
-              <RefreshIndicator status="loading" left={0} top={0} />
-            </div>
+            <RefreshIndicator className="loading-circle" status="loading" />
             :
             <div className={`control-discover-results ${filtersVisible ? 'blur' : ''}`}>
               {results && results.length ?

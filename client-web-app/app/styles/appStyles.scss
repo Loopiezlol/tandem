@@ -1,16 +1,18 @@
 .main-wrapper {
   // height: 100vh;
   // display: inline-block;
-  position: relative;
+  // position: relative;
   height: 100%;
-  width: 100%;
   display: flex;
   overflow-y: hidden;
+  position: absolute;
+  right: 0px;
+  transition: width 0.2s;
 
   .control-tabs {
     height: 100%;
     width: 20%;
-    position: static;
+    // position: static;
     background-color: green;
     // display: inline-block;
 
@@ -24,11 +26,45 @@
     }
   }
 
+
+
   .opened-wrapper {
-    background-color: yellow;
+    background-color: #FFF8DC;
     width: 80%;
-    position: static;
-    overflow-y: auto;
-    // height: inherit;
+    // position: static;
+    // overflow-y: auto;
+
+    .navigator-toggler {
+
+      border-bottom-right-radius: 90px;
+      border-top-right-radius: 90px;
+      height: 90px;
+      width: 45px;
+      z-index: 12;
+      position: absolute;
+      top: 50%;
+      background-color: blue;
+
+      .navigator-toggler-icon {
+        top: 25%;
+        height: 45px;
+        width: 45px;
+        position: absolute;
+        transition: transform 0.5s;
+      }
+
+      .expanded {
+        transform: rotate(180deg);
+      }
+    }
+
   }
+}
+
+.nav-visible {
+  width: 100%;
+}
+
+.nav-hidden {
+  width: 125%;
 }

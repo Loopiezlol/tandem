@@ -63,7 +63,7 @@ class Filters extends Reflux.Component {
           onRequestAdd={chip => this.handleAddChip(chip)}
           onRequestDelete={(chip, index) => this.handleDeleteChip(chip, index)}
         />
-        <div>
+        <div className="filters-interests">
           Choose interests:<br />
           {iconsWithLabels.map((interest, index) => (
             <IconButton
@@ -71,7 +71,7 @@ class Filters extends Reflux.Component {
               tooltip={interest.label}
               onTouchTap={() => this.handleInterest(index)}
             >
-              <img className={`interest-icon ${this.state.interests[index] ? 'selected' : ''}`} src={require(`../../public//png/${interest.icon}.png`)} />
+              <img className={`interest-icon ${this.state.interests[index] ? 'selected' : ''}`} src={require(`../../public/png/${interest.icon}.png`)} />
             </IconButton>
           ))}
         </div>

@@ -22,6 +22,10 @@ class DiscoverStore extends Reflux.Store {
   static getResultsFailed(err) {
     console.log(err);
   }
+
+  meFromTokenCompleted(res) {
+    actions.getResults({}, res.body.user._id);
+  }
 }
 
 actions.getResults.listen((options, id) => {
