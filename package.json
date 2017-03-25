@@ -102,6 +102,7 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "react": "^15.4.2",
+    "react-avatar-cropper": "^0.1.3",
     "react-background-image-loader": "0.0.1",
     "react-dom": "^15.4.2",
     "react-emoj": "^0.1.2",

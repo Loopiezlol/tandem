@@ -7,6 +7,7 @@ import Paper from 'material-ui/Paper';
 import Avatar from 'material-ui/Avatar';
 // import PictureUploader from "./PictureUploader";
 import CustomCarousel from './CustomCarousel';
+import PictureUploader from './PictureUploader';
 import '../../styles/Onboarding/DetailsForm.scss';
 import OnboardingActions from '../../actions/OnboardingActions';
 
@@ -96,6 +97,7 @@ class DetailsForm extends Reflux.Component {
       />
       ));
     // Avatar for both male and female characters
+    // PictureUploader should be in this array
     const userProfileCharacters = [userManWrap, userWomanWrap];
 
     const firstNameError = (
