@@ -1,7 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import { Card, CardMedia, CardText, CardTitle } from 'material-ui/Card';
-import FlatButton from 'material-ui/RaisedButton';
+import FlaotingActionButton from 'material-ui/FloatingActionButton';
 import Divider from 'material-ui/Divider';
 import IconButton from 'material-ui/IconButton';
 
@@ -11,6 +11,10 @@ import '../styles/flags.min.css';
 import interestsDetails from '../interests';
 
 require('../../public/flags.png');
+
+const style = {
+  marginRight: 20,
+};
 
 class UserCard extends Reflux.Component {
   constructor(props) {
@@ -22,8 +26,13 @@ class UserCard extends Reflux.Component {
     const imgUrl = 'https://facebook.github.io/react/img/logo_og.png';
     return (
       <Card className="result" >
+        <div className="chatButton">
+          <FlaotingActionButton mini={true} style={style} className="chatButton">
+            <img src={require('../../public/userProfile/talk.png')} />
+          </FlaotingActionButton>
+        </div>
         <CardMedia
-          overlay={<CardTitle title={me.userName} className="userName" />}
+          overlay={<CardTitle title={`${me.userName}, ${me.age}`} className="userName" />}
         >
           <img className="img" src={imgUrl} />
         </CardMedia>
@@ -40,9 +49,6 @@ class UserCard extends Reflux.Component {
               style={{ backgroundImage: require('../../public/flags.png') }}
             />
           </IconButton>
-        </CardText>
-        <Divider className="cardDivider" />
-        <CardText className="languages">
           <span className="speaks">Practices:</span>
           {me.wantsToLearn.map(l =>
           (<IconButton
@@ -58,8 +64,7 @@ class UserCard extends Reflux.Component {
           </IconButton>))}
         </CardText>
         <Divider className="cardDivider" />
-        <CardText className="languages" >
-          <span className="speaks">Interests:</span>
+        <CardText className="interests" >
           {me.interests.map(x =>
             <IconButton tooltip={x.name} tooltipPosition="top-center">
               <img
@@ -68,7 +73,6 @@ class UserCard extends Reflux.Component {
               />
             </IconButton>)}
         </CardText>
-        <FlatButton className="chatButton" onTouchTap={() => console.log(me)} primary fullWidth> Chat! </FlatButton>
       </Card>
     );
   }

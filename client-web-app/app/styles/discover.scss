@@ -63,14 +63,13 @@
   display: inline-block;
   margin: 40px;
   border: 3px solid #0D4D4D !important;
-  background-color: #669999 !important;
+  background-color:  #FFFFFF !important;
   // resize: horizontal;
 }
 .userName {
   text-align: left;
   height: 20px !important;
   font-family: Roboto !important;
-  font-style: italic;
   padding-bottom: 0px !important;
   bottom: 15px;
 }
@@ -80,34 +79,41 @@
   object-fit: cover;
 }
 .speaks {
-  background-color: #669999;
-  background: #669999;
-  text-align: left;
+  background-color:  #FFFFFF;
+  background:  #FFFFFF;
+  text-align: center !important;
   font-family: Roboto !important;
-  font-style: italic;
-  font-size: 20px !important;
+  font-size: 18px !important;
   text-decoration-color: #000000 !important;
   padding: 0px !important;
+  width: 90px !important;
 }
 .languages {
   padding: 0px !important;
-  text-align: left;
+  text-align: center;
   bottom: 15px !important;
 }
 .cardDivider {
   background: #0D4D4D !important;
   background-color: #0D4D4D !important;
-  padding: 1px !important;
 }
 .interests-img {
-  height: 25px;
-  width: 25px;
+  height: 20px;
+  width: 20px;
   padding: 5px;
   padding-bottom: 0px !important;
 }
 .interests {
-  text-align: left !important;
+  text-align: center !important;
+  padding: 0px !important ;
+  background: #FFFFFF;
+  background-color: #FFFFFF;
 }
 .chatButton {
-  z-index: 0 !important;
+  z-index: 100 !important;
+  position: absolute;
+  background: #D8D3C2 !important;
+  color: #D8D3C2 !important;
+  background-color: #D8D3C2 !important;
+  background: url('../../public/speakIcon.png') !important;
 }
