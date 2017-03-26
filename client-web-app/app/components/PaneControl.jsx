@@ -29,6 +29,7 @@ class PaneControl extends React.Component { // !! not reflux
   switchTo(openedTab) {
     this.setState({
       openedTab,
+      navigatiorOpen: false,
     });
   }
 
