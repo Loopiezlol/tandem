@@ -1,7 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import { Card, CardMedia, CardText, CardTitle } from 'material-ui/Card';
-import FlaotingActionButton from 'material-ui/FloatingActionButton';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
 import Divider from 'material-ui/Divider';
 import IconButton from 'material-ui/IconButton';
 
@@ -26,13 +26,11 @@ class UserCard extends Reflux.Component {
     const imgUrl = 'https://facebook.github.io/react/img/logo_og.png';
     return (
       <Card className="result" >
-        <div className="chatButton">
-          <FlaotingActionButton mini={true} style={style} className="chatButton">
-            <img src={require('../../public/userProfile/talk.png')} />
-          </FlaotingActionButton>
-        </div>
+        <FloatingActionButton mini={true} style={style} className="chatButton">
+          <img src={require('../../public/userProfile/talk.png')} />
+        </FloatingActionButton>
         <CardMedia
-          overlay={<CardTitle title={`${me.userName}, ${me.age}`} className="userName" />}
+          overlay={<CardTitle title={`${me.firstName} ${me.lastName}, ${me.age}`} className="userName" />}
         >
           <img className="img" src={imgUrl} />
         </CardMedia>
