@@ -31,7 +31,7 @@ module.exports = {
         // _id: language.languageId._id,
         level: language.levelId.name,
       })),
-      profilePicutre: u.profilePicutre,
+      profilePicture: u.profilePicutre,
     };
   },
 };

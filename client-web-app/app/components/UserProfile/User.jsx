@@ -293,7 +293,7 @@ class User extends Reflux.Component {
           <h1 className="selectorHeader">Languages</h1>
           <div className="motherLanguageWrap" >
             <p className="propLabel" id="motherLangLabel">Mother language</p>
-            <p className="dataLabel" id="motherLangDataLabel">{this.state.userInfo.motherLanguage}</p>
+            <p className="dataLabel" id="motherLangDataLabel">{(this.state.tempUser.mainLanguage || {}).name}</p>
 {/* =======
             {
               this.state.enableEdit ? <div id="motherLanguaeEdit">
@@ -474,10 +474,12 @@ class User extends Reflux.Component {
       </div>
     );
 
-
+    const loadedImg = (this.state.tempUser || {}).profilePicture;
+    const src = loadedImg ? `data:image/jpeg;base64, ${loadedImg}` : require('../../../public/boss.png');
+    console.log(loadedImg);
     return (
       <div className="userProfileWrap">
-        <img src={require('../../../public/boss.png')} className="profileImg" />
+        <img src={src} className="profileImg" />
         <MuiThemeProvider>
           <Paper className="userInfoWrap" zDepth={1}>
             <div className="selectorsWrap" >
