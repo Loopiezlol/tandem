@@ -29,6 +29,7 @@ module.exports = {
         name: language.languageId.name,
         _id: language.languageId._id,
       })),
+      profilePicutre: u.profilePicutre,
     };
   },
 };

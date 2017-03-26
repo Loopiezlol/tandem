@@ -41,7 +41,7 @@ class Onboarding extends Reflux.Component {
     }
   }
 
-  finish() {
+  finish = () => {
     const { userInfo, me } = this.state;
     OnboardingActions.finish(userInfo, me._id);
     const jwt = localStorage.getItem('jwt');
@@ -102,7 +102,6 @@ class Onboarding extends Reflux.Component {
           decorators={null}
           autoplay
           className="bgSlider"
-          wrapAround={true}
           autoplayInterval={8000}
         >
           {bgImages}
@@ -122,7 +121,7 @@ class Onboarding extends Reflux.Component {
         </MuiThemeProvider>
         <div className="ctrlBtns">
           {this.state.stage !== 'interestsNotesStage' && <NextButton onClick={() => OnboardingActions.goNext()} />}
-          {this.state.stage === 'interestsNotesStage' && <FinishButton onClick={() => this.finish()} />}
+          {this.state.stage === 'interestsNotesStage' && <FinishButton onClick={this.finish} />}
         </div>
       </div>
     );

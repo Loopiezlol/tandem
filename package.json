@@ -91,6 +91,7 @@
     "email-verification": "^0.4.5",
     "express": "^4.14.1",
     "file-loader": "^0.10.1",
+    "formidable": "^1.1.1",
     "jsonwebtoken": "^7.3.0",
     "material-ui": "^0.17.0",
     "material-ui-chip-input": "^0.13.1",

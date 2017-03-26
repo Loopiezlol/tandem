@@ -48,6 +48,7 @@ class DetailsForm extends Reflux.Component {
       updateChar(this);
     }
     this.setState({ selectedCharacterSrc: source, goBtnState: 'goBtn goBtn-show' });
+    OnboardingActions.setImage(source);
   }
     // Confirming character selection for new profile picture
   selectCharacterDone() {
@@ -72,6 +73,7 @@ class DetailsForm extends Reflux.Component {
     this.setState({
       selectedCharacterSrc: input,
     });
+    OnboardingActions.setImage(input);
   }
 
   renderPicture = () => {
