@@ -7,15 +7,16 @@ import FontIcon from 'material-ui/FontIcon';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import ReactEmoji from 'react-emoji';
+import Avatar from 'material-ui/Avatar';
 import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
 import SBStore from '../../stores/sbStore';
 import '../../styles/sbChat.scss';
 import SBActions from '../../actions/sbActions';
 
-
+/* eslint-disable */
 const reportIcon = <FontIcon className="material-icons">mood_bad</FontIcon>;
-const profileIcon = <FontIcon className="material-icons">account_circle</FontIcon>;
+/* {const profileIcon = <FontIcon className="material-icons">account_circle</FontIcon>;}*/
 const styles = {
   uploadButton: {
     verticalAlign: 'middle',
@@ -86,13 +87,17 @@ class chatComponent extends Reflux.Component {
         onTouchTap={this.handleAbuseClose}
       />,
     ];
-    const { otherUser, otherUserNick, message, prevMessages, messages, isTyping }
+    const { otherUser, otherUserNick, message, prevMessages, messages, isTyping, otherUserProfileUrl, lastMessage }
      = this.state;
+    let lastTimeStamp = 'New chat';
+    if (!(lastMessage == null)) {
+      lastTimeStamp = moment(lastMessage.createdAt).fromNow();
+    }
     return (
       <div>
         <h3 style={{ margin: 14, fontSize: '0.93em', fontWeight: 'normal' }}>Chat with {otherUserNick} ({otherUser})</h3>
-        <p>Last message: TODO!</p>
-        <RaisedButton label="View Profile" style={{ margin: 12 }} icon={profileIcon} />
+        <p>Last message: {lastTimeStamp}</p>
+        <RaisedButton label="View Profile" style={{ margin: 12 }} icon={<Avatar src={otherUserProfileUrl} />} />
         <RaisedButton label="Block/Report" secondary style={{ margin: 12 }} icon={reportIcon} onClick={this.handleAbuseOpen} />
         <Dialog
           title="Block or Report this User"

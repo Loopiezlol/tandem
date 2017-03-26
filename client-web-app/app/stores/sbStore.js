@@ -25,6 +25,8 @@ class sbStore extends Reflux.Store {
       messages: [],
       channelHandler: {},
       isTyping: false,
+      otherUserProfileUrl: '',
+      lastMessage: null,
     };
     this.listenables = sbactions;
 
@@ -71,6 +73,8 @@ class sbStore extends Reflux.Store {
                   otherUser: userid,
                   otherUserNick: userNick,
                   currentChannel: channelList[i],
+                  otherUserProfileUrl: channelList[i].members[n].profileUrl,
+                  lastMessage: channelList[i].lastMessage,
                 });
                 return;
               }
@@ -82,6 +86,7 @@ class sbStore extends Reflux.Store {
             chatOpen: true,
             otherUser: userid,
             otherUserNick: userNick,
+            lastMessage: null,
           });
         });
       }
@@ -106,8 +111,15 @@ class sbStore extends Reflux.Store {
           return;
         }
         console.log(`made the new channel successfully: ${channel}`);
+        let url = '';
+        for (let i = 0, size = channel.members.length; i < size; i += 1) {
+          if (channel.members[i].userId !== userID) {
+            url = channel.members[i].profileUrl;
+          }
+        }
         this.setState({
           currentChannel: channel,
+          otherUserProfileUrl: url,
         });
         console.log(channel);
       });
