@@ -9,13 +9,29 @@ import FlatButton from 'material-ui/FlatButton';
 import ReactEmoji from 'react-emoji';
 import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
-import Avatar from 'material-ui/Avatar';
 import SBStore from '../../stores/sbStore';
 import '../../styles/sbChat.scss';
 import SBActions from '../../actions/sbActions';
 
+
 const reportIcon = <FontIcon className="material-icons">mood_bad</FontIcon>;
 const profileIcon = <FontIcon className="material-icons">account_circle</FontIcon>;
+const styles = {
+  uploadButton: {
+    verticalAlign: 'middle',
+    width: '20%',
+  },
+  uploadInput: {
+    cursor: 'pointer',
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    right: 0,
+    left: 0,
+    width: '100%',
+    opacity: 0,
+  },
+};
 
 // The component containing an actual conversation with a user
 
@@ -24,6 +40,7 @@ class chatComponent extends Reflux.Component {
     super(props);
     this.state = {
       message: '',
+      fileMessage: '',
       abuseDialogOpen: false,
       usernameLabel: 'username-hidden',
     };
@@ -96,7 +113,7 @@ class chatComponent extends Reflux.Component {
             <div className="messages">
               <ul className="old-messages" style={{ listStyle: 'none' }}>
                 {prevMessages.map(msg => <li key={`${msg.messageId}`}>
-                  {this.renderMessage(msg, Avatar)}
+                  {this.renderMessage(msg)}
                 </li>)}
               </ul>
 
@@ -109,7 +126,7 @@ class chatComponent extends Reflux.Component {
             <div className="currentMsg">
               <ul className="new-messages" style={{ listStyle: 'none' }}>
                 {messages.map(msg => <li key={`${msg.messageId}`}>
-                  {this.renderMessage(msg, Avatar)}
+                  {this.renderMessage(msg)}
                 </li>)}
               </ul>
             </div>
@@ -123,6 +140,13 @@ class chatComponent extends Reflux.Component {
             floatingLabelText="Type Your Message"
             value={message} onChange={e => this.handleMessageType(e)}
           />
+          <FlatButton
+            icon={<i className="material-icons">attachment</i>}
+            onclick={e => this._handleChange(e)}
+            onchange={e => this._openFileDialog(e)}
+          >
+            <input type="file" style={styles.uploadInput} />
+          </FlatButton>
           <RaisedButton
             primary style={{ margin: 5 }}
             label="Send"
@@ -134,6 +158,13 @@ class chatComponent extends Reflux.Component {
     );
   }
 
+  handleChange(e) {
+    console.log(e.target.value);
+  }
+  _openFileDialog() {
+    const fileUploadDom = this.node(this.refs.fileUpload);
+    fileUploadDom.click();
+  }
   handleMessageType(e) {
     const { currentChannel } = this.state;
     if (e.target.value && e.target.value.length) {
@@ -168,7 +199,7 @@ class chatComponent extends Reflux.Component {
         <div>
           <p className="usernameLabel" style={{ paddingLeft: '340px' }} id={this.state.usernameLabel}> {message.sender.nickname}{timeStamp} </p>
           <div onClick={e => this.showUserName(e)} className="message to">
-            {ReactEmoji.emojify(message.message) || message.message || Avatar}
+            {ReactEmoji.emojify(message.message) || message.message}
           </div>
         </div>
       );
