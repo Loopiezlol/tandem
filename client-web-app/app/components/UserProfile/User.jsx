@@ -97,28 +97,6 @@ class User extends Reflux.Component {
     this.setState({ addNotes: null, visibilityHeader: 'visibleHeader' });
   }
 
-  handleMouseEnter = () => {
-    if (this.state.selectorBg === 'bg-info' || this.state.selectorBg === 'bg-languages') {
-      this.setState({ showEdit: true });
-    }
-  }
-
-  handleMouseLeave = () => {
-    if (this.state.selectorBg === 'bg-info' || this.state.selectorBg === 'bg-languages') {
-      this.setState({ showEdit: false });
-    }
-  }
-
-
-  enableEdit = () => {
-    if (this.state.enableEdit) {
-      this.setState({ enableEdit: false });
-    } else {
-      this.setState({ enableEdit: true });
-    }
-  }
-
-
   addNewFamLang = () => {
     // TODO: check if newFamLang is valid language
     const { newFamLang, newFamLangLevel, tempUser } = this.state;
@@ -313,9 +291,10 @@ class User extends Reflux.Component {
         </div>
         <div id={this.state.isBlurred} onClick={this.closeNewFamLangPopUp}>
           <h1 className="selectorHeader">Languages</h1>
-          {this.state.showEdit && <p className="editPromptLabel" onClick={this.enableEdit}>Edit</p>}
           <div className="motherLanguageWrap" >
             <p className="propLabel" id="motherLangLabel">Mother language</p>
+            <p className="dataLabel" id="motherLangDataLabel">{(this.state.tempUser.mainLanguage || {}).name}</p>
+{/* =======
             {
               this.state.enableEdit ? <div id="motherLanguaeEdit">
                 <TextField
@@ -326,6 +305,7 @@ class User extends Reflux.Component {
               </div> :
               <p className="dataLabel" id="motherLangDataLabel">{(this.state.tempUser.mainLanguage || {}).name} </p>
             }
+>>>>>>> develop */}
           </div>
           <div className="famLangWrapper">
             <p className="propLabel" id="famLangLabel">Familiar languages</p>
@@ -494,10 +474,12 @@ class User extends Reflux.Component {
       </div>
     );
 
-
+    const loadedImg = (this.state.tempUser || {}).profilePicture;
+    const src = loadedImg ? `data:image/jpeg;base64, ${loadedImg}` : require('../../../public/boss.png');
+    console.log(loadedImg);
     return (
       <div className="userProfileWrap">
-        <img src={require('../../../public/boss.png')} className="profileImg" />
+        <img src={src} className="profileImg" />
         <MuiThemeProvider>
           <Paper className="userInfoWrap" zDepth={1}>
             <div className="selectorsWrap" >
@@ -507,7 +489,7 @@ class User extends Reflux.Component {
                 </Paper>
               </MuiThemeProvider>
             </div>
-            <div className="selectorDataWrap" onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
+            <div className="selectorDataWrap">
               <span className="backgroundSelector" id={this.state.selectorBg} />
               <MuiThemeProvider>
                 <Paper className="selectorDataContainer" >

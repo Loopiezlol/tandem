@@ -1,6 +1,8 @@
+
+
 .control-discover {
   height: 98vh; // for now
-  background-color: #F0E7BB;
+  background-color: #EAE3EA !important;
   $filterheight: 64px;
 
   .control-discover-filter {
@@ -52,10 +54,14 @@
 }
 .speaks {
   position: relative;
-  background-color: yellow;
-  background: yellow;
+  background-color: white;
+  background: white;
   text-align: left;
 }
 .result {
   border-radius: 15px;
+}
+
+.leftIconBar {
+  color: black !important;
 }

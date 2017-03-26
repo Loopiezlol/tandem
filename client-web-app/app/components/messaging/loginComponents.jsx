@@ -9,7 +9,6 @@ import {
 } from 'material-ui/styles/colors';
 import SBStore from '../../stores/sbStore';
 import SBActions from '../../actions/sbActions';
-
 class loginComponents extends Reflux.Component {
   constructor(props) {
     super(props);
