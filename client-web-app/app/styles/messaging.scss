@@ -1,0 +1,12 @@
+.messaging-wrapper {
+
+  height: 100%;
+
+  .content-wrapper-2 {
+    max-height: calc(100% - 64px) !important;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
