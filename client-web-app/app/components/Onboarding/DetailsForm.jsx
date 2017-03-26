@@ -7,7 +7,7 @@ import Paper from 'material-ui/Paper';
 import Avatar from 'material-ui/Avatar';
 // import PictureUploader from "./PictureUploader";
 import CustomCarousel from './CustomCarousel';
-import PictureUploader from './PictureUploader';
+import AvatarUploader from '../avatarUploader';
 import '../../styles/Onboarding/DetailsForm.scss';
 import OnboardingActions from '../../actions/OnboardingActions';
 
@@ -67,6 +67,26 @@ class DetailsForm extends Reflux.Component {
     OnboardingActions.selectSex(sex);
     this.setState({ sexSelected: `selected-${sex}` });
   }
+
+  handleAvatarChange = (input) => {
+    this.setState({
+      selectedCharacterSrc: input,
+    });
+  }
+
+  renderPicture = () => {
+    const { selectedCharacterSrc } = this.state;
+    if (selectedCharacterSrc.includes('blob')) {
+      // uploaded picture
+      return <img className="uploaded-pic-selected" src={selectedCharacterSrc} />;
+    }
+    // default pic charAvatar-selected
+    return (<Avatar
+      key={'avatar-woman-selected'}
+      className={'avatar-selected'}
+      src={selectedCharacterSrc}
+    />);
+  };
   render() {
     // Label that introduecs stage of the onnboarding process
     const label = {
@@ -98,7 +118,8 @@ class DetailsForm extends Reflux.Component {
       ));
     // Avatar for both male and female characters
     // PictureUploader should be in this array
-    const userProfileCharacters = [userManWrap, userWomanWrap];
+    const uploader = <AvatarUploader onUpload={this.handleAvatarChange} />;
+    const userProfileCharacters = [userManWrap, userWomanWrap, uploader];
 
     const firstNameError = (
       <span className="firstNameError">
@@ -195,7 +216,7 @@ class DetailsForm extends Reflux.Component {
       <div>
         <div style={label}>Who are you?</div>
         <div className={this.state.defaultIcon}>
-          <i
+          {this.state.selectedCharacterSrc ? this.renderPicture() : <i
             className="material-icons userIcon"
             style={{
               fontSize: '60px',
@@ -203,7 +224,7 @@ class DetailsForm extends Reflux.Component {
               color: '#d3d3d3' }}
           >
             account_circle
-          </i>
+          </i>}
         </div>
         {this.state.newProfileEnabled && newProfile}
         {this.state.showCharacters && charactersWrap}

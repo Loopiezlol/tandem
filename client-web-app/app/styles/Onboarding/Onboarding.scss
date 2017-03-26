@@ -159,3 +159,18 @@
   margin-top: -70px;
   z-index: 1;
 }
+
+.uploaded-pic-selected {
+  max-height: 50px !important;
+  width: 50px !important;
+  height: auto;
+  display: inline-block;
+  position: relative;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.avatar-selected {
+  height: 50px !important;
+  width: 50px !important;
+}
