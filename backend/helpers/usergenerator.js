@@ -12,7 +12,10 @@ function* _populateDB(n) {
   const levels = yield Level.find({});
   [...Array(n).keys()].forEach((i) => {
     User.create({
+      firstName: `First${i}`,
+      lastName: `Last${i}`,
       username: `user${i}`,
+      age: 21,
       email: `user_${i}@kcl.ac.uk`,
       gender: ['M', 'F'][Math.floor(Math.random() * 2)],
       mainLanguage: languages[Math.floor(Math.random() * languages.length)]._id,
@@ -23,6 +26,7 @@ function* _populateDB(n) {
       }],
       interests: [interests[Math.floor(Math.random() * 12)],
         interests[Math.floor(Math.random() * 12)]],
+      onboardingDone: true,
     }, (err, doc) => {
       if (err) {
         console.log(err);

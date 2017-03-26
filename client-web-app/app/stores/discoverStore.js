@@ -16,15 +16,12 @@ class DiscoverStore extends Reflux.Store {
       results: res.body,
       showLoading: false,
       filtersVisible: false,
+      loadedFirstTime: false,
     });
   }
 
   static getResultsFailed(err) {
     console.log(err);
-  }
-
-  meFromTokenCompleted(res) {
-    actions.getResults({}, res.body.user._id);
   }
 }
 
