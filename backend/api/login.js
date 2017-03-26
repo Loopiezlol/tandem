@@ -23,7 +23,7 @@ function logIn(req, res) {
         expiresIn: '1440m', // expires in 24 hours
       });
       return res.json({
-        message: 'This should get you to the dashboard now',
+        message: 'Success!',
         errors,
         // user,
         token,

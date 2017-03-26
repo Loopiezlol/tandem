@@ -1,5 +1,6 @@
 import React from 'react';
 import Discover from './discover';
+import User from './UserProfile/User';
 import Messaging from './messaging/messaging';
 import '../styles/appStyles.scss';
 
@@ -8,7 +9,7 @@ const renderMainComponent = (componentName) => {
     case 'messaging':
       return <Messaging />;
     case 'profile':
-      return <div>profile  :)</div>;
+      return <User />;
     case 'discover':
     default:
       return <Discover />;
