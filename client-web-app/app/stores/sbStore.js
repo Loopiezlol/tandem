@@ -27,6 +27,10 @@ class sbStore extends Reflux.Store {
       isTyping: false,
     };
     this.listenables = sbactions;
+
+    if (this.props.otherUserID && this.props.otherUserNickName) {
+      this.openChat (this.props.otherUserID, this.props.otherUserNickName);
+    }
     //  sbactions.loginUser(auth.state.me.email);
   }
 
