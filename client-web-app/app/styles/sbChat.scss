@@ -1,30 +1,15 @@
-.youMessage {
-  // margin: 2;
-  background-color: #00bcd4 !important;
-  display: block !important;
-  // float: right !important;
-  margin-left: 330px !important;
-  margin-top:-7px !important;
-  margin-bottom: 10px !important;
-  max-width: 300px !important;
-  word-wrap: break-word !important;
-  max-height: 300px !important;
-}
-.otherMessage{
-  margin-top:-7px !important;
-  margin-bottom: 10px !important;
-}
-.messageWrap {
-  // background-color: red !important;
-
-}
-.currentMsg {
-  // background-color: red !important;
+.content-wrapper {
+  display:block !important;
+  text-align:center !important;
 }
 
 .usernameLabel {
   position: relative;
   font-size: 12px;
+  /* display: block; */
+  padding-right: 50px;
+  bottom: -25px;
+
 }
 
 #username-visible {
@@ -34,26 +19,139 @@
 #username-hidden {
   display: none;
 }
+.timeStampLabel {
+  position: relative;
+  /* background-color: red !important; */
+  font-size: 9px;
+  width: 70px;
+  opacity: 0.65;
+  display: block;
+  color: #bababa;
+  margin-left: -8px;
+}
 
 .messageDividerLine {
   position: absolute;
-  width: 145px;
+  width: 125px;
   height: 1px;
   margin-top: 17px;
   background-color: pink;
-  z-index: 1;
+  z-index: 2;
 }
 
 #divider-left {
-  margin-left: -150px;
+  margin-left: -140px;
 }
 
 #divider-right {
-  margin-left: 5px;
+  margin-left: 10px;
 }
 
 #messageDividerLabel {
   font-size: 14px;
   display: inline;
   z-index: 2;
+}
+
+.message {
+box-sizing: border-box;
+width: auto;
+max-width: 80%;
+position: relative;
+clear: both;
+border-radius: 20px 20px 20px 20px;
+background-color: #00bcd4;
+margin-top: -7px;
+margin-bottom: 10px;
+position: relative;
+word-wrap: break-word;
+overflow-wrap: break-word;
+max-width: 300px;
+font-size: 14px;
+padding: 6px 3px 3px 3px;
+z-index: 2;
+min-width: 80px;
+min-height: 30px;
+
+}
+.message.to {
+    float: right;
+    color: #fff ;
+    margin-right: 40px ;
+
+}
+.message.from {
+    background-color: #E5E4E9 ;
+    color: #363636 ;
+    float: left;
+    margin-left: 0px ;
+
+}
+.message.to + .message.to,
+.message.from + .message.from {
+  margin-top: -7px ;
+}
+.message:before {
+    border-color: #00bcd4 ;
+    border-radius: 50% 50% 50% 50% ;
+    border-style: solid ;
+    border-width: 0 20px ;
+    bottom: 0 ;
+    clip: rect(28px, 37px, 50px, 0px) ;
+    content: " " ;
+    height: 40px ;
+    position: absolute ;
+    right: -48px ;
+    width: 30px ;
+    z-index: -1 ;
+}
+.message.from:before {
+    border-color: #E5E4E9 ;
+    left: -48px ;
+    transform: rotateY(180deg);
+}
+.paperStyle{
+  width: 30pc;
+  margin: 15px;
+  text-align:center;
+  display: inline-block;
+  color: gray;
+
+}
+.ULpaperStyle{
+  width: 30pc;
+  margin: 1pc;
+  text-align: left;
+  display: inline-block;
+}
+.messageStyle  {
+  width: 30pc;
+  margin: 0;
+  text-align:center;
+  display: inline-block;
+  color: black;
+}
+.textFieldStyle {
+  width: 25pc;
+  margin: 0;
+  text-align:center;
+  display: inline-block;
+  color: black;
+}
+
+.avatarStyle {
+  width: 39pc;
+  margin: -20px;
+/* bottom: -19px; */
+display: inline-block;
+position: element(#username-visible);
+transform: translateY(65%);
+position: relative;
+
+}
+.avatarTo {
+  margin-right: -250px;
+}
+.avatarFrom {
+  margin-left: -620px;
 }

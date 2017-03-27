@@ -1,46 +1,76 @@
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import IconButton from 'material-ui/IconButton';
+import Drawer from 'material-ui/Drawer';
+import AppBar from 'material-ui/AppBar';
+import ContentFilterList from 'material-ui/svg-icons/content/filter-list';
+
 import React from 'react';
 import Reflux from 'reflux';
-import SampleStore from '../stores/sampleStore';
-import actions from '../actions';
+import Filters from './filters';
+import UserCard from './discover-search-result';
+import DiscoverStore from '../stores/discoverStore';
+import Auth from '../stores/auth';
+import actions from '../actions/actions';
+
+import '../styles/discover.scss';
 
 class Discover extends Reflux.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchText: '',
-      boxContent: 0,
+      filtersVisible: false,
     };
-    this.store = SampleStore;
+    this.stores = [DiscoverStore, Auth];
+
+    actions.getResults({}, ((this.state || {}).me || {})._id);
   }
 
   render() {
-    const { users, searchText, boxContent } = this.state;
+    const { results } = this.state;
     return (
-      <div className="control-discover">
-        <div className="control-discover-filter">
-          <input type="text" value={searchText} onChange={e => this.handleType(e)} />
-          <input type="checkbox" checked={boxContent} onChange={e => this.handleBox(e)} />
-          <button onClick={() => actions.getUsers()}>Search!</button>
+      <MuiThemeProvider>
+        <div className="control-discover">
+          <Drawer
+            open={this.state.filtersVisible}
+            openSecondary
+            docked={false}
+            onRequestChange={filtersVisible => this.handleSwipeDrawer(filtersVisible)}
+          >
+            <AppBar
+              title="Hide filters"
+              onLeftIconButtonTouchTap={() => this.handleToggleDrawer()}
+              onTitleTouchTap={() => this.handleToggleDrawer()}
+            />
+            <Filters />
+          </Drawer>
+          <AppBar
+            className="appbar"
+            iconClassNameLeft = "leftIconBar"
+            iconElementRight={<IconButton><ContentFilterList /></IconButton>}
+            onRightIconButtonTouchTap={() => this.handleToggleDrawer()}
+          />
+          <div className="control-discover-results">
+            {results && results.length ?
+              results.map(user =>
+                <UserCard className="results" me={user} />,
+              )
+              :
+              <div className="control-discover-results-emptypage">No matches!</div>
+            }
+          </div>
         </div>
-        <div className="control-discover-results">
-          <ul>
-            {users.map(user => <li key={`${user.username}`}>{user.username}</li>)}
-          </ul>
-        </div>
-      </div>
+      </MuiThemeProvider>
     );
   }
-  handleType(e) {
-    this.setState({
-      searchText: e.target.value,
-    });
-    console.log(this.state.searchText);
+
+  handleSwipeDrawer(filtersVisible) {
+    this.setState({ filtersVisible });
   }
-  handleBox(e) {
-    console.log(e);
+
+  handleToggleDrawer() {
     this.setState({
-      boxContent: e.target.checked,
-    }, console.log(this.state.boxContent));
+      filtersVisible: !this.state.filtersVisible,
+    });
   }
 }
 

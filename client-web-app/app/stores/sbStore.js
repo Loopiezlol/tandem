@@ -2,6 +2,7 @@ import Reflux from 'reflux';
 import SendBird from 'sendbird';
 import request from 'superagent';
 import sbactions from '../actions/sbActions';
+// import auth from './auth';
 
 const APP_ID = '78A3DDF9-3396-4088-95C3-A5E8CBDF9AD3';
 const API_TOKEN = 'ff8bf5060352c01ce575287f25def5be4b02fd6d';
@@ -20,18 +21,26 @@ class sbStore extends Reflux.Store {
       chatOpen: false,
       otherUser: '',
       otherUserNick: '',
+      otherUserProfileUrl: '',
       prevMessages: [],
       messages: [],
       channelHandler: {},
       isTyping: false,
+      //unreadMessages: 0,
     };
     this.listenables = sbactions;
+    //  sbactions.loginUser(auth.state.me.email);
   }
 
   openChat(userid, userNick) {
     // 1) Check if a channel with the other user already exists.
     // 2a) If YES, JOIN and load previous messages.
     // 2b) If NO, create the new channel and event handlers and JOIN.
+
+    // Clear the current messages array of old user messages which were sent in the last session
+    this.setState({
+      messages: [],
+    });
 
     // 1) First query using SendBird to get the list of channels user participating in...
     if (this.state.loggedIn) {
@@ -54,13 +63,14 @@ class sbStore extends Reflux.Store {
               if (channelList[i].members[n].userId === userid) {
                 // 2a) If YES, JOIN and load previous messages.
                 console.log('Channel already exists, getting previous messages.');
-                sbactions.loadPreviousMessages(channelList[i]);
                 this.setState({
                   chatOpen: true,
                   otherUser: userid,
                   otherUserNick: userNick,
                   currentChannel: channelList[i],
+                  otherUserProfileUrl: channelList[i].members[n].profileUrl,
                 });
+                sbactions.loadPreviousMessages(channelList[i]);
                 return;
               }
             }
@@ -116,6 +126,26 @@ class sbStore extends Reflux.Store {
         prevMessages: messageList.reverse(),
       });
     });
+
+    // if (prevMessages[prevMessages.length-1]._sender.userId !== this.state.userId) {
+    //   var lastMessageTestedIndex = -1;
+    //   for (var i = prevMessages.length - 1; i >= 0; i--) {
+    //     var unreadCount = currentChannel.getReadReceipt(prevMessages[i]);
+    //     if (i === prevMessages.length - 1 && unreadCount === 0) {
+    //       return;
+    //     }
+    //     if (unreadCount > 0) {
+    //       lastMessageTestedIndex = i;
+    //     }
+    //   }
+    //   if (lastMessageTestedIndex >= 0) {
+    //     this.setState({
+    //       unreadMessages : prevMessages.length - lastMessageTestedIndex,
+    //     })
+    //   }
+    //
+    //
+    // }
   }
 
   loginUser(userid) {
@@ -127,7 +157,7 @@ class sbStore extends Reflux.Store {
         this.setState({
           userID: user.userId,
           userNick: user.nickname,
-          profileURL: user.profile_url,
+          profileURL: user.profileUrl,
         });
         console.log(`nickname is: ${this.state.userNick}, username is ${this.state.userID}`);
         console.log(user);
@@ -147,7 +177,8 @@ class sbStore extends Reflux.Store {
 
     const x = this;
 
-    this.state.channelHandler.onMessageReceived = function (channel, message) {
+    this.state.currentChannel.onMessageReceived = function (channel, message) {
+
       console.log('CHANNEL HANDLER: Got a message!! Here: ');
       console.log(channel, message);
 

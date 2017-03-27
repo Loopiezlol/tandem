@@ -9,13 +9,11 @@ import SBStore from '../../stores/sbStore';
 import SBActions from '../../actions/sbActions';
 import SBUserList from '../messaging/sbUserList';
 
+/*eslint-disable*/
 class sbMessaging extends Reflux.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      sbUser: '',
-      sbNick: '',
-    };
+    this.state = {};
     this.stores = SBStore;
   }
   render() {
@@ -39,17 +37,14 @@ class sbMessaging extends Reflux.Component {
             iconClassNameRight="muidocs-icon-navigation-expand-more"
           />
 
-          <div
-            className="content-wrapper"
-            style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column' }}
-          >
-            <Paper style={style} zDepth={zDepthSize}>
+          <div className="content-wrapper">
+            <Paper className="paperStyle" style = {{ backgroundColor : 'lightblue'}} zDepth={4}>
 
               <p>Currently logged in as: </p>
               { this.logInCheck() }
             </Paper>
 
-            <Paper style={style} zDepth={zDepthSize}>
+            <Paper className="paperStyle" style = {{ backgroundColor : 'lightblue'}} zDepth={4}>
               <p>Select a unique User ID and nickname:</p>
               <TextField
                 hintText="User ID"
@@ -67,11 +62,11 @@ class sbMessaging extends Reflux.Component {
                 label="Create SendBird User"
                 onClick={() => this.handleCreate()}
                 onTap={() => this.handleCreate()}
-                primary style={buttonStyle}
+                primary style={{margin: '12px'}}
               />
             </Paper>
 
-            <Paper style={style} zDepth={zDepthSize}>
+            <Paper className="paperStyle"style = {{ backgroundColor : 'lightblue'}} zDepth={4}>
               <p>Or, log in to an existing user ID: </p>
               <TextField
                 hintText="Existing User ID"
@@ -83,7 +78,7 @@ class sbMessaging extends Reflux.Component {
                 label="Log in as SendBird User"
                 onClick={() => this.handleLogIn()}
                 onTap={() => this.handleLogIn()}
-                primary style={buttonStyle}
+                primary style={{margin: '12px'}}
               />
             </Paper>
 

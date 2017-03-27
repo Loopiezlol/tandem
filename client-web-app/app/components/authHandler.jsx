@@ -1,33 +1,45 @@
 import { hashHistory } from 'react-router';
+import Loading from 'react-loading';
 import Reflux from 'reflux';
-// import React from 'react';
+import React from 'react';
 import Auth from '../stores/auth';
+import sbactions from '../actions/sbActions';
+import sbStore from '../stores/sbStore';
 
 class AuthHandler extends Reflux.Component {
   constructor(props) {
     super(props);
-    this.store = Auth;
+    this.stores = [Auth, sbStore];
   }
 
   render() {
-    return this.props.children;
+    return this.state.me ? this.props.children : <Loading type="cyclon" />;
   }
 
   componentDidMount() {
-    if (this.state.status === 'in' && this.props.children === null) {
+    const { status } = this.state;
+    if (status === 'in' && this.props.children === null) {
+      sbactions.loginUser(this.state.me.email);
       // could be improved with indexroute I guess
       // Currently set the main page as /message because we didn't have another one
-      hashHistory.push('/message');
-    } else if (this.state.status === 'off') {
+      hashHistory.push('/');
+    } else if (status === 'off') {
       hashHistory.push('/login');
     }
   }
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.status !== this.state.status ||
-      this.props.children === null) {
-      if (this.state.status === 'in') {
-        // must change main route here as well
-        hashHistory.push('/message');
+    const { status, me } = this.state;
+    if (prevState.status !== status ||
+      this.props.children === null ||
+      me.onboardingDone !== prevState.me.onboardingDone ||
+      (prevProps.location.pathname !== this.props.location.pathname && this.props.location.pathname === '/onboarding')) {
+      if (status === 'in') {
+        sbactions.loginUser(this.state.me.email);
+        if (me.onboardingDone) {
+          hashHistory.push('/home');
+        } else {
+          hashHistory.push('/onboarding');
+        }
       } else {
         hashHistory.push('/login');
       }

@@ -30,6 +30,14 @@ export default {
         exclude: [/node_modules/, /dist/],
       },
     ],
+    {
+       test: /\.(jpe?g|png|gif|svg)$/i,
+       loaders: [
+         'file-loader?hash=sha512&digest=hex&name=[hash].[ext]',
+         'image-webpack-loader?bypassOnDebug',
+       ],
+       exclude: [/node_modules/, /dist/],
+     },
   },
   resolve: {
     extensions: ['*', '.js', '.jsx', 'scss', 'css'],

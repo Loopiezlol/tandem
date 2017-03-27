@@ -6,9 +6,68 @@ const morgan = require('morgan');
 const config = require('../common/config.js');
 const jwt = require('jsonwebtoken');
 
+// const Language = require('./models/language');
+// const Level = require('./models/level');
+// const wrap = require('co-express');
+
 const app = express();
 
-mongoose.connect(config.db);
+
+if (require.main === module) {
+  mongoose.connect(config.db);
+  // require('./helpers/usergenerator').populateDBwithLanguages();
+
+  require('./helpers/usergenerator').populateDB(50);
+  // UNCOMMENT THIS TO GENERATE SOME LANGUAGES AND LEVELS
+  const wrap = require('co-express');
+  const Language = require('./models/language');
+  const Level = require('./models/level');
+
+  function* createLanguages() {
+    const currentLanguages = yield Language.find({});
+    // console.log(currentLanguages);
+    if (currentLanguages.length === 0) {
+      yield Language.create({
+        name: 'Spanish',
+        abbreviation: 'ES',
+      });
+      yield Language.create({
+        name: 'English',
+        abbreviation: 'EN',
+      });
+      yield Language.create({
+        name: 'Romanian',
+        abbreviation: 'RO',
+      });
+      console.log('done');
+    }
+  }
+
+  function* createLevels() {
+    const currentLevels = yield Level.find({});
+    if (currentLevels.length === 0) {
+      yield Level.create({
+        name: 'C2',
+        level: 5,
+      });
+      yield Level.create({
+        name: 'C1',
+        level: 4,
+      });
+      yield Level.create({
+        name: 'B2',
+        level: 3,
+      });
+      console.log('done');
+    }
+  }
+
+  wrap(createLanguages)();
+  wrap(createLevels)();
+} else {
+  mongoose.connect('mongodb://localhost/test');
+}
+
 app.use(cors());
 
 app.use(bodyParser.json({ limit: '50mb' }));
@@ -16,15 +75,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(morgan('dev'));
 
+// unprotected routes
 app.use('/', require('./api/login'));
 app.use('/', require('./api/register'));
 app.use('/', require('./api/verify'));
 
 
-// testing purposes only, should remove afterwards
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  // res.send('Hello World!');
+  res.redirect('http://localhost:3001/#/login');
 });
+
 
 // auth middleware
 //eslint-disable-next-line
@@ -50,11 +111,19 @@ app.use((req, res, next) => {
   }
 });
 
+// protected routes
 app.use('/me', require('./api/me'));
 app.use('/users/', require('./api/users'));
+app.use('/levels', require('./api/levels'));
+app.use('/languages', require('./api/languages'));
 
-const server = app.listen(process.env.PORT || 3000, () => {
-  const port = server.address().port;
-  const host = server.address().address;
-  console.log('App listening at http://%s:%s', host, port);
-});
+
+if (require.main === module) {
+  const server = app.listen(process.env.PORT || 3000, () => {
+    const port = server.address().port;
+    const host = server.address().address;
+    console.log('App listening at http://%s:%s', host, port);
+  });
+} else {
+  module.exports = app;
+}
