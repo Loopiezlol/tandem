@@ -150,7 +150,7 @@ class chatComponent extends Reflux.Component {
             onclick={e => this._handleChange(e)}
             onchange={e => this._openFileDialog(e)}
           >
-            <input type="file" style={styles.uploadInput} />
+            <input type="file" style={styles.uploadInput}  />
           </FlatButton>
           <RaisedButton
             primary style={{ margin: 5 }}
