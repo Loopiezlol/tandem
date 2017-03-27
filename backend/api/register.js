@@ -2,6 +2,7 @@ const validator = require('validator');
 const router = require('express').Router();
 const User = require('../models/user');
 const nev = require('../mailer/index');
+const fconfig = require('../../common/formsconfig');
 
 function registerUser(req, res) {
   const user = new User({
@@ -24,7 +25,7 @@ function registerUser(req, res) {
     if (existingPersistentUser) {
       return res.json({
         success: true,
-        message: 'You have already signed up and confirmed your account. Did you forget your password?',
+        message: fconfig.accountConfirmed,
       });
     }
 
@@ -35,20 +36,20 @@ function registerUser(req, res) {
       return nev.sendVerificationEmail(email, URL, (err1) => {
         if (err1) {
           return res.status(404).json({
-            message: 'ERROR: sending verification email FAILED',
+            message: fconfig.verificationEmailError,
             errors,
           });
         }
         return res.json({
           success: true,
-          message: 'An email has been sent to you. Please check it to verify your account.',
+          message: fconfig.verificationEmailSent,
         });
       });
       // user already exists in temporary collection!
     }
     return res.json({
       success: true,
-      message: 'You have already signed up. Please check your email to verify your account.',
+      message: fconfig.pleaseVerify,
     });
   });
 }
@@ -64,21 +65,21 @@ function validateSignupForm(req) {
   if (!email || typeof email !== 'string' || !validator.isEmail(email)
     || !email.endsWith('kcl.ac.uk')) {
     isFormValid = false;
-    errors.email = 'Please provide a valid KCL e-mail.';
+    errors.email = fconfig.emailError;
   }
 
   if (!password || typeof password !== 'string' || password.trim().length < 8) {
     isFormValid = false;
-    errors.password = 'Password must have at least 8 characters.';
+    errors.password = fconfig.passwordError;
   }
 
   if (!(password === repassword)) {
     isFormValid = false;
-    errors.repassword = 'Password doesn\'t match.';
+    errors.repassword = fconfig.repasswordError;
   }
 
   if (!isFormValid) {
-    message = 'Check the form for errors.';
+    message = fconfig.formError;
   }
 
   return {

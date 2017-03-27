@@ -7,6 +7,7 @@
   "author": "loopiezlol",
   "license": "MIT",
   "scripts": {
+    "test": "mocha ./backend/test",
     "web-app": "cd client-web-app && ../node_modules/webpack-dev-server/bin/webpack-dev-server.js --content-base ./dist/ --hot --progress --colors",
     "backend": "cd backend && nodemon app.js",
     "web-app:prod": "cd client-web-app && ../node_modules/webpack/bin/webpack.js --config ./webpack.config.production.babel.js --progress --colors -p",
@@ -87,6 +88,7 @@
     "babel-preset-react-app": "^2.2.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.16.0",
+    "chai": "^3.5.0",
     "co-express": "^1.2.2",
     "cors": "^2.8.1",
     "email-verification": "^0.4.5",
@@ -96,6 +98,7 @@
     "jsonwebtoken": "^7.3.0",
     "material-ui": "^0.17.0",
     "material-ui-chip-input": "^0.13.1",
+    "mocha": "^3.2.0",
     "moment": "^2.18.0",
     "mongoose": "^4.8.1",
     "morgan": "^1.8.1",
