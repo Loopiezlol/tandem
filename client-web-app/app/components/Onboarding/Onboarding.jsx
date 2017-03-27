@@ -16,13 +16,14 @@ import LanguageStore from '../../stores/languageStore';
 import Auth from '../../stores/auth';
 import actions from '../../actions/actions';
 import '../../styles/Onboarding/Onboarding.scss';
+import Carousel from 'nuka-carousel';
 
 
 class Onboarding extends Reflux.Component {
 
   constructor(props) {
     super(props);
-    this.state = { errorBubble: 'errorMsgInfoWrap' };
+    this.state = { errorBubble: 'errorMsgInfoWrap'};
     this.stores = [OnboardingStore, Auth, LevelStore, LanguageStore];
     actions.fetchLanguages();
     actions.fetchLevels();
@@ -40,7 +41,7 @@ class Onboarding extends Reflux.Component {
     }
   }
 
-  finish() {
+  finish = () => {
     const { userInfo, me } = this.state;
     OnboardingActions.finish(userInfo, me._id);
     const jwt = localStorage.getItem('jwt');
@@ -85,9 +86,27 @@ class Onboarding extends Reflux.Component {
       </div>
     );
 
+    const bgImages = ['bg1', 'bg2', 'bg3', 'bg4', 'bg5', 'bg6'].map((bg) => {
+      const source = `/backgroundImages/${bg}.jpg`;
+      console.log(source);
+      return (
+        <img className="bgImageSlide" src={require(`../../../public${source}`)} />
+      );
+    });
+
     return (
+
       <div className="mainWrap">
         {this.renderOnboarding()}
+        <Carousel
+          decorators={null}
+          autoplay
+          className="bgSlider"
+          autoplayInterval={8000}
+        >
+          {bgImages}
+        </Carousel>
+
         <MuiThemeProvider>
           <Paper className="basicContainer" zDepth={1}>
             {this.state.stage === 'userInfoStage' && <DetailsForm />}
@@ -102,7 +121,7 @@ class Onboarding extends Reflux.Component {
         </MuiThemeProvider>
         <div className="ctrlBtns">
           {this.state.stage !== 'interestsNotesStage' && <NextButton onClick={() => OnboardingActions.goNext()} />}
-          {this.state.stage === 'interestsNotesStage' && <FinishButton onClick={() => this.finish()} />}
+          {this.state.stage === 'interestsNotesStage' && <FinishButton onClick={this.finish} />}
         </div>
       </div>
     );

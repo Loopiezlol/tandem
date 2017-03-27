@@ -16,6 +16,7 @@ class OnboardingStore extends Reflux.Store {
         motherLanguage: null,
         familiarLanguages: [],
         interests: [],
+        profilePicutre: '',
       },
       langLevel: 'Level',
       currLang: null,
@@ -201,7 +202,39 @@ class OnboardingStore extends Reflux.Store {
     });
   }
 
+  setImage(src) {
+    this.setState({
+      userInfo: {
+        ...this.state.userInfo,
+        profilePicutre: src,
+      },
+    });
+  }
 }
+
+
+function getBase64Image(img) {
+  const image = new Image();
+  image.src = img;
+
+  // Create an empty canvas element
+  const canvas = document.createElement('canvas');
+  canvas.width = image.width;
+  canvas.height = image.height;
+
+  // Copy the image contents to the canvas
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(image, 0, 0);
+
+  // Get the data-URL formatted image
+  // Firefox supports PNG and JPEG. You could check img.src to
+  // guess the original format, but be aware the using "image/jpg"
+  // will re-encode the image.
+  const dataURL = canvas.toDataURL('image/png');
+
+  return dataURL.replace(/^data:image\/(png|jpg);base64,/, '');
+}
+
 
 OnboardingActions.finish.listen((userInfo, id) => {
   const interests = userInfo.interests.map(i => ({
@@ -216,8 +249,9 @@ OnboardingActions.finish.listen((userInfo, id) => {
     interests,
     mainLanguage: userInfo.motherLanguage,
     wantsToLearn: userInfo.familiarLanguages,
-    // TODO: add main language + languages to learn
+    profilePicutre: getBase64Image(userInfo.profilePicutre),
   };
+
   request.put('http://localhost:3000/me/finish-onboarding')
     .send({ info, id })
     .set('x-access-token', localStorage.getItem('jwt'))
