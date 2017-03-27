@@ -16,15 +16,20 @@ class RegisterComponent extends Reflux.Component {
     this.state = {};
     this.store = RegisterStore;
   }
+
+
   render() {
     const { username, email, password, repassword, message, errorEm, errorPass, errorRepass }
     = this.state;
+
+    const passwdError = { position: 'absolute', marginBottom: '-60px', width: '260px', height: '50px', textAlign:'left' };
+
     return (
-      <div className = "mainSignWrap">
+      <div className="mainSignWrap">
         <MuiThemeProvider >
           <Card className="mainRegisterContainer">
             <h2 className="card-heading"> Register </h2>
-            { message && <p className="error-message" id = 'errorRegister'>{message}</p> }
+            { message && <p className="error-message" >{message}</p> }
             <form action="/">
               <div className="field-line">
                 <TextField
@@ -40,7 +45,7 @@ class RegisterComponent extends Reflux.Component {
                   floatingLabelText="E-mail"
                   value={email}
                   errorText={errorEm}
-                  errorStyle =  {{position:'absolute' , marginBottom:'-20px'}}
+                  errorStyle={{ position: 'absolute', marginBottom: '-20px' }}
                   onChange={actions.emailAction}
                 />
               </div>
@@ -51,7 +56,7 @@ class RegisterComponent extends Reflux.Component {
                   floatingLabelText="Password"
                   value={password}
                   errorText={errorPass}
-                  errorStyle =  {{position:'absolute' , marginBottom:'-20px'}}
+                  errorStyle={passwdError}
                   onChange={actions.passwordAction}
                 />
               </div>
@@ -62,7 +67,7 @@ class RegisterComponent extends Reflux.Component {
                   floatingLabelText="Repeat password"
                   value={repassword}
                   errorText={errorRepass}
-                  errorStyle =  {{position:'absolute' , marginBottom:'-20px'}}
+                  errorStyle={{ position: 'absolute', marginBottom: '-20px' }}
                   onChange={actions.repPA}
                 />
               </div>

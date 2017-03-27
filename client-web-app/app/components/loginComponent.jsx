@@ -39,7 +39,7 @@ class LoginComponent extends Reflux.Component {
         <MuiThemeProvider >
           <Card className="mainLoginContainer">
             <h2 className="card-heading"> Login </h2>
-            { messageL && <p className="error-message" id = 'errorLogin' >{messageL}</p> }
+            { messageL && <p className="error-message" >{messageL}</p> }
             <form action="/">
               <div className="field-line">
                 <TextField

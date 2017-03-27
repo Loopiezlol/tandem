@@ -73,20 +73,14 @@ a:hover {
   position: absolute !important;
 }
 
-#errorRegister{
-  padding-left: 100px;
-}
-
-#errorLogin{
-  padding-left: 130px;
-}
 
 .error-message {
   position: absolute !important;
-  padding-left: 120px;
   margin-top: -20px;
   color: #a83030;
   font-family: 'Dosis', sans-serif;
+  width: 420px;
+  text-align: center !important;
 }
 
 .success-message {
