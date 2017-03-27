@@ -1,4 +1,5 @@
 import moment from 'moment';
+import Infinite from 'react-infinite';
 import React from 'react';
 import Reflux from 'reflux';
 import Paper from 'material-ui/Paper';
@@ -24,7 +25,8 @@ class sbChat extends Reflux.Component {
   }
 
 
-  showUserName() {
+  showUserName(e) {
+    console.log(e);
     if (this.state.usernameLabel === 'username-show') {
       this.setState({ usernameLabel: 'username-hidden' });
     } else {

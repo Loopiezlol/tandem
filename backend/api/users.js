@@ -11,6 +11,8 @@ function* getUsers(req, res) {
   .populate('mainLanguage')
   .populate('wantsToLearn.languageId');
   res.json(users);
+
+  // console.log(users.map(user => user.wantsToLearn.map(x => `L: ${x.languageId.name}`)));
 }
 
 // standard api method, using callbakcs

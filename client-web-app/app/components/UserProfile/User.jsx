@@ -92,6 +92,7 @@ class User extends Reflux.Component {
     // MeActions.selectHobby(hobby);
 
     this.setState({ addNotes: hobby, visibilityHeader: 'hiddenHeader', carouselIndex: index, selectedHobby: interestsData.find(i => i.label === hobby.name), updatingNotes: this.state.tempUser.interests.find(i => i.name === hobby.name).notes });
+      console.log(`Carousel index ${this.state.carouselIndex}`);
   }
 
   closeNotes = () => {
@@ -133,6 +134,7 @@ class User extends Reflux.Component {
     //     updateMotherLanguage
     //   })
     // }
+    console.log(e.target.value);
     this.setState({
       updatingMotherLang: e.target.value,
     }, () => {
@@ -159,6 +161,7 @@ class User extends Reflux.Component {
   }
 
   saveTempUser = () => {
+    console.log('updating temp user');
     actions.updateTempUser(this.state.tempUser);
   }
 
@@ -475,6 +478,7 @@ class User extends Reflux.Component {
 
     const loadedImg = (this.state.tempUser || {}).profilePicture;
     const src = loadedImg ? `data:image/jpeg;base64, ${loadedImg}` : require('../../../public/boss.png');
+    console.log(loadedImg);
     return (
       <div className="userProfileWrap">
         <img src={src} className="profileImg" />
