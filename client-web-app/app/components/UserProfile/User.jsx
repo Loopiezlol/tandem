@@ -92,7 +92,6 @@ class User extends Reflux.Component {
     // MeActions.selectHobby(hobby);
 
     this.setState({ addNotes: hobby, visibilityHeader: 'hiddenHeader', carouselIndex: index, selectedHobby: interestsData.find(i => i.label === hobby.name), updatingNotes: this.state.tempUser.interests.find(i => i.name === hobby.name).notes });
-      console.log(`Carousel index ${this.state.carouselIndex}`);
   }
 
   closeNotes = () => {
@@ -134,7 +133,6 @@ class User extends Reflux.Component {
     //     updateMotherLanguage
     //   })
     // }
-    console.log(e.target.value);
     this.setState({
       updatingMotherLang: e.target.value,
     }, () => {
@@ -161,7 +159,6 @@ class User extends Reflux.Component {
   }
 
   saveTempUser = () => {
-    console.log('updating temp user');
     actions.updateTempUser(this.state.tempUser);
   }
 
@@ -213,20 +210,20 @@ class User extends Reflux.Component {
         <h1 className="selectorHeader">Information</h1>
         <div className="nameWrap">
           <p className="propLabel" id="nameLabel">Name</p>
-          <p className="dataLabel" id="nameData">{this.state.tempUser.firstName} {this.state.tempUser.lastName}</p>
+          <p className="dataLabel" id="nameLabel">{this.state.tempUser.firstName} {this.state.tempUser.lastName}</p>
         </div>
-        <div className="usernameWrap">
-          <p className="propLabel" id="usernameLabel">Username</p>
-          <p className="dataLabel" id="usernamenameData">{this.state.tempUser.username}</p>
+        <div className="nameWrap">
+          <p className="propLabel" id="nameLabel">Username</p>
+          <p className="dataLabel" id="nameLabel">{this.state.tempUser.username}</p>
         </div>
-        <div className="ageWrap">
-          <p className="propLabel" id="ageLabel" >Age</p>
-          <p className="dataLabel" id="ageData">{this.state.tempUser.age ?
+        <div className="nameWrap">
+          <p className="propLabel" id="nameLabel" >Age</p>
+          <p className="dataLabel" id="nameLabel">{this.state.tempUser.age ?
             this.state.tempUser.age : 'please contact us to update your age'}</p>
         </div>
-        <div className="genderWrap">
-          <p className="propLabel" id="genderLabel">Gender</p>
-          <p className="dataLabel" id="genderData">{this.state.tempUser.gender ?
+        <div className="nameWrap">
+          <p className="propLabel" id="nameLabel">Gender</p>
+          <p className="dataLabel" id="nameLabel">{this.state.tempUser.gender ?
            this.state.tempUser.gender : 'please contact us to update your gender'}</p>
         </div>
       </div>
@@ -310,7 +307,7 @@ class User extends Reflux.Component {
 >>>>>>> develop */}
           </div>
           <div className="famLangWrapper">
-            <p className="propLabel" id="famLangLabel">Familiar languages</p>
+            <p className="propLabel" id="motherLangLabel">Familiar languages</p>
             <div>
               <p className="langLevelLabels" id="langLabel">Language</p>
               <p className="langLevelLabels" id="levelLabel">Level</p>
@@ -478,7 +475,6 @@ class User extends Reflux.Component {
 
     const loadedImg = (this.state.tempUser || {}).profilePicture;
     const src = loadedImg ? `data:image/jpeg;base64, ${loadedImg}` : require('../../../public/boss.png');
-    console.log(loadedImg);
     return (
       <div className="userProfileWrap">
         <img src={src} className="profileImg" />
@@ -501,8 +497,10 @@ class User extends Reflux.Component {
                 </Paper>
               </MuiThemeProvider>
             </div>
-            <FlatButton className="saveButton" onClick={this.saveTempUser}>
-              Save user here
+            <FlatButton
+            className="saveButton"
+            onClick={this.saveTempUser}>
+              Save user
             </FlatButton>
           </Paper>
         </MuiThemeProvider>
