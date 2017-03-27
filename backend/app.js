@@ -6,9 +6,49 @@ const morgan = require('morgan');
 const config = require('../common/config.js');
 const jwt = require('jsonwebtoken');
 
-// const Language = require('./models/language');
-// const Level = require('./models/level');
-// const wrap = require('co-express');
+const Language = require('./models/language');
+const Level = require('./models/level');
+
+
+function* createLanguages() {
+  const currentLanguages = yield Language.find({});
+  // console.log(currentLanguages);
+  if (currentLanguages.length === 0) {
+    yield Language.create({
+      name: 'Spanish',
+      abbreviation: 'ES',
+    });
+    yield Language.create({
+      name: 'English',
+      abbreviation: 'EN',
+    });
+    yield Language.create({
+      name: 'Romanian',
+      abbreviation: 'RO',
+    });
+    console.log('done');
+  }
+}
+
+function* createLevels() {
+  const currentLevels = yield Level.find({});
+  if (currentLevels.length === 0) {
+    yield Level.create({
+      name: 'C2',
+      level: 5,
+    });
+    yield Level.create({
+      name: 'C1',
+      level: 4,
+    });
+    yield Level.create({
+      name: 'B2',
+      level: 3,
+    });
+    console.log('done');
+  }
+}
+
 
 const app = express();
 
@@ -20,47 +60,6 @@ if (require.main === module) {
   require('./helpers/usergenerator').populateDB(50);
   // UNCOMMENT THIS TO GENERATE SOME LANGUAGES AND LEVELS
   const wrap = require('co-express');
-  const Language = require('./models/language');
-  const Level = require('./models/level');
-
-  function* createLanguages() {
-    const currentLanguages = yield Language.find({});
-    // console.log(currentLanguages);
-    if (currentLanguages.length === 0) {
-      yield Language.create({
-        name: 'Spanish',
-        abbreviation: 'ES',
-      });
-      yield Language.create({
-        name: 'English',
-        abbreviation: 'EN',
-      });
-      yield Language.create({
-        name: 'Romanian',
-        abbreviation: 'RO',
-      });
-      console.log('done');
-    }
-  }
-
-  function* createLevels() {
-    const currentLevels = yield Level.find({});
-    if (currentLevels.length === 0) {
-      yield Level.create({
-        name: 'C2',
-        level: 5,
-      });
-      yield Level.create({
-        name: 'C1',
-        level: 4,
-      });
-      yield Level.create({
-        name: 'B2',
-        level: 3,
-      });
-      console.log('done');
-    }
-  }
 
   wrap(createLanguages)();
   wrap(createLevels)();
@@ -83,7 +82,7 @@ app.use('/', require('./api/verify'));
 
 app.get('/', (req, res) => {
   // res.send('Hello World!');
-  res.redirect('http://localhost:3001/#/login');
+  res.redirect(`${config.client}/#/login`);
 });
 
 

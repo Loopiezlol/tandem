@@ -86,7 +86,8 @@ actions.meFromToken.listen((token) => {
 });
 
 actions.updateTempUser.listen((tempUser) => {
-  request.put('http://localhost:3000/me/update')
+  request.put('/update')
+  .use(prefix)
   .send({ tempUser })
   .set('x-access-token', localStorage.getItem('jwt'))
   .end((err, res) => {

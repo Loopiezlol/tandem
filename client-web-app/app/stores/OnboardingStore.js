@@ -2,6 +2,9 @@ import Reflux from 'reflux';
 import request from 'superagent';
 import OnboardingActions from '../actions/OnboardingActions';
 import iconsWithLabels from '../interests';
+import config from '../../../common/config';
+
+const prefix = require('superagent-prefix')(config.server);
 
 class OnboardingStore extends Reflux.Store {
   constructor() {
@@ -252,7 +255,8 @@ OnboardingActions.finish.listen((userInfo, id) => {
     profilePicutre: getBase64Image(userInfo.profilePicutre),
   };
 
-  request.put('http://localhost:3000/me/finish-onboarding')
+  request.put('/me/finish-onboarding')
+    .use(prefix)
     .send({ info, id })
     .set('x-access-token', localStorage.getItem('jwt'))
     .end((err, res) => {
