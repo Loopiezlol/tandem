@@ -57,12 +57,12 @@ if (require.main === module) {
   mongoose.connect(config.db);
   // require('./helpers/usergenerator').populateDBwithLanguages();
 
-  require('./helpers/usergenerator').populateDB(50);
+  // require('./helpers/usergenerator').populateDB(50);
   // UNCOMMENT THIS TO GENERATE SOME LANGUAGES AND LEVELS
-  const wrap = require('co-express');
+  // const wrap = require('co-express');
 
-  wrap(createLanguages)();
-  wrap(createLevels)();
+  // wrap(createLanguages)();
+  // wrap(createLevels)();
 } else {
   mongoose.connect('mongodb://localhost/test');
 }
