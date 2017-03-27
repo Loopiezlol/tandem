@@ -62,9 +62,9 @@ class RegisterStore extends Reflux.Store {
 
 }
 // how to get actual email and password of component!
-actions.submitClick.listen((email, password, repassword) => {
+actions.submitClick.listen((username, email, password, repassword) => {
   request.put('http://localhost:3000/register/')
-  .send({ email, password, repassword })
+  .send({ username, email, password, repassword })
   .end((err, res) => {
     if (err) {
       actions.submitClick.failed(res);

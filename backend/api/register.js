@@ -8,6 +8,7 @@ function registerUser(req, res) {
   const user = new User({
     email: req.body.email,
     password: req.body.password,
+    username: req.body.username,
   });
   const { email } = req.body;
 
