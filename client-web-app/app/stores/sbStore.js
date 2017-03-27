@@ -18,6 +18,7 @@ class sbStore extends Reflux.Store {
       profileURL: '', // TODO: Implement!
       userList: [],
       currentChannel: {},
+      channelInView: '',
       chatOpen: false,
       otherUser: '',
       otherUserNick: '',
@@ -26,9 +27,19 @@ class sbStore extends Reflux.Store {
       messages: [],
       channelHandler: {},
       isTyping: false,
-      //unreadMessages: 0,
+      newMsgContent: '',
+      snackbarOpen: false,
+      otherUserProfileUrl: '',
+      lastMessage: null,
     };
     this.listenables = sbactions;
+
+    // if ((this.props || {}).otherUserID && this.props.otherUserNickName) {
+    //   this.openChat (this.props.otherUserID, this.props.otherUserNickName);
+    // }
+    // if (this.props.otherUserID && this.props.otherUserNickName) {
+    //   this.openChat (this.props.otherUserID, this.props.otherUserNickName);
+    // }
     //  sbactions.loginUser(auth.state.me.email);
   }
 
@@ -39,6 +50,7 @@ class sbStore extends Reflux.Store {
 
     // Clear the current messages array of old user messages which were sent in the last session
     this.setState({
+      prevMessages: [],
       messages: [],
     });
 
@@ -68,7 +80,9 @@ class sbStore extends Reflux.Store {
                   otherUser: userid,
                   otherUserNick: userNick,
                   currentChannel: channelList[i],
+                  channelInView: channelList[i].channelUrl,
                   otherUserProfileUrl: channelList[i].members[n].profileUrl,
+                  lastMessage: channelList[i].lastMessage,
                 });
                 sbactions.loadPreviousMessages(channelList[i]);
                 return;
@@ -81,6 +95,7 @@ class sbStore extends Reflux.Store {
             chatOpen: true,
             otherUser: userid,
             otherUserNick: userNick,
+            lastMessage: null,
           });
         });
       }
@@ -105,8 +120,16 @@ class sbStore extends Reflux.Store {
           return;
         }
         console.log(`made the new channel successfully: ${channel}`);
+        let url = '';
+        for (let i = 0, size = channel.members.length; i < size; i += 1) {
+          if (channel.members[i].userId !== userID) {
+            url = channel.members[i].profileUrl;
+          }
+        }
         this.setState({
           currentChannel: channel,
+          channelInView: channel.channelUrl,
+          otherUserProfileUrl: url,
         });
         console.log(channel);
       });
@@ -182,13 +205,23 @@ class sbStore extends Reflux.Store {
       console.log('CHANNEL HANDLER: Got a message!! Here: ');
       console.log(channel, message);
 
-      const messagesState = x.state.messages;
-      messagesState.push(message);
-      x.setState({
-        messages: messagesState,
-      });
-      console.log('our messages list contains: ');
-      console.log(x.state.message);
+      try {
+          if (message.channelUrl === this.state.channelInView) {
+          const messagesState = x.state.messages;
+          messagesState.push(message);
+          x.setState({
+            messages: messagesState,
+          });
+          console.log('our messages list contains: ');
+          console.log(x.state.message);
+        } else {
+          // console.log('Firing a notification a');
+          sbactions.fireNewNotification(message);
+        }
+      } catch (TypeError) {
+        // console.log('Firing a notification b');
+        sbactions.fireNewNotification(message);
+      }
     };
 
     this.state.channelHandler.onTypingStatusUpdated = function (channel) {
@@ -220,6 +253,43 @@ class sbStore extends Reflux.Store {
         messages: messagesState,
       });
     });
+  }
+
+  blockUser() {
+    const { otherUser, userID } = this.state;
+    const userid = userID;
+    const uri = 'https://api.sendbird.com/v3/users/' + userid + '/block';
+    request.post(uri)
+         .set('Content-Type', 'application/json', 'charset=utf8')
+         .set('Api-Token', API_TOKEN)
+         .send({
+           target_id: otherUser
+          })
+       .end((err, res) => {
+         if (err || !res.ok) {
+           console.log(`Error Blocking the user: ` + otherUser );
+         } else {
+           console.log(`User Blocked Successfully: ${JSON.stringify(res.body)}`);
+           console.log(res.body);
+         }
+       });
+  }
+
+  unBlockUser() {
+    const { otherUser, userID } = this.state;
+    const userid = userID;
+    const uri = 'https://api.sendbird.com/v3/users/' + userID + '/block/' + otherUser;
+    request.delete(uri)
+         .set('Content-Type', 'application/json', 'charset=utf8 ')
+         .set('Api-Token', API_TOKEN)
+         .send({})
+       .end((err, res) => {
+         if (err || !res.ok) {
+           console.log(`Error Unblocking the user: ` + otherUser );
+         } else {
+           console.log(`User Unblocked Successfully: ${JSON.stringify(res.body)}`);
+         }
+       });
   }
 
   createUserCompleted(res) {
@@ -282,6 +352,20 @@ class sbStore extends Reflux.Store {
     console.log(`SendBird Channel Creation ERROR. ERROR: ${err}`);
   }
 
+  fireNewNotification(mess) {
+    const messageString = mess.message + " - " + mess.sender.nickname;
+    console.log('Firing a notification action');
+    this.setState({
+      snackbarOpen: true,
+    });
+    console.log(this.state.snackbarOpen);
+    this.setState({
+      snackbarOpen: true,
+      newMsgContent: messageString,
+    });
+    console.log(this.state.snackbarOpen);
+  }
+
   // sendMessageCompleted(res) {
   //   if (res.status === 200) {
   //     console.log('SendBird Message Sent: Server response 200 (OK)');
@@ -331,6 +415,8 @@ sbactions.loadOnlineUsersList.listen(() => {
       }
     });
 });
+
+
 
 // sbactions.createChannel.listen((userID, otherUserID) => {
 //   request.get('https://api.sendbird.com/v3/group_channels')
