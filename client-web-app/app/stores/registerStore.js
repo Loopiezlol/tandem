@@ -1,7 +1,10 @@
 import Reflux from 'reflux';
 import request from 'superagent';
 import actions from '../actions/actions';
+import config from '../../../common/config';
 import SBActions from '../actions/sbActions';
+
+const prefix = require('superagent-prefix')(config.server);
 
 class RegisterStore extends Reflux.Store {
   constructor() {
@@ -63,7 +66,8 @@ class RegisterStore extends Reflux.Store {
 }
 // how to get actual email and password of component!
 actions.submitClick.listen((username, email, password, repassword) => {
-  request.put('http://localhost:3000/register/')
+  request.put('/register/')
+  .use(prefix)
   .send({ username, email, password, repassword })
   .end((err, res) => {
     if (err) {

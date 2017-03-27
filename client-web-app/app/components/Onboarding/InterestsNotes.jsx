@@ -53,7 +53,6 @@ class IneterestsNotes extends Reflux.Component {
     // Container for all the interests that the user has chosen
     const chosenInterests = this.state.userInfo.interests.map((hobby) => {
       const source = `/png/${hobby.icon}.png`;
-      console.log(`${hobby.label} === ${this.state.toAddNotes.label}`);
       return (
         <span>
           <Avatar src={require(`../../../public${source}`)} className={hobby.label === this.state.toAddNotes.label ? 'singleInterest singleInterest-selected' : 'singleInterest'} onClick={() => this.selectInterest(hobby)} />
