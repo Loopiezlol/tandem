@@ -45,7 +45,7 @@ class UserCard extends Reflux.Component {
         >
           <img className="img" src={imgUrl} />
         </CardMedia>]
-        <CardText className="interests" expandable={true} >
+        <CardText className={`interests ${this.state.expanded ? 'expanded' : 'unexpanded'}`} expandable={true} >
           <List>
             {me.interests.map(x =>
               <ListItem primaryText={x.name} leftIcon={<img src={require(`../../public/png/${interestsDetails[interestsDetails.findIndex(det => det.label === x.name)].icon}.png`)} />} />)}
