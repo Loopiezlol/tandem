@@ -90,7 +90,9 @@ class User extends Reflux.Component {
 
   addNotes = (hobby, index) => {
     // MeActions.selectHobby(hobby);
+
     this.setState({ addNotes: hobby, visibilityHeader: 'hiddenHeader', carouselIndex: index, selectedHobby: interestsData.find(i => i.label === hobby.name), updatingNotes: this.state.tempUser.interests.find(i => i.name === hobby.name).notes });
+      console.log(`Carousel index ${this.state.carouselIndex}`);
   }
 
   closeNotes = () => {

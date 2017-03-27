@@ -81,7 +81,8 @@ app.use('/', require('./api/register'));
 app.use('/', require('./api/verify'));
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  // res.send('Hello World!');
+  res.redirect('http://localhost:3001/#/login');
 });
 
 
