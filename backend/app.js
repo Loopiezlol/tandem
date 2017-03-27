@@ -12,7 +12,62 @@ const jwt = require('jsonwebtoken');
 
 const app = express();
 
-mongoose.connect(config.db);
+
+if (require.main === module) {
+  mongoose.connect(config.db);
+  // require('./helpers/usergenerator').populateDBwithLanguages();
+
+  require('./helpers/usergenerator').populateDB(50);
+  // UNCOMMENT THIS TO GENERATE SOME LANGUAGES AND LEVELS
+  const wrap = require('co-express');
+  const Language = require('./models/language');
+  const Level = require('./models/level');
+
+  function* createLanguages() {
+    const currentLanguages = yield Language.find({});
+    // console.log(currentLanguages);
+    if (currentLanguages.length === 0) {
+      yield Language.create({
+        name: 'Spanish',
+        abbreviation: 'ES',
+      });
+      yield Language.create({
+        name: 'English',
+        abbreviation: 'EN',
+      });
+      yield Language.create({
+        name: 'Romanian',
+        abbreviation: 'RO',
+      });
+      console.log('done');
+    }
+  }
+
+  function* createLevels() {
+    const currentLevels = yield Level.find({});
+    if (currentLevels.length === 0) {
+      yield Level.create({
+        name: 'C2',
+        level: 5,
+      });
+      yield Level.create({
+        name: 'C1',
+        level: 4,
+      });
+      yield Level.create({
+        name: 'B2',
+        level: 3,
+      });
+      console.log('done');
+    }
+  }
+
+  wrap(createLanguages)();
+  wrap(createLevels)();
+} else {
+  mongoose.connect('mongodb://localhost/test');
+}
+
 app.use(cors());
 
 app.use(bodyParser.json({ limit: '50mb' }));
@@ -60,55 +115,10 @@ app.use('/users/', require('./api/users'));
 app.use('/levels', require('./api/levels'));
 app.use('/languages', require('./api/languages'));
 
-app.listen(3000, () => {
-  console.log('Server started on port 3000!');
-});
-
-// require('./helpers/usergenerator').populateDBwithLanguages();
-// require('./helpers/usergenerator').populateDB(50);
-// // UNCOMMENT THIS TO GENERATE SOME LANGUAGES AND LEVELS
-// const wrap = require('co-express');
-// const Language = require('./models/language');
-// const Level = require('./models/level');
-//
-// function* createLanguages() {
-//   const currentLanguages = yield Language.find({});
-//   // console.log(currentLanguages);
-//   if (currentLanguages.length === 0) {
-//     yield Language.create({
-//       name: 'Spanish',
-//       abbreviation: 'ES',
-//     });
-//     yield Language.create({
-//       name: 'English',
-//       abbreviation: 'EN',
-//     });
-//     yield Language.create({
-//       name: 'Romanian',
-//       abbreviation: 'RO',
-//     });
-//     console.log('done');
-//   }
-// }
-//
-// function* createLevels() {
-//   const currentLevels = yield Level.find({});
-//   if (currentLevels.length === 0) {
-//     yield Level.create({
-//       name: 'C2',
-//       level: 5,
-//     });
-//     yield Level.create({
-//       name: 'C1',
-//       level: 4,
-//     });
-//     yield Level.create({
-//       name: 'B2',
-//       level: 3,
-//     });
-//     console.log('done');
-//   }
-// }
-//
-// wrap(createLanguages)();
-// wrap(createLevels)();
+if (require.main === module) {
+  app.listen(3000, () => {
+    console.log('Server started on port 3000!');
+  });
+} else {
+  module.exports = app;
+}
