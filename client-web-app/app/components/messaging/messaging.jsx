@@ -37,8 +37,8 @@ class messaging extends Reflux.Component {
         anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
       >
         <MenuItem primaryText="Refresh" />
-        <MenuItem primaryText="Help" />
         <MenuItem primaryText="Sign out" />
+        <MenuItem primaryText="Hide" onClick={() => this.openLogin()} />
       </IconMenu>
     );
     const { newMsgContent, snackbarOpen } = this.state;
@@ -48,6 +48,7 @@ class messaging extends Reflux.Component {
         <div className="wrapper-sb">
           <AppBar
             title="Tandem Messenger"
+            className="appbar"
             iconElementLeft={<IconButton><ActionHome /></IconButton>}
             iconElementRight={this.state.loggedIn ? <Logged /> : <FlatButton label="Log in" onClick={() => this.openLogin()} />}
           />
@@ -81,13 +82,6 @@ class messaging extends Reflux.Component {
       snackbarOpen: false,
     });
   };
-
-  // style={{ position: 'absolute',
-  // left: '50%',
-  // transform: 'translateX(-50%)',
-  // display: 'flex',
-  // flexDirection: 'column'
-  // }}
   openLogin() {
     if (this.state.showLoginComponents) {
       this.setState({

@@ -192,3 +192,9 @@
 #tipsSelected {
   color: #946c94 !important;
 }
+
+.appbar {
+  position: -webkit-sticky;
+  top: 0;
+  z-index: 1;
+}

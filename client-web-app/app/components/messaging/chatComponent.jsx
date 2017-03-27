@@ -125,11 +125,9 @@ class chatComponent extends Reflux.Component {
               </ul>
 
             </div>
-            <Paper className="textFieldStyle" zDepth={0}>
               <span className="messageDividerLine" id="divider-left" />
               <p id="messageDividerLabel">New messages</p>
               <span className="messageDividerLine" id="divider-right" />
-            </Paper>
             <div className="currentMsg">
               <ul className="new-messages" style={{ listStyle: 'none' }}>
                 {messages.map(msg => <li key={`${msg.messageId}`}>
