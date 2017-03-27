@@ -5,7 +5,6 @@ import FlatButton from 'material-ui/FlatButton';
 import Divider from 'material-ui/Divider';
 import IconButton from 'material-ui/IconButton';
 import Avatar from 'material-ui/Avatar';
-import Toggle from 'material-ui/Toggle';
 import { List, ListItem } from 'material-ui/List';
 
 
@@ -98,7 +97,7 @@ class UserCard extends Reflux.Component {
                   expandable={true}
                   className="tooltip"
                     //eslint-disable-next-line
-                  tooltip={me.wantsToLearn.map(l => <div> {l.languageId.name.toString()} Level: {me.mainLanguage.level} </div>)}
+                  tooltip={me.wantsToLearn.splice(1).map(l => <div> {l.languageId.name.toString()} Level: {me.mainLanguage.level} </div>)}
                 >
                   <Avatar
                     src={require('../../public/add-button.svg')}
