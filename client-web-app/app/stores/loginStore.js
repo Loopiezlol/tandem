@@ -1,9 +1,7 @@
 import Reflux from 'reflux';
 import request from 'superagent';
 import actions from '../actions/actions';
-import config from '../../../common/config';
-
-const prefix = require('superagent-prefix')(config.server);
+// import SBActions from '../actions/sbActions';
 
 class LoginStore extends Reflux.Store {
   constructor() {
@@ -48,18 +46,17 @@ class LoginStore extends Reflux.Store {
 }
 // how to get actual email and password of component!
 actions.submitClickL.listen((email, password) => {
-  request.put('/login')
-    .use(prefix)
-    .send({ email, password })
-    .end((err, res) => {
-      if (err) {
-        actions.submitClickL.failed(res);
-        actions.handleLogin.failed(res);
-      } else {
-        actions.submitClickL.completed(res);
-        actions.handleLogin.completed(res);
-      }
-    });
+  request.put('http://localhost:3000/login/')
+  .send({ email, password })
+  .end((err, res) => {
+    if (err) {
+      actions.submitClickL.failed(res);
+      actions.handleLogin.failed(res);
+    } else {
+      actions.submitClickL.completed(res);
+      actions.handleLogin.completed(res);
+    }
+  });
 });
 
 export default LoginStore;

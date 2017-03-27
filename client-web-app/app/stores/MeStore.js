@@ -24,6 +24,7 @@ class MeStore extends Reflux.Store {
   }
 
   updateNewFamLangLevel(event, index, value) {
+    console.log(value);
     if (value !== 'Level') {
       this.setState({
         newFamLangLevel: value, famLangToAdd: { ...this.state.famLangToAdd, level: value },

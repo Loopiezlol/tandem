@@ -39,7 +39,6 @@ function registerUser(req, res) {
           return res.status(404).json({
             message: fconfig.verificationEmailError,
             errors,
-            err1,
           });
         }
         return res.json({

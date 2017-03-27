@@ -49,9 +49,6 @@ export default {
     new HtmlWebpackPlugin({
       template: '../common/templates/index.template.html',
     }),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"production"',
-    }),
   ],
   resolve: {
     extensions: ['*', '.js', '.jsx', 'scss', 'css'],

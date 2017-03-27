@@ -10,6 +10,7 @@ function* _populateDB(n) {
   const interests = [...Array(12).keys()].map(i => ({ name: `interest_${i}`, notes: 'BLAH!' }));
   const languages = yield Language.find({});
   const levels = yield Level.find({});
+  console.log(languages[0]._id);
   [...Array(n).keys()].forEach((i) => {
     User.create({
       username: `user${i}`,

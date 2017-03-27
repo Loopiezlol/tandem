@@ -88,6 +88,7 @@ class Filters extends Reflux.Component {
   }
 
   handleInterest(interest) {
+    console.log(`interest:${interest.name} `);
     const { interests } = this.state;
     const foundIndex = interests.findIndex(x => x.name === interest.name);
     if (foundIndex !== -1) {
