@@ -125,9 +125,9 @@ class chatComponent extends Reflux.Component {
               </ul>
 
             </div>
-              <span className="messageDividerLine" id="divider-left" />
-              <p id="messageDividerLabel">New messages</p>
-              <span className="messageDividerLine" id="divider-right" />
+            <Paper className="textFieldStyle" zDepth={0}>
+              <p id="messageDividerLabel">---------------- New messages ----------------</p>
+            </Paper>
             <div className="currentMsg">
               <ul className="new-messages" style={{ listStyle: 'none' }}>
                 {messages.map(msg => <li key={`${msg.messageId}`}>
@@ -140,7 +140,7 @@ class chatComponent extends Reflux.Component {
 
         { isTyping ? <div>typing...</div> : <div />}
 
-        <div className="input" style={{ paddingBottom: '20px' }}>
+        <div className="input" style={{ paddingBottom: '-20px' }}>
           <TextField
             floatingLabelText="Type Your Message"
             value={message} onChange={e => this.handleMessageType(e)}

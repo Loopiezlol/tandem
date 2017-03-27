@@ -6,7 +6,6 @@ import { BottomNavigation, BottomNavigationItem } from 'material-ui/BottomNaviga
 import FontIcon from 'material-ui/FontIcon';
 import IconLocationOn from 'material-ui/svg-icons/communication/location-on';
 import ReactEmoji from 'react-emoji';
-import Avatar from 'material-ui/Avatar';
 import ChatComponent from '../messaging/chatComponent';
 import MeetingComponent from '../messaging/meetingComponent';
 import LibBookComponent from '../messaging/libBookingComponent';
