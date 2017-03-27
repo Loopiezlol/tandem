@@ -1,18 +1,20 @@
+
 const router = require('express').Router();
 const User = require('../models/user');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('../../common/config');
+const fconfig = require('../../common/formsconfig');
 
 function logIn(req, res) {
   const errors = {};
 
   User.findOne({ email: req.body.email }, (err, user) => {
     if (!user) {
-      errors.email = 'No user registered with this e-mail.';
+      errors.email = fconfig.invalidEmail;
       return res.json({
-        message: 'Invalid email or password',
+        message: fconfig.badCredentials,
         errors,
       });
     }
@@ -22,15 +24,15 @@ function logIn(req, res) {
         expiresIn: '1440m', // expires in 24 hours
       });
       return res.json({
-        message: 'This should get you to the dashboard now',
+        message: fconfig.success,
         errors,
         // user,
         token,
       });
     }
-    errors.password = 'Incorrect password.';
+    errors.password = fconfig.incorrectPassword;
     return res.json({
-      message: 'Invalid email or password',
+      message: fconfig.badCredentials,
       errors,
     });
   });
@@ -46,16 +48,16 @@ function validateLoginForm(req, res) {
   if (!email || typeof email !== 'string' || !validator.isEmail(email)
    || !email.endsWith('kcl.ac.uk')) {
     isFormValid = false;
-    errors.email = 'Please provide a valid KCL e-mail.';
+    errors.email = fconfig.emailError;
   }
 
   if (!password || typeof password !== 'string' || password.trim().length < 8) {
     isFormValid = false;
-    errors.password = 'Password must have at least 8 characters.';
+    errors.password = fconfig.passwordError;
   }
 
   if (!isFormValid) {
-    message = 'Check the form for errors.';
+    message = fconfig.formError;
     return res.status(400).json({
       success: isFormValid,
       message,

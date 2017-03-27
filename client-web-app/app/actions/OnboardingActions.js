@@ -13,6 +13,7 @@ const OnboardingActions = Reflux.createActions({
   goNext: {},
   goBack: {},
   finish: { asyncResult: true },
+  setImage: {},
 });
 
 

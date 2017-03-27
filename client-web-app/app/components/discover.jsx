@@ -24,11 +24,11 @@ class Discover extends Reflux.Component {
     this.stores = [DiscoverStore, Auth];
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    if (nextState.me._id && nextState.loadedFirstTime) {
-      actions.getResults({}, nextState.me._id);
-    }
-  }
+  // componentWillUpdate(nextProps, nextState) {
+  //   if (nextState.me._id && nextState.loadedFirstTime) {
+  //     actions.getResults({}, nextState.me._id);
+  //   }
+  // }
 
   render() {
     const { results, showLoading, filtersVisible } = this.state;

@@ -8,7 +8,9 @@ import TextField from 'material-ui/TextField';
 import actions from '../actions/actions';
 import LoginStore from '../stores/loginStore';
 import Auth from '../stores/auth';
-
+import '../styles/login.scss';
+//import BackgroundImage from 'react-background-image-loader';
+// import Background from '../public/alexis-brown-85793.jpg';
 
 class LoginComponent extends Reflux.Component {
   constructor(props) {
@@ -33,43 +35,47 @@ class LoginComponent extends Reflux.Component {
   render() {
     const { emailL, passwordL, messageL, errorEmL, errorPassL } = this.state;
     return (
-      <MuiThemeProvider >
-        <Card className="container">
-          <h2 className="card-heading"> Login </h2>
-          { messageL && <p className="error-message">{messageL}</p> }
-          <form action="/">
-            <div className="field-line">
-              <TextField
-                hintText="Your KCL Email"
-                floatingLabelText="E-mail"
-                value={emailL}
-                errorText={errorEmL}
-                onChange={actions.emailActionL}
-              />
-            </div>
-            <div className="field-line">
-              <TextField
-                type="password"
-                hintText="Your Password"
-                floatingLabelText="Password"
-                value={passwordL}
-                errorText={errorPassL}
-                onChange={actions.passwordActionL}
-              />
-            </div>
-            <div className="button-line">
-              <br />
-              <RaisedButton
-                onClick={() => actions.submitClickL(emailL, passwordL)}
-                primary="true"
-              >
-                Sign in!
-              </RaisedButton>
-            </div>
-            <CardText>{"Don't have an account? "}<Link to={'/register'}>Sign up!</Link></CardText>
-          </form>
-        </Card>
-      </MuiThemeProvider>
+      <div className = "mainSignWrap">
+        <MuiThemeProvider >
+          <Card className="mainLoginContainer">
+            <h2 className="card-heading"> Login </h2>
+            { messageL && <p className="error-message" >{messageL}</p> }
+            <form action="/">
+              <div className="field-line">
+                <TextField
+                  hintText="Your KCL Email"
+                  floatingLabelText="E-mail"
+                  value={emailL}
+                  errorText={errorEmL}
+                  errorStyle =  {{position:'absolute' , marginBottom:'-20px'}}
+                  onChange={actions.emailActionL}
+                />
+              </div>
+              <div className="field-line">
+                <TextField
+                  type="password"
+                  hintText="Your Password"
+                  floatingLabelText="Password"
+                  value={passwordL}
+                  errorText={errorPassL}
+                      errorStyle =  {{position:'absolute', marginBottom:'-20px'}}
+                  onChange={actions.passwordActionL}
+                />
+              </div>
+                <div className="button-line">
+                  <br />
+                  <RaisedButton
+                    onClick={() => actions.submitClickL(emailL, passwordL)}
+                    primary="true"
+                  >
+                    Sign in!
+                  </RaisedButton>
+                </div>
+                <CardText>{"Don't have an account? "}<Link to={'/register'}>Sign up!</Link></CardText>
+            </form>
+          </Card>
+        </MuiThemeProvider>
+      </div>
     );
   }
 }

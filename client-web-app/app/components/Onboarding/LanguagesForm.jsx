@@ -10,6 +10,7 @@ import OnboardingActions from '../../actions/OnboardingActions';
 import OnboardingStore from '../../stores/OnboardingStore';
 import LanguageStore from '../../stores/languageStore';
 import LevelStore from '../../stores/levelStore';
+import InternationalLevels from './InternationalLevels';
 import '../../styles/Onboarding/LanguagesForm.scss';
 
 class LanguagesForm extends Reflux.Component {
@@ -29,6 +30,7 @@ class LanguagesForm extends Reflux.Component {
       langErrorWrap: 'languagesErrorWrap-appear',
       showInstruction: false,
       enableInputField: false,
+      wrapBlur: '',
     };
   }
 
@@ -36,8 +38,8 @@ class LanguagesForm extends Reflux.Component {
   // Event listener to show button if mother language is provided
   showOkBtn(input) {
     if (input && this.state.languages.map(l => l.name).indexOf(input) !== -1) {
-      OnboardingActions.updateLanguage(input);
-      this.setState({ okBtn: 'okBtn okBtn-show' });
+    OnboardingActions.updateLanguage(input);
+    this.setState({ okBtn: 'okBtn okBtn-show' });
     } else if (this.state.okBtn === 'okBtn okBtn-show') {
       this.setState({ okBtn: 'okBtn' });
     }
@@ -65,6 +67,16 @@ class LanguagesForm extends Reflux.Component {
     }, () => {
       setTimeout(changeState, 1000);
     });
+  }
+
+  openLangLevelDesc() {
+    this.setState({ langsDesc: true, wrapBlur: 'langsWrapBlur' });
+  }
+
+  closeLangLevelDesc() {
+    if (this.state.langsDesc) {
+      this.setState({ langsDesc: false, wrapBlur: '' });
+    }
   }
 
   // Add a language the user is familiar with the list
@@ -120,6 +132,8 @@ class LanguagesForm extends Reflux.Component {
       }
     }
   }
+
+
 
   render() {
     // Label that introduecs stage of the onnboarding process
@@ -181,7 +195,9 @@ class LanguagesForm extends Reflux.Component {
             />)}
           </DropDownMenu>
         </span>
-
+        <span className="langQuestionWrap">
+          <span id="questionCircle" /><p id="questionLabel" onClick={() => this.openLangLevelDesc()}>?</p>
+        </span>
         <FlatButton
           backgroundColor="#00796B"
           hoverColor="#009688"
@@ -235,50 +251,53 @@ class LanguagesForm extends Reflux.Component {
 
 
     return (
-      <div className="transitionComponent">
-        <div style={label}>Let&#39;s connect!</div>
-        <div>
-          <i
-            className="material-icons smileyIcon"
-          >            sentiment_very_satisfied</i>
-
-        </div>
-
-        <div>
-          <span><img className={this.state.bubbleState} src={require(`../../../public${this.state.bubbleSrc}`)} /></span>
-        </div>
-        {this.state.greetUser && greeting}
-        {this.state.askLanguages && askLanguage}
-        {this.state.showInstruction && instruction}
-
-        <MuiThemeProvider>
-          <div className="inputWrap ">
-
-            <FlatButton
-              backgroundColor="#3f577c"
-              hoverColor="#496796"
-              label="OK"
-              labelStyle={{ color: 'white' }}
-              className={this.state.okBtn}
-              onClick={() => this.askLanguages()}
-            />
-
-            <Paper className={this.state.inputContainer}>
-              {this.state.greetUser && motherLanguage}
-              {this.state.enableInputField && familiarLanguages}
-              <span>
-                {this.state.langLevelError && langLevelError}
-
-                {this.state.addedLangError && addedLangError}
-
-                {this.state.validLangError && validLangError}
-              </span>
-            </Paper>
-
+      <div>
+        {this.state.langsDesc && <div className = "intLevelsPopUp" ><InternationalLevels /></div>}
+        <div className="transitionComponent" id={this.state.wrapBlur} onClick = {() => this.closeLangLevelDesc()}>
+          <div style={label}>Let&#39;s connect!</div>
+          <div>
+            <i
+              className="material-icons smileyIcon"
+            >            sentiment_very_satisfied</i>
 
           </div>
-        </MuiThemeProvider>
 
+          <div>
+            <span><img className={this.state.bubbleState} src={require(`../../../public${this.state.bubbleSrc}`)} /></span>
+          </div>
+          {this.state.greetUser && greeting}
+          {this.state.askLanguages && askLanguage}
+          {this.state.showInstruction && instruction}
+
+          <MuiThemeProvider>
+            <div className="inputWrap ">
+
+              <FlatButton
+                backgroundColor="#3f577c"
+                hoverColor="#496796"
+                label="OK"
+                labelStyle={{ color: 'white' }}
+                className={this.state.okBtn}
+                onClick={() => this.askLanguages()}
+              />
+
+              <Paper className={this.state.inputContainer}>
+                {this.state.greetUser && motherLanguage}
+                {this.state.enableInputField && familiarLanguages}
+                <span>
+                  {this.state.langLevelError && langLevelError}
+
+                  {this.state.addedLangError && addedLangError}
+
+                  {this.state.validLangError && validLangError}
+                </span>
+              </Paper>
+
+
+            </div>
+          </MuiThemeProvider>
+
+        </div>
       </div>
     );
   }

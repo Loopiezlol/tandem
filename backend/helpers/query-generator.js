@@ -1,3 +1,4 @@
+//eslint-disable-next-line
 const Language = require('../models/language'); // this has to be initialized before populating the users
 const User = require('../models/user');
 const wrap = require('co-express');
@@ -34,7 +35,6 @@ function* _dbQuery(options, id) {
     query['wantsToLearn.languageId'] = user.mainLanguage;
   }
 
-  console.log('query: ', query);
   return query;
 }
 

@@ -1,6 +1,9 @@
 import Reflux from 'reflux';
 import request from 'superagent';
+import config from '../../../common/config';
 import actions from '../actions/actions';
+
+const prefix = require('superagent-prefix')(config.server);
 
 class Auth extends Reflux.Store {
   constructor() {
@@ -47,6 +50,17 @@ class Auth extends Reflux.Store {
       me: {},
     });
   }
+
+  updateTempUserCompleted() {
+    // this.setState({
+    //   me: res.body.user,
+    // });
+  }
+
+  updateTempUserFailed(err) {
+    console.log(err);
+  }
+
   handleLogOut() {
     localStorage.removeItem('jwt');
     this.jwt = '';
@@ -59,13 +73,28 @@ class Auth extends Reflux.Store {
 }
 
 actions.meFromToken.listen((token) => {
-  request.put('http://localhost:3000/me')
+  request.put('/me')
+  .use(prefix)
   .send({ token })
   .end((err, res) => {
     if (err) {
-      actions.meFromToken.failed(res);
+      actions.meFromToken.failed(err);
     } else {
       actions.meFromToken.completed(res);
+    }
+  });
+});
+
+actions.updateTempUser.listen((tempUser) => {
+  request.put('/update')
+  .use(prefix)
+  .send({ tempUser })
+  .set('x-access-token', localStorage.getItem('jwt'))
+  .end((err, res) => {
+    if (err) {
+      actions.updateTempUser.failed(err);
+    } else {
+      actions.updateTempUser.completed(res);
     }
   });
 });

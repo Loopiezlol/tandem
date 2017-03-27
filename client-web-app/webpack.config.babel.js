@@ -27,15 +27,6 @@ export default {
         loader: ['babel-loader', 'eslint-loader'],
         exclude: [/node_modules/, /dist/],
       },
-      // {
-      //   test: /\.(scss|css)$/,
-      //   loader: [
-      //     'style-loader',
-      //     'css-loader?sourceMap',
-      //     'sass-loader?sourceMap',
-      //   ],
-      //   exclude: [/node_modules/, /dist/],
-      // },
       {
         test: /\.(scss|css)$/,
         loader: ExtractTextPlugin.extract({

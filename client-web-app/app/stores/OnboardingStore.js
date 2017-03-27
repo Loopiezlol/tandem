@@ -2,6 +2,9 @@ import Reflux from 'reflux';
 import request from 'superagent';
 import OnboardingActions from '../actions/OnboardingActions';
 import iconsWithLabels from '../interests';
+import config from '../../../common/config';
+
+const prefix = require('superagent-prefix')(config.server);
 
 class OnboardingStore extends Reflux.Store {
   constructor() {
@@ -16,6 +19,7 @@ class OnboardingStore extends Reflux.Store {
         motherLanguage: null,
         familiarLanguages: [],
         interests: [],
+        profilePicutre: '',
       },
       langLevel: 'Level',
       currLang: null,
@@ -59,14 +63,12 @@ class OnboardingStore extends Reflux.Store {
         break;
       default:
     }
-    console.log(this.state.userInfo);
   }
 
 
      // Click event for updating the user's sex
   selectSex = (name) => {
     this.setState({ userInfo: { ...this.state.userInfo, sex: name } });
-    console.log(this.state.userInfo);
   }
 
     // Check if all user information is provided
@@ -129,12 +131,10 @@ class OnboardingStore extends Reflux.Store {
       interestsState.splice(idx, 1);
     }
     this.setState({ userInfo: { ...this.state.userInfo, interests: interestsState } });
-    console.log(this.state.userInfo.interests);
   }
 
   expandNotes = (hobby) => {
     this.setState({ toAddNotes: hobby });
-    console.log(`Hobby is : ${this.state.toAddNotes.label}`);
   }
 
   updateNotes = (e) => {
@@ -143,7 +143,6 @@ class OnboardingStore extends Reflux.Store {
         hobby.notes += `${e.target.value}\n`;   //eslint-disable-line
       }
     });
-    console.log(this.state.userInfo.interests);
   }
 
 
@@ -160,17 +159,14 @@ class OnboardingStore extends Reflux.Store {
         }
         break;
       case 'languagesStage':
-        console.log(`Languages are complete : ${this.isLanguagesComplete()}`);
         if (this.state.userInfo.motherLanguage == null || this.state.userInfo.motherLanguage === '') {
           this.setState({ motherLangError: true });
           setTimeout(() => { x.setState({ langErrorWrap: 'languagesErrorWrap-leave' }); }, 3000);
           setTimeout(() => { x.setState({ langErrorWrap: 'languagesErrorWrap-appear', motherLangError: false }); }, 3400);
-          console.log('Please enter your mother language');
         } else if (this.state.userInfo.familiarLanguages.length === 0) {
           this.setState({ famLangError: true });
           setTimeout(() => { x.setState({ langErrorWrap: 'languagesErrorWrap-leave' }); }, 3000);
           setTimeout(() => { x.setState({ langErrorWrap: 'languagesErrorWrap-appear', famLangError: false }); }, 3400);
-          console.log('Please add the languages you want to practice');
         } else {
           this.setState({ stage: 'interestsStage' });
         }
@@ -182,7 +178,6 @@ class OnboardingStore extends Reflux.Store {
           setTimeout(() => { x.setState({ langErrorWrap: 'languagesErrorWrap-appear', interestsError: false }); }, 3400);
         } else {
           this.setState({ toAddNotes: this.state.userInfo.interests[0], stage: 'interestsNotesStage' });
-          console.log(this.state.userInfo);
         }
         break;
       default:
@@ -201,7 +196,39 @@ class OnboardingStore extends Reflux.Store {
     });
   }
 
+  setImage(src) {
+    this.setState({
+      userInfo: {
+        ...this.state.userInfo,
+        profilePicutre: src,
+      },
+    });
+  }
 }
+
+
+function getBase64Image(img) {
+  const image = new Image();
+  image.src = img;
+
+  // Create an empty canvas element
+  const canvas = document.createElement('canvas');
+  canvas.width = image.width;
+  canvas.height = image.height;
+
+  // Copy the image contents to the canvas
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(image, 0, 0);
+
+  // Get the data-URL formatted image
+  // Firefox supports PNG and JPEG. You could check img.src to
+  // guess the original format, but be aware the using "image/jpg"
+  // will re-encode the image.
+  const dataURL = canvas.toDataURL('image/png');
+
+  return dataURL.replace(/^data:image\/(png|jpg);base64,/, '');
+}
+
 
 OnboardingActions.finish.listen((userInfo, id) => {
   const interests = userInfo.interests.map(i => ({
@@ -216,9 +243,11 @@ OnboardingActions.finish.listen((userInfo, id) => {
     interests,
     mainLanguage: userInfo.motherLanguage,
     wantsToLearn: userInfo.familiarLanguages,
-    // TODO: add main language + languages to learn
+    profilePicutre: getBase64Image(userInfo.profilePicutre),
   };
-  request.put('http://localhost:3000/me/finish-onboarding')
+
+  request.put('/me/finish-onboarding')
+    .use(prefix)
     .send({ info, id })
     .set('x-access-token', localStorage.getItem('jwt'))
     .end((err, res) => {
