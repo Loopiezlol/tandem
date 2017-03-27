@@ -5,15 +5,15 @@ import Discover from './discover';
 import Messaging from './messaging/messaging';
 import '../styles/appStyles.scss';
 
-const renderMainComponent = (componentName) => {
-  switch (componentName) {
+const MainComponent = (props) => {
+  switch (props.opened) {
     case 'messaging':
-      return <Messaging />;
+      return <Messaging userToRender={props.userToRender} />;
     case 'profile':
       return <div>profile  :)</div>;
     case 'discover':
     default:
-      return <Discover />;
+      return <Discover onMessage={props.redirect} />;
   }
 };
 
@@ -23,6 +23,7 @@ class PaneControl extends React.Component { // !! not reflux
     this.state = {
       openedTab: 'discover',
       navigatiorOpen: window.innerWidth > 500,
+      userToRender: {},
     };
   }
 
@@ -39,8 +40,15 @@ class PaneControl extends React.Component { // !! not reflux
     });
   }
 
+  handleRedirect(tabToOpen, optionalUser) {
+    this.setState({
+      openedTab: tabToOpen,
+      userToRender: optionalUser,
+    });
+  }
+
   render() {
-    const { openedTab, navigatiorOpen } = this.state;
+    const { openedTab, navigatiorOpen, userToRender } = this.state;
     return (
       <MuiThemeProvider>
         <div className={`main-wrapper nav-${navigatiorOpen ? 'visible' : 'hidden'}`}>
@@ -62,7 +70,7 @@ class PaneControl extends React.Component { // !! not reflux
             >
               <img className={`navigator-toggler-icon ${navigatiorOpen ? 'expanded' : ''}`} src={require('../../public/ic_chevron_right_black_24px.svg')} />
             </div>
-            {renderMainComponent(openedTab)}
+            <MainComponent opened={openedTab} redirect={(tabToOpen, optionalUser) => this.handleRedirect(tabToOpen, optionalUser)} userToRender={userToRender} />
           </div>
         </div>
       </MuiThemeProvider>

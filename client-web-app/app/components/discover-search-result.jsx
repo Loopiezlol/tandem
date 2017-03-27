@@ -110,7 +110,7 @@ class UserCard extends Reflux.Component {
         </CardText>
         <div className="chatButton">
           <CardActions>
-            <FlatButton className="chatButton">
+            <FlatButton className="chatButton" onTouchTap={() => this.props.message('messaging', { id: me._id, name: me.username })}>
                 CHAT
             </FlatButton>
           </CardActions>

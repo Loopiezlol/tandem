@@ -22,6 +22,7 @@ class messaging extends Reflux.Component {
       showUserList: true,
     };
     this.stores = SBStore;
+    // console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaa', props.userToRender);
   }
   render() {
     const Logged = props => (
