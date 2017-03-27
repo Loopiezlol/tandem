@@ -45,10 +45,14 @@ class UserCard extends Reflux.Component {
         >
           <img className="img" src={imgUrl} />
         </CardMedia>]
-        <CardText className={`interests ${this.state.expanded ? 'expanded' : 'unexpanded'}`} expandable={true} >
+        <CardText className={`interests ${this.state.expanded ? 'expanded' : 'reduced'}`} >
           <List>
+            <CardTitle title="Interests:" />
             {me.interests.map(x =>
-              <ListItem primaryText={x.name} leftIcon={<img src={require(`../../public/png/${interestsDetails[interestsDetails.findIndex(det => det.label === x.name)].icon}.png`)} />} />)}
+              <ListItem
+                primaryText={x.name}
+                leftIcon={<img src={require(`../../public/png/${interestsDetails[interestsDetails.findIndex(det => det.label === x.name)].icon}.png`)} />}
+              />)}
           </List>
         </CardText>
         <Divider className="cardDivider" />
@@ -87,7 +91,9 @@ class UserCard extends Reflux.Component {
                 >
                   <img
                     src={require('../../public/transperant.png')}
-                    className={me.wantsToLearn[0].languageId.abbreviation.toLowerCase() ? `flag flag-${me.wantsToLearn[0].languageId.abbreviation.toLowerCase()}` : ''}
+                    className={me.wantsToLearn[0].languageId.abbreviation.toLowerCase() ?
+                      `flag flag-${me.wantsToLearn[0].languageId.abbreviation.toLowerCase()}` :
+                      ''}
                     alt={me.wantsToLearn[0].languageId.name}
                     style={{ backgroundImage: require('../../public/flags.png') }}
                   />

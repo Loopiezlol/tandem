@@ -115,6 +115,14 @@
   padding: 0px !important ;
   background: #FFFFFF;
   background-color: #FFFFFF;
+  overflow: hidden;
+  transition: height 0.5s;
+}
+.expanded {
+  height: 100%;
+}
+.reduced {
+  height: 0px;
 }
 .chatButton {
   width: 100% !important;
@@ -122,21 +130,4 @@
   padding: 0px !important;
   background: #038FB6;
   background-color: #038FB6;
-}
-.interests-toggle {
-  text-align: left !important;
-  width: 50px;
-}
-@keyframes bounceIn {
-  0% {
-    transform: scale(0.1);
-    opacity: 0;
-  }
-  60% {
-    transform: scale(1.2);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
-  }
 }
