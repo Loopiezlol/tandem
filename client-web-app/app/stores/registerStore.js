@@ -1,9 +1,10 @@
 import Reflux from 'reflux';
 import request from 'superagent';
-import actions from '../actions';
+import actions from '../actions/actions';
 import config from '../../../common/config';
-const prefix = require('superagent-prefix')(config.server);
 import SBActions from '../actions/sbActions';
+
+const prefix = require('superagent-prefix')(config.server);
 
 class RegisterStore extends Reflux.Store {
   constructor() {

@@ -120,6 +120,8 @@ if (require.main === module) {
   const server = app.listen(process.env.PORT || 3000, () => {
     const port = server.address().port;
     const host = server.address().address;
+    console.log(host);
+    console.log(port);
     console.log('App listening at http://%s:%s', host, port);
   });
 } else {

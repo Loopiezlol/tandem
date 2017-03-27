@@ -9,3 +9,4 @@ client-hybrid/plugins
 client-hybrid/platforms
 client-hybrid/www/client-bundle.js*
 .DS_Store
+backend/newrelic_agent.log
