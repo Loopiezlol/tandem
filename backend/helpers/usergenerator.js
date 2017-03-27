@@ -18,6 +18,10 @@ function* _populateDB(n) {
     wantsToLearn: [{
       languageId: languages[Math.floor(Math.random() * languages.length)]._id,
       levelId: levels[Math.floor(Math.random() * levels.length)]._id,
+    },
+    {
+      languageId: languages[Math.floor(Math.random() * languages.length)]._id,
+      levelId: levels[Math.floor(Math.random() * levels.length)]._id,
     }],
     interests: [interests[Math.floor(Math.random() * 12)],
       interests[Math.floor(Math.random() * 12)]],

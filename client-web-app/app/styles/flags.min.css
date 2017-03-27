@@ -1,8 +1,8 @@
 
 .flag {
     display:inline-block;
-    width:22px;
-    height:22px;
+    width:30px;
+    height:30px;
     background: url('../../public/flags.png') no-repeat;
     padding: 0px !important;
   }

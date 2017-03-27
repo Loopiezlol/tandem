@@ -82,8 +82,7 @@
   bottom: 15px;
 }
 .img {
-  height: 220px !important;
-  width: 100%;
+  height: 200px !important;
   object-fit: cover;
 }
 .speaks {
@@ -118,10 +117,13 @@
   background-color: #FFFFFF;
 }
 .chatButton {
-  z-index: 100 !important;
-  position: absolute;
-  background: #D8D3C2 !important;
-  color: #D8D3C2 !important;
-  background-color: #D8D3C2 !important;
-  background: url('../../public/speakIcon.png') !important;
+  width: 100% !important;
+  height: 40px !important;
+  padding: 0px !important;
+  background: #038FB6;
+  background-color: #038FB6;
+}
+.interests-toggle {
+  text-align: left !important;
+  width: 50px;
 }
