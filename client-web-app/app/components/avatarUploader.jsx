@@ -1,5 +1,7 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
+import Paper from 'material-ui/Paper';
+import '../styles/AvatarUploader.scss';
 
 class AvatarUploader extends React.Component {
   constructor(props) {
@@ -24,24 +26,31 @@ class AvatarUploader extends React.Component {
 
   render() {
     return (
-      <div className="avatar-wrapper">
-        { this.state.file.length > 0 ?
-          <button className="upload-button" onClick={this.resetUpload}>Remove image</button> :
-          <Dropzone
-            multiple={false}
-            accept="image/*"
-            maxSize={10000000}
-            ref={(node) => {
-              this.dropzone = node;
-            }}
-            onDrop={this.onDrop}
-          >
-            <div className="instructions">
-              Drag and drop a file here. Otherwise, click the dropzone.
+      <Paper className="picUploaderContainer" zDepth={2}>
+        <div className="avatar-wrapper">
+          { this.state.file.length > 0 ?
+            <div className="refreshPicWrap">
+              <p id="refreshLabel">Have a better one?</p>
+              <img src={require('../../public/refresh.svg')} className="refreshIcon" onClick={this.resetUpload} />
             </div>
-          </Dropzone>
-      }
-      </div>
+            :
+            <Dropzone
+              multiple={false}
+              accept="image/*"
+              maxSize={10000000}
+              ref={(node) => {
+                this.dropzone = node;
+              }}
+              onDrop={this.onDrop}
+            >
+              <div className="instructions">
+                <p id="instructionLabel" >Drag and drop a file here. Otherwise, click the dropzone.</p>
+                <img src={require('../../public/folder.svg')} id="folderIcon" />
+              </div>
+            </Dropzone>
+        }
+        </div>
+      </Paper>
     );
   }
 }
