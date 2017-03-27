@@ -8,6 +8,8 @@ import IconMenu from 'material-ui/IconMenu';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import ActionHome from 'material-ui/svg-icons/action/home';
 import FlatButton from 'material-ui/FlatButton';
+import ReactEmoji from 'react-emoji';
+import Snackbar from 'material-ui/Snackbar';
 import SBStore from '../../stores/sbStore';
 import SBChat from '../messaging/sbChat';
 import SBUserList from '../messaging/sbUserList';
@@ -22,7 +24,7 @@ class messaging extends Reflux.Component {
       showLoginComponents: false,
       showUserList: true,
     };
-    this.stores = SBStore;
+    this.store = SBStore;
   }
   render() {
     const Logged = props => (
@@ -39,6 +41,8 @@ class messaging extends Reflux.Component {
         <MenuItem primaryText="Sign out" />
       </IconMenu>
     );
+    const { newMsgContent, snackbarOpen } = this.state;
+    const newMsgMsg = ReactEmoji.emojify(newMsgContent) || newMsgContent;
     return (
       <MuiThemeProvider>
         <div className="wrapper-sb">
@@ -61,10 +65,23 @@ class messaging extends Reflux.Component {
             <SBUserList />
             <SBChat />
           </div>
+          <Snackbar
+            open={snackbarOpen}
+            message={newMsgMsg}
+            autoHideDuration={2000}
+            onRequestClose={this.handleRequestClose}
+          />
         </div>
       </MuiThemeProvider>
     );
   }
+
+  handleRequestClose = () => {
+    this.setState({
+      snackbarOpen: false,
+    });
+  };
+
   // style={{ position: 'absolute',
   // left: '50%',
   // transform: 'translateX(-50%)',

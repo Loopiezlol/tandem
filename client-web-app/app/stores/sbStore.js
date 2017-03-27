@@ -18,6 +18,7 @@ class sbStore extends Reflux.Store {
       profileURL: '', // TODO: Implement!
       userList: [],
       currentChannel: {},
+      channelInView: '',
       chatOpen: false,
       otherUser: '',
       otherUserNick: '',
@@ -25,6 +26,8 @@ class sbStore extends Reflux.Store {
       messages: [],
       channelHandler: {},
       isTyping: false,
+      newMsgContent: '',
+      snackbarOpen: false,
     };
     this.listenables = sbactions;
     //  sbactions.loginUser(auth.state.me.email);
@@ -37,6 +40,7 @@ class sbStore extends Reflux.Store {
 
     // Clear the current messages array of old user messages which were sent in the last session
     this.setState({
+      prevMessages: [],
       messages: [],
     });
 
@@ -67,6 +71,7 @@ class sbStore extends Reflux.Store {
                   otherUser: userid,
                   otherUserNick: userNick,
                   currentChannel: channelList[i],
+                  channelInView: channelList[i].channelUrl,
                 });
                 return;
               }
@@ -104,6 +109,7 @@ class sbStore extends Reflux.Store {
         console.log(`made the new channel successfully: ${channel}`);
         this.setState({
           currentChannel: channel,
+          channelInView: channel.channelUrl,
         });
         console.log(channel);
       });
@@ -158,13 +164,23 @@ class sbStore extends Reflux.Store {
       console.log('CHANNEL HANDLER: Got a message!! Here: ');
       console.log(channel, message);
 
-      const messagesState = x.state.messages;
-      messagesState.push(message);
-      x.setState({
-        messages: messagesState,
-      });
-      console.log('our messages list contains: ');
-      console.log(x.state.message);
+      try {
+          if (message.channelUrl === this.state.channelInView) {
+          const messagesState = x.state.messages;
+          messagesState.push(message);
+          x.setState({
+            messages: messagesState,
+          });
+          console.log('our messages list contains: ');
+          console.log(x.state.message);
+        } else {
+          // console.log('Firing a notification a');
+          sbactions.fireNewNotification(message);
+        }
+      } catch (TypeError) {
+        // console.log('Firing a notification b');
+        sbactions.fireNewNotification(message);
+      }
     };
 
     this.state.channelHandler.onTypingStatusUpdated = function (channel) {
@@ -256,6 +272,20 @@ class sbStore extends Reflux.Store {
 
   static createChannelFailed(err) {
     console.log(`SendBird Channel Creation ERROR. ERROR: ${err}`);
+  }
+
+  fireNewNotification(mess) {
+    const messageString = mess.message + " - " + mess.sender.nickname;
+    console.log('Firing a notification action');
+    this.setState({
+      snackbarOpen: true,
+    });
+    console.log(this.state.snackbarOpen);
+    this.setState({
+      snackbarOpen: true,
+      newMsgContent: messageString,
+    });
+    console.log(this.state.snackbarOpen);
   }
 
   // sendMessageCompleted(res) {
