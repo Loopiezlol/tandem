@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const config = require('../common/config.js');
 const jwt = require('jsonwebtoken');
+require('newrelic');
 
 const Language = require('./models/language');
 const Level = require('./models/level');
@@ -12,7 +13,6 @@ const Level = require('./models/level');
 
 function* createLanguages() {
   const currentLanguages = yield Language.find({});
-  // console.log(currentLanguages);
   if (currentLanguages.length === 0) {
     yield Language.create({
       name: 'Spanish',
@@ -81,7 +81,6 @@ app.use('/', require('./api/verify'));
 
 
 app.get('/', (req, res) => {
-  // res.send('Hello World!');
   res.redirect(`${config.client}/#/login`);
 });
 
