@@ -28,8 +28,17 @@ class sbStore extends Reflux.Store {
       isTyping: false,
       newMsgContent: '',
       snackbarOpen: false,
+      otherUserProfileUrl: '',
+      lastMessage: null,
     };
     this.listenables = sbactions;
+
+    // if ((this.props || {}).otherUserID && this.props.otherUserNickName) {
+    //   this.openChat (this.props.otherUserID, this.props.otherUserNickName);
+    // }
+    // if (this.props.otherUserID && this.props.otherUserNickName) {
+    //   this.openChat (this.props.otherUserID, this.props.otherUserNickName);
+    // }
     //  sbactions.loginUser(auth.state.me.email);
   }
 
@@ -72,6 +81,8 @@ class sbStore extends Reflux.Store {
                   otherUserNick: userNick,
                   currentChannel: channelList[i],
                   channelInView: channelList[i].channelUrl,
+                  otherUserProfileUrl: channelList[i].members[n].profileUrl,
+                  lastMessage: channelList[i].lastMessage,
                 });
                 return;
               }
@@ -83,6 +94,7 @@ class sbStore extends Reflux.Store {
             chatOpen: true,
             otherUser: userid,
             otherUserNick: userNick,
+            lastMessage: null,
           });
         });
       }
@@ -107,9 +119,16 @@ class sbStore extends Reflux.Store {
           return;
         }
         console.log(`made the new channel successfully: ${channel}`);
+        let url = '';
+        for (let i = 0, size = channel.members.length; i < size; i += 1) {
+          if (channel.members[i].userId !== userID) {
+            url = channel.members[i].profileUrl;
+          }
+        }
         this.setState({
           currentChannel: channel,
           channelInView: channel.channelUrl,
+          otherUserProfileUrl: url,
         });
         console.log(channel);
       });
@@ -212,6 +231,43 @@ class sbStore extends Reflux.Store {
         messages: messagesState,
       });
     });
+  }
+
+  blockUser() {
+    const { otherUser, userID } = this.state;
+    const userid = userID;
+    const uri = 'https://api.sendbird.com/v3/users/' + userid + '/block';
+    request.post(uri)
+         .set('Content-Type', 'application/json', 'charset=utf8')
+         .set('Api-Token', API_TOKEN)
+         .send({
+           target_id: otherUser
+          })
+       .end((err, res) => {
+         if (err || !res.ok) {
+           console.log(`Error Blocking the user: ` + otherUser );
+         } else {
+           console.log(`User Blocked Successfully: ${JSON.stringify(res.body)}`);
+           console.log(res.body);
+         }
+       });
+  }
+
+  unBlockUser() {
+    const { otherUser, userID } = this.state;
+    const userid = userID;
+    const uri = 'https://api.sendbird.com/v3/users/' + userID + '/block/' + otherUser;
+    request.delete(uri)
+         .set('Content-Type', 'application/json', 'charset=utf8 ')
+         .set('Api-Token', API_TOKEN)
+         .send({})
+       .end((err, res) => {
+         if (err || !res.ok) {
+           console.log(`Error Unblocking the user: ` + otherUser );
+         } else {
+           console.log(`User Unblocked Successfully: ${JSON.stringify(res.body)}`);
+         }
+       });
   }
 
   createUserCompleted(res) {
@@ -337,6 +393,8 @@ sbactions.loadOnlineUsersList.listen(() => {
       }
     });
 });
+
+
 
 // sbactions.createChannel.listen((userID, otherUserID) => {
 //   request.get('https://api.sendbird.com/v3/group_channels')

@@ -10,6 +10,8 @@ const SBActions = Reflux.createActions({
   loadPreviousMessages: { asyncResult: true },
   makeChannelHandler: { asyncResult: true },
   fireNewNotification: {},
+  blockUser: { asyncResult: true },
+  unBlockUser: { asyncResult: true },
 });
 
 export default SBActions;

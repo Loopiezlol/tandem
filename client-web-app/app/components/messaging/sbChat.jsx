@@ -114,7 +114,7 @@ class sbChat extends Reflux.Component {
         <div>
           <p className="usernameLabel" style={{ paddingLeft: '340px' }} id={this.state.usernameLabel}> {message.sender.nickname}{timeStamp} </p>
           <div onClick={e => this.showUserName(e)} className="message to">
-            {ReactEmoji.emojify(message.message) || message.message || Avatar}
+            {ReactEmoji.emojify(message.message) || message.message }
           </div>
         </div>
       );
