@@ -8,11 +8,8 @@ function* getUsers(req, res) {
   const query = yield helpers.dbQuery(req.query, req.headers.id);
 
   const users = yield User.find(query)
-  .populate('mainLanguage')
-  .populate('wantsToLearn.languageId');
+  .populate('mainLanguage wantsToLearn.languageId wantsToLearn.levelId');
   res.json(users);
-
-  // console.log(users.map(user => user.wantsToLearn.map(x => `L: ${x.languageId.name}`)));
 }
 
 // standard api method, using callbakcs

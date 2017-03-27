@@ -5,9 +5,17 @@ const wrap = require('co-express');
 
 function* _dbQuery(options, id) {
   const user = yield User.findOne({ _id: id });
-  const query = {};
+  const query = {
+    _id: { $ne: id },
+  };
   if (options.name) {
-    query.username = new RegExp(options.name, 'i');
+    const toMatch = new RegExp(options.name, 'i');
+    query.$or = [
+      { username: toMatch },
+      { firstName: toMatch },
+      { lastName: toMatch },
+      { email: toMatch },
+    ];
   }
 
   if (options.languagesToMatch) {

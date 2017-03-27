@@ -1,8 +1,7 @@
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import IconButton from 'material-ui/IconButton';
-import Drawer from 'material-ui/Drawer';
-import AppBar from 'material-ui/AppBar';
 import ContentFilterList from 'material-ui/svg-icons/content/filter-list';
+import RefreshIndicator from 'material-ui/RefreshIndicator';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
 
 import React from 'react';
 import Reflux from 'reflux';
@@ -19,55 +18,59 @@ class Discover extends Reflux.Component {
     super(props);
     this.state = {
       filtersVisible: false,
+      showLoading: true,
+      loadedFirstTime: true,
     };
     this.stores = [DiscoverStore, Auth];
+  }
 
-    actions.getResults({}, ((this.state || {}).me || {})._id);
+  componentWillUpdate(nextProps, nextState) {
+    if (nextState.me._id && nextState.loadedFirstTime) {
+      actions.getResults({}, nextState.me._id);
+    }
   }
 
   render() {
-    const { results } = this.state;
+    const { results, showLoading, filtersVisible } = this.state;
     return (
       <MuiThemeProvider>
         <div className="control-discover">
-          <Drawer
-            open={this.state.filtersVisible}
-            openSecondary
-            docked={false}
-            onRequestChange={filtersVisible => this.handleSwipeDrawer(filtersVisible)}
-          >
-            <AppBar
-              title="Hide filters"
-              onLeftIconButtonTouchTap={() => this.handleToggleDrawer()}
-              onTitleTouchTap={() => this.handleToggleDrawer()}
-            />
-            <Filters />
-          </Drawer>
-          <AppBar
-            className="appbar"
-            iconClassNameLeft = "leftIconBar"
-            iconElementRight={<IconButton><ContentFilterList /></IconButton>}
-            onRightIconButtonTouchTap={() => this.handleToggleDrawer()}
+          {showLoading ?
+            <RefreshIndicator className="loading-circle" status="loading" />
+            :
+            <div className={`control-discover-results ${filtersVisible ? 'blur' : ''}`}>
+              {results && results.length ?
+                results.map(user =>
+                  <UserCard className="results" me={user} message={this.props.onMessage} />,
+                )
+                :
+                <div className="control-discover-results-emptypage">No matches!</div>
+              }
+            </div>
+          }
+          <Filters
+            visible={filtersVisible}
+            onSearch={(queryParameters, id) => this.handleSearch(queryParameters, id)}
           />
-          <div className="control-discover-results">
-            {results && results.length ?
-              results.map(user =>
-                <UserCard className="results" me={user} />,
-              )
-              :
-              <div className="control-discover-results-emptypage">No matches!</div>
-            }
-          </div>
+          <FloatingActionButton
+            className="toggle-filter-button"
+            onTouchTap={() => this.handleToggleFilters()}
+          >
+            <ContentFilterList />
+          </FloatingActionButton>
         </div>
       </MuiThemeProvider>
     );
   }
 
-  handleSwipeDrawer(filtersVisible) {
-    this.setState({ filtersVisible });
+  handleSearch(queryParameters, id) {
+    this.setState({
+      showLoading: true,
+    });
+    actions.getResults(queryParameters, id);
   }
 
-  handleToggleDrawer() {
+  handleToggleFilters() {
     this.setState({
       filtersVisible: !this.state.filtersVisible,
     });

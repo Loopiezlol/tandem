@@ -28,7 +28,7 @@ module.exports = {
       mainLanguage: u.mainLanguage,
       wantsToLearn: u.wantsToLearn.map(language => ({
         name: language.languageId.name,
-        // _id: language.languageId._id,
+        _id: language.languageId._id,
         level: language.levelId.name,
       })),
       profilePicture: u.profilePicutre,

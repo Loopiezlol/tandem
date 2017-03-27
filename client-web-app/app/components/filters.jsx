@@ -1,14 +1,11 @@
 import TextField from 'material-ui/TextField';
 import Divider from 'material-ui/Divider';
-import Paper from 'material-ui/Paper';
 import CheckBox from 'material-ui/Checkbox';
 import FlatButton from 'material-ui/FlatButton';
 import ChipInput from 'material-ui-chip-input';
 import IconButton from 'material-ui/IconButton';
-import ActionHome from 'material-ui/svg-icons/action/home';
 import React from 'react';
 import Reflux from 'reflux';
-import actions from '../actions/actions';
 import Auth from '../stores/auth';
 
 import iconsWithLabels from '../interests';
@@ -21,26 +18,30 @@ class Filters extends Reflux.Component {
       genderBoxContent: false,
       languageBoxContent: false,
       chips: [],
-      interests: iconsWithLabels.map(x => ({ name: x.label, selected: false, icon: x.icon })),
+      interests: Array(iconsWithLabels.length).fill(false),
     };
     this.stores = [Auth];
   }
 
   render() {
+    const { onSearch: search, visible } = this.props;
     const { searchText, genderBoxContent, languageBoxContent, chips, interests, me } = this.state;
+
     const queryParameters = {
       name: searchText,
       sameGender: genderBoxContent,
       matchLanguages: languageBoxContent,
       languagesToMatch: chips.map(chip => chip._id),
-      interests: interests.filter(x => x.selected).map(x => x.name),
+      interests: iconsWithLabels.reduce(
+        (acc, val, index) => (interests[index] ? [...acc, val.label] : acc),
+         [],
+       ),
     };
+
     return (
-      <Paper className="control-discover-filter">
+      <div className={`control-discover-filter ${visible ? 'visible' : 'hidden'}`}>
         <TextField
-          hintText="username:"
-          // floatingLabelText="username:"
-          // floatingLabelFixed
+          hintText="Search by name, username or email:"
           onChange={e => this.handleType(e)}
         />
         <Divider />
@@ -53,47 +54,41 @@ class Filters extends Reflux.Component {
           onCheck={(e, checked) => this.handleLanguageBox(checked)}
         />
         <ChipInput
-          floatingLabelText="Display users that speak:"
+          floatingLabelText="Limit results to users that speak"
           openOnFocus
-          hintText="Just type in languages"
+          fullWidth
+          hintText="Leave empty to ignore languages"
           value={this.state.chips}
           dataSource={me.wantsToLearn}
           dataSourceConfig={{ text: 'name', value: '_id' }}
           onRequestAdd={chip => this.handleAddChip(chip)}
           onRequestDelete={(chip, index) => this.handleDeleteChip(chip, index)}
         />
-        <div>
+        <div className="filters-interests">
           Choose interests:<br />
-          {interests.map(interest => (
+          {iconsWithLabels.map((interest, index) => (
             <IconButton
-              key={`interest-${interest.name}`}
-              tooltip={interest.name}
-              onTouchTap={() => this.handleInterest(interest)}
+              key={`interest-${interest.label}`}
+              tooltip={interest.label}
+              onTouchTap={() => this.handleInterest(index)}
             >
-              {/* <ActionHome className={interest.selected ? 'selected' : ''} /> */}
-              <img className={`interest-icon ${interest.selected ? 'selected' : ''}`} src={require(`../../public//png/${interest.icon}.png`)} />
-
+              <img className={`interest-icon ${this.state.interests[index] ? 'selected' : ''}`} src={require(`../../public/png/${interest.icon}.png`)} />
             </IconButton>
           ))}
         </div>
         <FlatButton
-          style={{ width: '100%' }}
           fullWidth
           label="Search"
           primary
-          onTouchTap={() => actions.getResults(queryParameters, this.state.me._id)}
+          onTouchTap={() => search(queryParameters, this.state.me._id)}
         />
-      </Paper>
+      </div>
     );
   }
 
-  handleInterest(interest) {
-    console.log(`interest:${interest.name} `);
+  handleInterest(index) {
     const { interests } = this.state;
-    const foundIndex = interests.findIndex(x => x.name === interest.name);
-    if (foundIndex !== -1) {
-      interests[foundIndex].selected = !interests[foundIndex].selected;
-    }
+    interests[index] = !interests[index];
     this.setState({
       interests,
     });
@@ -115,10 +110,10 @@ class Filters extends Reflux.Component {
   }
 
   handleDeleteChip(chip, index) {
-    const tempChips = this.state.chips;
-    tempChips.splice(index, 1);
+    const chips = this.state.chips;
+    chips.splice(index, 1);
     this.setState({
-      chips: tempChips,
+      chips,
     });
   }
 

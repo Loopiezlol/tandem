@@ -12,6 +12,7 @@ import SBStore from '../../stores/sbStore';
 import SBChat from '../messaging/sbChat';
 import SBUserList from '../messaging/sbUserList';
 import LoginComponents from '../messaging/loginComponents';
+import '../../styles/messaging.scss';
 
 class messaging extends Reflux.Component {
   constructor(props) {
@@ -21,6 +22,7 @@ class messaging extends Reflux.Component {
       showUserList: true,
     };
     this.stores = SBStore;
+    // console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaa', props.userToRender);
   }
   render() {
     const Logged = props => (
@@ -39,26 +41,14 @@ class messaging extends Reflux.Component {
     );
     return (
       <MuiThemeProvider>
-        <div className="wrapper-sb">
+        <div className="messaging-wrapper">
           <AppBar
             title="Tandem Messenger"
             iconElementLeft={<IconButton><ActionHome /></IconButton>}
             iconElementRight={this.state.loggedIn ? <Logged /> : <FlatButton label="Log in" onClick={() => this.openLogin()} />}
           />
-          <div
-            className="content-wrapper-2"
-            style={{ position: 'relative',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'flex-start',
-            }}
-          >
+          <div className="content-wrapper-2">
             {this.state.showLoginComponents ? <LoginComponents /> : <div />}
-            {
-              // {this.state.showUserList ? <div /> : <SBUserList />}
-            }
             <SBUserList />
             <SBChat />
           </div>

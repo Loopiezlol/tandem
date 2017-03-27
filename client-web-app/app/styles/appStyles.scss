@@ -3,18 +3,20 @@
 .main-wrapper {
   // height: 100vh;
   // display: inline-block;
-  position: relative;
+  // position: relative;
   height: 100%;
-  width: 100%;
   display: flex;
-  overflow-y: hidden;
+  overflow: hidden;
+  position: absolute;
+  right: 0px;
+  transition: width 0.2s;
 
   .control-tabs {
+    z-index: 1000;
     height: 100%;
     width: 15%;
     position: static;
     background-color: white;
-    // display: inline-block;
 
     .wrapper-control-button {
       flex: 1;
@@ -47,36 +49,68 @@
     }
   }
 
-.paneTabBg {
-  position: absolute;
-  width: 168%;
-  margin-left: -30%;
-  // margin-top: -45%;
-  height: 168%;
-  z-index: 1;
-}
+  .paneTabBg {
+    position: absolute;
+    width: 168%;
+    margin-left: -30%;
+    // margin-top: -45%;
+    height: 168%;
+    z-index: 1;
+  }
 
-#paneColor-powder {
-  background-color: #BFD8D2;
-  margin-top: -15%;
-}
+  #paneColor-powder {
+    background-color: #BFD8D2;
+    margin-top: -15%;
+  }
 
-#paneColor-peach {
-  background-color: #DCC7AA;
-  margin-top: 10%;
-}
+  #paneColor-peach {
+    background-color: #DCC7AA;
+    margin-top: 10%;
+  }
 
-#paneColor-warm {
-    background-color: #DF744A;
-    margin-top: -45%;
-}
+  #paneColor-warm {
+      background-color: #DF744A;
+      margin-top: -45%;
+  }
 
 
   .opened-wrapper {
-  background-color: #EAE3EA !important;
-      width: 85%;
-    position: static;
-    overflow-y: auto;
-    // height: inherit;
+    background-color: #FFF8DC;
+    width: 85%;
+    // position: static;
+    // overflow-y: auto;
+
+    .navigator-toggler {
+
+      border-bottom-right-radius: 90px;
+      border-top-right-radius: 90px;
+      height: 90px;
+      width: 45px;
+      z-index: 1000;
+      position: absolute;
+      top: 50%;
+      background-color: blue;
+
+      .navigator-toggler-icon {
+        top: 25%;
+        height: 45px;
+        width: 45px;
+        position: absolute;
+        transition: transform 0.5s;
+      }
+
+      .expanded {
+        transform: rotate(180deg);
+      }
+    }
+
   }
+}
+
+.nav-visible {
+  width: 100%;
+}
+
+.nav-hidden {
+  width: 118%;
 }
