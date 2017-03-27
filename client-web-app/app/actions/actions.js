@@ -19,6 +19,8 @@ const actions = Reflux.createActions({
   fetchLanguages: { asyncResult: true },
   fetchLevels: { asyncResult: true },
   getResults: { asyncResult: true },
+  updateResults: { asyncResult: true },
+  updateTempUser: { asyncResult: true },
 });
 
 export default actions;

@@ -8,20 +8,27 @@ import TextField from 'material-ui/TextField';
 import SBStore from '../../stores/sbStore';
 import SBActions from '../../actions/sbActions';
 import SBUserList from '../messaging/sbUserList';
+
 /*eslint-disable*/
 class sbMessaging extends Reflux.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      sbUser: '',
-      sbNick: '',
-    };
+    this.state = {};
     this.stores = SBStore;
   }
   render() {
     const { sbUser, sbNick } = this.state;
-
-
+    const style = {
+      width: '30pc',
+      margin: 15,
+      textAlign: 'center',
+      display: 'inline-block',
+      backgroundColor: 'lightblue',
+    };
+    const buttonStyle = {
+      margin: 12,
+    };
+    const zDepthSize = 4;
     return (
       <MuiThemeProvider>
         <div className="wrapper-sb">

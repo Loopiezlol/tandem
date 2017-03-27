@@ -2,6 +2,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import React from 'react';
 import Discover from './discover';
+import User from './UserProfile/User';
 import Messaging from './messaging/messaging';
 import '../styles/appStyles.scss';
 
@@ -10,7 +11,7 @@ const MainComponent = (props) => {
     case 'messaging':
       return <Messaging userToRender={props.userToRender} />;
     case 'profile':
-      return <div>profile  :)</div>;
+      return <User />;
     case 'discover':
     default:
       return <Discover onMessage={props.redirect} />;
@@ -54,13 +55,22 @@ class PaneControl extends React.Component { // !! not reflux
         <div className={`main-wrapper nav-${navigatiorOpen ? 'visible' : 'hidden'}`}>
           <div className="control-tabs">
             <div onTouchTap={() => this.switchTo('discover')} className="wrapper-control-button">
-              <p>Discover</p>
+              <span className="paneTabBg" id="paneColor-warm">
+                <img src={require('../../public/PaneControl/discover.svg')} className="paneTabIcon" />
+                <p className="paneTabLabel">Discover</p>
+              </span>
             </div>
             <div onTouchTap={() => this.switchTo('messaging')} className="wrapper-control-button">
-              <p>Messaging</p>
+              <span className="paneTabBg" id="paneColor-powder">
+                <img src={require('../../public/PaneControl/messaging.svg')} className="paneTabIcon" />
+                <p className="paneTabLabel">Messaging</p>
+              </span>
             </div>
             <div onTouchTap={() => this.switchTo('profile')} className="wrapper-control-button">
-              <p>Profile</p>
+              <span className="paneTabBg" id="paneColor-peach">
+                <img src={require('../../public/PaneControl/myProfile.svg')} className="paneTabIcon" />
+                <p className="paneTabLabel">Profile</p>
+              </span>
             </div>
           </div>
           <div className="opened-wrapper" >
@@ -70,7 +80,12 @@ class PaneControl extends React.Component { // !! not reflux
             >
               <img className={`navigator-toggler-icon ${navigatiorOpen ? 'expanded' : ''}`} src={require('../../public/ic_chevron_right_black_24px.svg')} />
             </div>
-            <MainComponent opened={openedTab} redirect={(tabToOpen, optionalUser) => this.handleRedirect(tabToOpen, optionalUser)} userToRender={userToRender} />
+            <MainComponent
+              opened={openedTab}
+              redirect={(tabToOpen, optionalUser) =>
+              this.handleRedirect(tabToOpen, optionalUser)}
+              userToRender={userToRender}
+            />
           </div>
         </div>
       </MuiThemeProvider>

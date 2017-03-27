@@ -3,6 +3,7 @@ import Reflux from 'reflux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
 import SelectField from 'material-ui/SelectField';
+import DropDownMenu from 'material-ui/DropDownMenu';
 import Avatar from 'material-ui/Avatar';
 import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
@@ -10,9 +11,15 @@ import TextField from 'material-ui/TextField';
 import AutoComplete from 'material-ui/AutoComplete';
 import { List, ListItem } from 'material-ui/List';
 import Infinite from 'react-infinite';
-import LanguageLevel from '../Onboarding/LanguageLevel';
 import CustomCarousel from '../Onboarding/CustomCarousel';
 import MeStore from '../../stores/MeStore';
+import LevelStore from '../../stores/levelStore';
+import LanguageStore from '../../stores/languageStore';
+import interestsData from '../../interests';
+
+import Auth from '../../stores/auth';
+
+import actions from '../../actions/actions';
 import MeActions from '../../actions/MeActions';
 import '../../styles/User/User.scss';
 
@@ -20,10 +27,37 @@ class User extends Reflux.Component {
 
   constructor(props) {
     super(props);
-    this.store = MeStore;
-    this.famLangArr = [{ name: 'English', level: 'A2' }, { name: 'Spanish', level: 'B1' }, { name: 'Bulgarian', level: 'C2' }, { name: 'Russian', level: 'B2' }];
-    this.state = { selectorBg: 'bg-info', addNewFamLangBtnLabel: 'Add', famLanguage: 'English', interestsSelectorHeader: 'selectorHeader', carouselIndex: 0, btnLabel: 'Save notes', btnState: 'updateNotesBtn-appear' };
+    this.stores = [Auth, MeStore, LevelStore, LanguageStore];
+    actions.fetchLanguages();
+    actions.fetchLevels();
+    this.state = {
+      selectorBg: 'bg-info',
+      addNewFamLangBtnLabel: 'Add',
+      interestsSelectorHeader: 'selectorHeader',
+      carouselIndex: 0,
+      btnLabel: 'Save notes',
+      btnState: 'updateNotesBtn-appear',
+      currentUserLanguages: [],
+      tempUser: {},
+      currentSelectedLanguage: '',
+      currentSelectedLanguageLevel: '',
+      newFamLang: '',
+      newFamLangLevel: '',
+      selectedHobby: '',
+    };
   }
+
+  componentDidUpdate() {
+    if (Object.keys(this.state.tempUser).length === 0 &&
+        this.state.me) {
+      this.setState({
+        tempUser: this.state.me,
+        currentSelectedLanguage: this.state.me.wantsToLearn[0].name,
+        currentSelectedLanguageLevel: this.state.me.wantsToLearn[0].level,
+      });
+    }
+  }
+
 
   changeSelector = (idx) => {
     switch (idx) {
@@ -47,50 +81,72 @@ class User extends Reflux.Component {
   };
 
   selectFamLang = (event, index, value) => {
-    this.setState({ famLanguage: value });
+    this.setState({
+      currentSelectedLanguage: value,
+      currentSelectedLanguageLevel: (this.state.tempUser.wantsToLearn || [])
+        .find(l => l.name === value).level,
+    });
   }
 
   addNotes = (hobby, index) => {
-    MeActions.selectHobby(hobby);
-    this.setState({ addNotes: hobby, visibilityHeader: 'hiddenHeader', carouselIndex: index });
+    // MeActions.selectHobby(hobby);
+
+    this.setState({ addNotes: hobby, visibilityHeader: 'hiddenHeader', carouselIndex: index, selectedHobby: interestsData.find(i => i.label === hobby.name), updatingNotes: this.state.tempUser.interests.find(i => i.name === hobby.name).notes });
+      console.log(`Carousel index ${this.state.carouselIndex}`);
   }
 
   closeNotes = () => {
     this.setState({ addNotes: null, visibilityHeader: 'visibleHeader' });
   }
 
-  handleMouseEnter = () => {
-    if (this.state.selectorBg === 'bg-info' || this.state.selectorBg === 'bg-languages') {
-      this.setState({ showEdit: true });
-    }
-  }
-
-  handleMouseLeave = () => {
-    if (this.state.selectorBg === 'bg-info' || this.state.selectorBg === 'bg-languages') {
-      this.setState({ showEdit: false });
-    }
-  }
-
-
-  enableEdit = () => {
-    if (this.state.enableEdit) {
-      this.setState({ enableEdit: false });
-    } else {
-      this.setState({ enableEdit: true });
-    }
-  }
-
-
   addNewFamLang = () => {
-    MeActions.addNewFamLang();
-    this.setState({ addNewFamLangBtnLabel: 'Added' });
+    // TODO: check if newFamLang is valid language
+    const { newFamLang, newFamLangLevel, tempUser } = this.state;
+    tempUser.wantsToLearn.push({
+      name: newFamLang,
+      level: newFamLangLevel,
+    });
+    this.setState({ addNewFamLangBtnLabel: 'Added', tempUser });
   }
 
-  updateNewFamLanguage = (e) => {
-    MeActions.updateNewFamLanguage(e);
+  updateNewFamLanguage = (v) => {
     if (this.state.addNewFamLangBtnLabel !== 'Add') {
-      this.setState({ addNewFamLangBtnLabel: 'Add' });
+      this.setState({
+        addNewFamLangBtnLabel: 'Add',
+        newFamLang: v,
+      });
+    } else {
+      this.setState({
+        newFamLang: v,
+      });
     }
+  }
+
+  updateNewFamLangLevel = (e, i, v) => {
+    this.setState({
+      newFamLangLevel: v,
+    });
+  }
+
+  updateMotherLanguage = (e) => {
+    // if (this.state.languages.find(l => l === e.target.value)) {
+    //   this.setState({
+    //     updateMotherLanguage
+    //   })
+    // }
+    console.log(e.target.value);
+    this.setState({
+      updatingMotherLang: e.target.value,
+    }, () => {
+      if (this.state.languages.find(l => l.name === this.state.updatingMotherLang)) {
+        const tempUser = this.state.tempUser;
+        tempUser.mainLanguage = this.state.languages
+          .find(l => l.name === this.state.updatingMotherLang);
+        this.setState({
+          tempUser,
+        });
+      }
+    });
   }
 
 
@@ -104,10 +160,19 @@ class User extends Reflux.Component {
     }
   }
 
-  saveNotes = (e) => {
-    this.setState({ btnLabel: 'Saved', btnState: 'updateNotesBtn-leave' }, () => {
-      MeActions.saveNotes(e);
-    });
+  saveTempUser = () => {
+    console.log('updating temp user');
+    actions.updateTempUser(this.state.tempUser);
+  }
+
+  saveNotes = () => {
+    const { addNotes, tempUser, updatingNotes } = this.state;
+    addNotes.notes = updatingNotes;
+
+    const hobbyIndex = tempUser.interests.findIndex(int => int.name === addNotes.name);
+
+    tempUser.interests[hobbyIndex].notes = updatingNotes;
+    this.setState({ btnLabel: 'Saved', btnState: 'updateNotesBtn-leave', addNotes, tempUser });
     const x = this;
     setTimeout(() => {
       x.setState({ btnLabel: 'Save notes', btnState: 'updateNotesBtn-appear' });
@@ -125,6 +190,17 @@ class User extends Reflux.Component {
     }
   }
 
+  changeCurrentLanguageLevel = (e, i, v) => {
+    const currentLangaugeIndex = this.state.tempUser.wantsToLearn.findIndex(l =>
+      this.state.currentSelectedLanguage === l.name);
+    const tempUserToModify = this.state.tempUser;
+    tempUserToModify.wantsToLearn[currentLangaugeIndex].level = v;
+    this.setState({
+      currentSelectedLanguageLevel: v,
+      tempUser: tempUserToModify,
+    });
+  }
+
   render() {
     const selectors = ['info', 'chatting', 'heart'].map((selector, index) => {
       const source = `${selector}.png`;
@@ -135,53 +211,73 @@ class User extends Reflux.Component {
     const infoSelector = (
       <div className="genericSelectorWrap">
         <h1 className="selectorHeader">Information</h1>
-        {this.state.showEdit && <p className="editPromptLabel">Edit</p>}
         <div className="nameWrap">
           <p className="propLabel" id="nameLabel">Name</p>
-          <p className="dataLabel" id="nameData">{this.state.userInfo.firstName} {this.state.userInfo.lastName}</p>
+          <p className="dataLabel" id="nameData">{this.state.tempUser.firstName} {this.state.tempUser.lastName}</p>
+        </div>
+        <div className="usernameWrap">
+          <p className="propLabel" id="usernameLabel">Username</p>
+          <p className="dataLabel" id="usernamenameData">{this.state.tempUser.username}</p>
         </div>
         <div className="ageWrap">
           <p className="propLabel" id="ageLabel" >Age</p>
-          <p className="dataLabel" id="ageData">{this.state.userInfo.age}</p>
+          <p className="dataLabel" id="ageData">{this.state.tempUser.age ?
+            this.state.tempUser.age : 'please contact us to update your age'}</p>
+        </div>
+        <div className="genderWrap">
+          <p className="propLabel" id="genderLabel">Gender</p>
+          <p className="dataLabel" id="genderData">{this.state.tempUser.gender ?
+           this.state.tempUser.gender : 'please contact us to update your gender'}</p>
         </div>
       </div>
     );
 
-    const familiarLanguages = this.state.userInfo.familiarLanguages.map(lang => (
+    const familiarLanguages = (this.state.tempUser.wantsToLearn || []).map(lang => (
       <MenuItem
         value={lang.name}
         primaryText={lang.name}
       />
       ));
 
-    const languageLevels = () => {
-      for (const lang of this.state.userInfo.familiarLanguages) {
-        if (this.state.famLanguage === lang.name) {
-          return (
-            <LanguageLevel
-              value={lang.level}
-              className="famLangLevel"
-            />
-          );
-        }
-      }
-    };
+    const languageLevels = () => (this.state.tempUser.wantsToLearn || [])
+    .filter(l => this.state.currentSelectedLanguageLevel === l.level)
+    .map(lang =>
+      <DropDownMenu
+        className="famLangLevel"
+        value={lang.level}
+        onChange={this.changeCurrentLanguageLevel}
+      >
+        {this.state.levels.map(l =>
+          <MenuItem
+            key={`menu-item-${l.name}`}
+            value={l.name} primaryText={l.name}
+          />)}
+      </DropDownMenu>,
+      );
 
-
+    // TODO: remove motherLanguage + languages already set
     const newFamLangBox = (
       <Paper className="newFamLangContainer" >
         <AutoComplete
           hintText="Language"
           searchText={this.state.newFamLangInput}
-          dataSource={this.state.allLanguages}
+          dataSource={(this.state.languages || []).map(l => l.name)}
           onUpdateInput={e => this.updateNewFamLanguage(e)}
           className="newFamLangsList"
         />
         <span className="newFamLangLangLevel">
-          <LanguageLevel
+          <DropDownMenu
+            className="famLangLevel"
             value={this.state.newFamLangLevel}
-            onChange={(event, index, value) => MeActions.updateNewFamLangLevel(event, index, value)}
-          />
+            onChange={this.updateNewFamLangLevel}
+          >
+            {this.state.levels.map(l =>
+              <MenuItem
+                key={`menu-item-${l.name}`}
+                value={l.name} primaryText={l.name}
+              />)}
+          </DropDownMenu>
+
         </span>
         <FlatButton className="newFamLangAddBtn" onClick={this.addNewFamLang}>
           {this.state.addNewFamLangBtnLabel}
@@ -197,12 +293,21 @@ class User extends Reflux.Component {
         </div>
         <div id={this.state.isBlurred} onClick={this.closeNewFamLangPopUp}>
           <h1 className="selectorHeader">Languages</h1>
-          {this.state.showEdit && <p className="editPromptLabel" onClick={this.enableEdit}>Edit</p>}
           <div className="motherLanguageWrap" >
             <p className="propLabel" id="motherLangLabel">Mother language</p>
+            <p className="dataLabel" id="motherLangDataLabel">{(this.state.tempUser.mainLanguage || {}).name}</p>
+{/* =======
             {
-              this.state.enableEdit ? <div id="motherLanguaeEdit"><TextField className="data motherLangInputEdit" value={this.state.updatingMotherLang || this.state.userInfo.motherLanguage} onChange={e => MeActions.updateMotherLanguage(e)} /></div> : <p className="dataLabel" id="motherLangDataLabel">{this.state.userInfo.motherLanguage}</p>
+              this.state.enableEdit ? <div id="motherLanguaeEdit">
+                <TextField
+                  className="data motherLangInputEdit"
+                  value={(this.state.updatingMotherLang)}
+                  onChange={this.updateMotherLanguage}
+                />
+              </div> :
+              <p className="dataLabel" id="motherLangDataLabel">{(this.state.tempUser.mainLanguage || {}).name} </p>
             }
+>>>>>>> develop */}
           </div>
           <div className="famLangWrapper">
             <p className="propLabel" id="famLangLabel">Familiar languages</p>
@@ -212,7 +317,7 @@ class User extends Reflux.Component {
             </div>
             <div className="famLangListWrap">
               <SelectField
-                value={this.state.famLanguage}
+                value={this.state.currentSelectedLanguage}
                 onChange={this.selectFamLang}
                 className="famLangList"
                 labelStyle={{ fontFamily: '"Dosis", sans-serif',
@@ -244,16 +349,16 @@ class User extends Reflux.Component {
         <Paper
           className="interestNotesWrap"
         >
-          <img src={`./png/${(this.state.addNotes || {}).icon}.png`} className="notesInterestIcon" />
+          <img src={(this.state.selectedHobby || {}).icon ? require(`../../../public/png/${(this.state.selectedHobby || {}).icon}.png`) : null} className="notesInterestIcon" />
           <div>
-            <p className="interestLabel notesInterestLabel">{(this.state.addNotes || {}).label}</p>
+            <p className="interestLabel notesInterestLabel">{(this.state.addNotes || {}).name}</p>
           </div>
           <span><img className="chosenInterestNotes" src={require('../../../public/notes-selected.png')} /></span>
         </Paper>
         <span id="notesBubbleWrap"> <img src={require('../../../public/notesBubble.png')} id="notesBubbleIcon" onClick={this.closeNotes} />
 
           <TextField
-            hintText={`Share something about ${(this.state.addNotes || {}).label}`}
+            hintText={`Share something about ${(this.state.addNotes || {}).name}`}
             value={this.state.updatingNotes || (this.state.addNotes || {}).notes}
             onChange={e => MeActions.updateNotesField(e)}
             multiLine
@@ -261,7 +366,7 @@ class User extends Reflux.Component {
             className="notesInputFieldUserProfile"
           />
 
-          {(this.state.addNotes || {}).notes !== this.state.updatingNotes && <FlatButton className="updateNotesBtn" id={this.state.btnState} onClick={e => this.saveNotes(e)}>{this.state.btnLabel}</FlatButton>}
+          {(this.state.addNotes || {}).notes !== this.state.updatingNotes && <FlatButton className="updateNotesBtn" id={this.state.btnState} onClick={this.saveNotes}>{this.state.btnLabel}</FlatButton>}
         </span>
       </div>
     );
@@ -281,18 +386,18 @@ class User extends Reflux.Component {
     },
     ];
 
-    const interests = this.state.userInfo.interests.map((hobby, index) => {
-      const source = `/png/${hobby.icon}.png`;
+    const interests = (this.state.tempUser.interests || []).map((hobby, index) => {
+      const source = `/png/${interestsData.find(i => i.label === hobby.name).icon}.png`;
       return (
         <Paper className="interestCardWrap">
           <Paper className="cardHeaderWrap">
-            <img src={require(`../../../public${source}`)} className="interestCardIcon" />
+            <img src={hobby ? require(`../../../public${source}`) : null} className="interestCardIcon" />
           </Paper>
 
           <span className="circleNotesWrap" onClick={() => this.addNotes(hobby, index)}><img src={require('../../../public/notes.png')} className="circleNotesIcon" /></span>
 
           <Paper className="cardFooterWrap">
-            <p className="cardLabel">{hobby.label}</p>
+            <p className="cardLabel">{hobby.name}</p>
           </Paper>
 
         </Paper>
@@ -310,10 +415,10 @@ class User extends Reflux.Component {
     interests.push(plusSign);
 
 
-    const listContent = this.state.allInterests.map((interest) => {
+    const listContent = interestsData.map((interest) => {
       const source = `/png/${interest.icon}.png`;
       const checked = [];
-      this.state.userInfo.interests.forEach((userInterest) => {
+      (this.state.tempUser.interests || []).forEach((userInterest) => {
         if (!checked.includes(interest)) {
           if (userInterest.label === interest.label) {
             interest.state = 'selected';    //eslint-disable-line
@@ -325,7 +430,7 @@ class User extends Reflux.Component {
       });
       return (
         <ListItem id="singleInterestContainer" onClick={() => MeActions.addInterest(interest)}>
-          <Avatar id="interestAvatarIcon" src={require(`../../../public${source}`)} />
+          <Avatar id="interestAvatarIcon" src={interest.icon ? require(`../../../public${source}`) : null} />
           <p id="interestListLabel">{interest.label}</p>
 
           <p className="heartIcon" id={`interest-${interest.state}`} >❤</p>
@@ -371,10 +476,12 @@ class User extends Reflux.Component {
       </div>
     );
 
-
+    const loadedImg = (this.state.tempUser || {}).profilePicture;
+    const src = loadedImg ? `data:image/jpeg;base64, ${loadedImg}` : require('../../../public/boss.png');
+    console.log(loadedImg);
     return (
       <div className="userProfileWrap">
-        <img src={require('../../../public/boss.png')} className="profileImg" />
+        <img src={src} className="profileImg" />
         <MuiThemeProvider>
           <Paper className="userInfoWrap" zDepth={1}>
             <div className="selectorsWrap" >
@@ -384,7 +491,7 @@ class User extends Reflux.Component {
                 </Paper>
               </MuiThemeProvider>
             </div>
-            <div className="selectorDataWrap" onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
+            <div className="selectorDataWrap">
               <span className="backgroundSelector" id={this.state.selectorBg} />
               <MuiThemeProvider>
                 <Paper className="selectorDataContainer" >
@@ -394,6 +501,9 @@ class User extends Reflux.Component {
                 </Paper>
               </MuiThemeProvider>
             </div>
+            <FlatButton className="saveButton" onClick={this.saveTempUser}>
+              Save user here
+            </FlatButton>
           </Paper>
         </MuiThemeProvider>
       </div>

@@ -1,5 +1,16 @@
+.bgSlider {
+  position: absolute !important;
+  z-index: -2 !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin-top:-21%;
+  opacity: (0.6);
+
+}
+
 .mainWrap {
   position: relative;
+  margin-top: 8%
 }
 
 .ctrlBtns {
@@ -13,6 +24,7 @@
     margin-top: 100px;
     display: block;
     text-align: center;
+    opacity: (0.95);
     z-index:-1;
 }
 
@@ -146,4 +158,19 @@
   transform: scale(0.9);
   margin-top: -70px;
   z-index: 1;
+}
+
+.uploaded-pic-selected {
+  max-height: 50px !important;
+  width: 50px !important;
+  height: auto;
+  display: inline-block;
+  position: relative;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.avatar-selected {
+  height: 50px !important;
+  width: 50px !important;
 }

@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const nev = require('../mailer/index');
-
+const fconfig = require('../../common/formsconfig');
 
 function verifyUrl(req, res) {
   const url = req.params.URL;
@@ -8,7 +8,7 @@ function verifyUrl(req, res) {
     if (user) {
       return res.redirect('/'); // if all goes well, go to login page (TODO:Render login p)
     }
-    return res.status(404).send('ERROR: confirming temp user FAILED');
+    return res.status(404).json(fconfig.confirmUserError);
   });
 }
 

@@ -1,5 +1,9 @@
+
+
 .control-discover {
   height: 100%;
+  background-color: #EAE3EA !important;
+  $filterheight: 64px;
 
   .loading-circle {
     top: 50%;
@@ -16,6 +20,8 @@
     bottom: 10%;
     right: 10%;
   }
+  // height: 98vh; // for now
+
 
   .control-discover-filter {
     padding: 15px;
@@ -130,4 +136,8 @@
   padding: 0px !important;
   background: #038FB6;
   background-color: #038FB6;
+}
+
+.leftIconBar {
+  color: black !important;
 }
