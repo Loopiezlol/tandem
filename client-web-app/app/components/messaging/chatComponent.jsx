@@ -1,4 +1,5 @@
 import moment from 'moment';
+import request from 'superagent';
 import React from 'react';
 import Reflux from 'reflux';
 import Paper from 'material-ui/Paper';
@@ -43,6 +44,7 @@ class chatComponent extends Reflux.Component {
       message: '',
       fileMessage: '',
       abuseDialogOpen: false,
+      blockDialogOpen: false,
       usernameLabel: 'username-hidden',
     };
     this.store = SBStore;
@@ -84,7 +86,7 @@ class chatComponent extends Reflux.Component {
       <FlatButton
         label="Block"
         secondary
-        onTouchTap={this.handleAbuseClose}
+        onTouchTap={this.handleBlock}
       />,
     ];
     const { otherUser, otherUserNick, message, prevMessages, messages, isTyping, otherUserProfileUrl, lastMessage }
@@ -197,6 +199,33 @@ class chatComponent extends Reflux.Component {
     // TODO!
   }
 
+  handleBlock() {
+    // const { otherUser } = this.state;
+    // console.log(otherUser);
+    SBActions.blockUser();
+    // this.handleAbuseClose();
+    // return (
+    //   <Dialog
+    //     title="User Successfully Blocled"
+    //     modal={false}
+    //     open={this.state.blockDialogOpen}
+    //     onRequestClose={this.handleBlockClose}
+    //   >
+    //     {(otherUser)} has been Successfully blocked.
+    //     <FlatButton
+    //       label="ok"
+    //       primary
+    //       keyboardFocused
+    //       onTouchTap={this.handleBlockClose}
+    //     />,
+    //   </Dialog>
+    // );
+  }
+
+  handleBlockClose() {
+    this.setState({ blockDialogOpen: false });
+  }
+
   renderMessage(message) {
     const timeStamp = moment(message.createdAt).fromNow();
     if (message.sender.userId === this.store.state.userID) {
@@ -219,6 +248,8 @@ class chatComponent extends Reflux.Component {
       </div>
     );
   }
+
+
 }
 
 

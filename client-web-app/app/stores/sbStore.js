@@ -30,9 +30,12 @@ class sbStore extends Reflux.Store {
     };
     this.listenables = sbactions;
 
-    if ((this.props || {}).otherUserID && this.props.otherUserNickName) {
-      this.openChat (this.props.otherUserID, this.props.otherUserNickName);
-    }
+    // if ((this.props || {}).otherUserID && this.props.otherUserNickName) {
+    //   this.openChat (this.props.otherUserID, this.props.otherUserNickName);
+    // }
+    // if (this.props.otherUserID && this.props.otherUserNickName) {
+    //   this.openChat (this.props.otherUserID, this.props.otherUserNickName);
+    // }
     //  sbactions.loginUser(auth.state.me.email);
   }
 
@@ -214,6 +217,43 @@ class sbStore extends Reflux.Store {
     });
   }
 
+  blockUser() {
+    const { otherUser, userID } = this.state;
+    const userid = userID;
+    const uri = 'https://api.sendbird.com/v3/users/' + userid + '/block';
+    request.post(uri)
+         .set('Content-Type', 'application/json', 'charset=utf8')
+         .set('Api-Token', API_TOKEN)
+         .send({
+           target_id: otherUser
+          })
+       .end((err, res) => {
+         if (err || !res.ok) {
+           console.log(`Error Blocking the user: ` + otherUser );
+         } else {
+           console.log(`User Blocked Successfully: ${JSON.stringify(res.body)}`);
+           console.log(res.body);
+         }
+       });
+  }
+
+  unBlockUser() {
+    const { otherUser, userID } = this.state;
+    const userid = userID;
+    const uri = 'https://api.sendbird.com/v3/users/' + userID + '/block/' + otherUser;
+    request.delete(uri)
+         .set('Content-Type', 'application/json', 'charset=utf8 ')
+         .set('Api-Token', API_TOKEN)
+         .send({})
+       .end((err, res) => {
+         if (err || !res.ok) {
+           console.log(`Error Unblocking the user: ` + otherUser );
+         } else {
+           console.log(`User Unblocked Successfully: ${JSON.stringify(res.body)}`);
+         }
+       });
+  }
+
   createUserCompleted(res) {
     if (res.status === 200) {
       console.log('SendBird User Creation: Server response 200');
@@ -323,6 +363,8 @@ sbactions.loadOnlineUsersList.listen(() => {
       }
     });
 });
+
+
 
 // sbactions.createChannel.listen((userID, otherUserID) => {
 //   request.get('https://api.sendbird.com/v3/group_channels')
