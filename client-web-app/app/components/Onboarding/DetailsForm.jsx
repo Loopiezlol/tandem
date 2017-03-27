@@ -32,9 +32,9 @@ class DetailsForm extends Reflux.Component {
     const character = e.target.name;
     let source = '';
     if (character.includes('woman')) {
-      source = require(`../../../public/womanBig/${character}.png`);
+      source = require(`../../../public/avatars/woman/${character}.svg`);
     } else if (character.includes('man')) {
-      source = require(`../../../public/manBig/${character}.png`);
+      source = require(`../../../public/avatars/man/${character}.svg`);
     }
     function updateChar(self) {
       self.setState({ selectedChar: e.target }, () => {
@@ -52,7 +52,7 @@ class DetailsForm extends Reflux.Component {
   }
     // Confirming character selection for new profile picture
   selectCharacterDone() {
-    this.setState({ showForm: true });
+    this.setState({ picUploadDropzone: false, showForm: true });
     const x = this;
     function expandHeight() {
       x.setState({ charactersWrapState: 'charactersWrap-expandWidth charactersWrapState-expandHeight', newProfileEnabled: true });
@@ -72,6 +72,7 @@ class DetailsForm extends Reflux.Component {
   handleAvatarChange = (input) => {
     this.setState({
       selectedCharacterSrc: input,
+      goBtnState: 'goBtn goBtn-show',
     });
     OnboardingActions.setImage(input);
   }
@@ -80,7 +81,7 @@ class DetailsForm extends Reflux.Component {
     const { selectedCharacterSrc } = this.state;
     if (selectedCharacterSrc.includes('blob')) {
       // uploaded picture
-      return <img className="uploaded-pic-selected" src={selectedCharacterSrc} />;
+      return <Avatar className="avatar-selected" src={selectedCharacterSrc} />;
     }
     // default pic charAvatar-selected
     return (<Avatar
@@ -89,6 +90,11 @@ class DetailsForm extends Reflux.Component {
       src={selectedCharacterSrc}
     />);
   };
+
+  openPicUploader = () => {
+    this.setState({ picUploadDropzone: true });
+  }
+
   render() {
     // Label that introduecs stage of the onnboarding process
     const label = {
@@ -103,7 +109,7 @@ class DetailsForm extends Reflux.Component {
       <Avatar
         key={`avatar-man-${man}`}
         className={this.state.charactersState}
-        src={require(`../../../public/manSmall/${man}.png`)}
+        src={require(`../../../public/avatars/man/${man}.svg`)}
         name={man}
         onClick={e => this.selectCharacter(e)}
       />
@@ -113,15 +119,15 @@ class DetailsForm extends Reflux.Component {
       <Avatar
         key={`avatar-woman-${woman}`}
         className={this.state.charactersState}
-        src={require(`../../../public/womanSmall/${woman}.png`)}
+        src={require(`../../../public/avatars/woman/${woman}.svg`)}
         name={woman}
         onClick={e => this.selectCharacter(e)}
       />
       ));
     // Avatar for both male and female characters
     // PictureUploader should be in this array
-    const uploader = <AvatarUploader onUpload={this.handleAvatarChange} />;
-    const userProfileCharacters = [userManWrap, userWomanWrap, uploader];
+    const picUpload = <Avatar src={require('../../../public/photo-camera.png')} className="charAvatar" onClick={this.openPicUploader} />;
+    const userProfileCharacters = [userManWrap, userWomanWrap, picUpload];
 
     const firstNameError = (
       <span className="firstNameError">
@@ -206,6 +212,7 @@ class DetailsForm extends Reflux.Component {
           </Paper>
         </MuiThemeProvider>
         {this.state.newProfileEnabled && form}
+        {this.state.picUploadDropzone && <AvatarUploader id={this.state.avatarUplaoderState} onUpload={this.handleAvatarChange} />}
       </div>
       );
     // The user's new profile picture
