@@ -13,10 +13,11 @@
   height: 470px;
   width: 420px;
   margin: auto;
-  margin-top: 15%;
+  margin-top: 10%;
   display: block;
   text-align: center;
   font-size: 1.1pc;
+  transform: scale(0.8);
 }
 
 a {
@@ -95,5 +96,5 @@ a:hover {
   display: block;
   text-align: center;
   margin: auto;
-  margin-top: 10%;
+  transform: scale(0.8);
 }

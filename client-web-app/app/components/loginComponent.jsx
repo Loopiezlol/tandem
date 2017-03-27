@@ -9,7 +9,7 @@ import actions from '../actions/actions';
 import LoginStore from '../stores/loginStore';
 import Auth from '../stores/auth';
 import '../styles/login.scss';
-//import BackgroundImage from 'react-background-image-loader';
+// import BackgroundImage from 'react-background-image-loader';
 // import Background from '../public/alexis-brown-85793.jpg';
 
 class LoginComponent extends Reflux.Component {
@@ -34,8 +34,11 @@ class LoginComponent extends Reflux.Component {
   }
   render() {
     const { emailL, passwordL, messageL, errorEmL, errorPassL } = this.state;
+
+    const passwdError = { position: 'absolute', marginBottom: '-30px', width: '260px', height: '20px', textAlign: 'left', wordWrap: 'break-word' };
+
     return (
-      <div className = "mainSignWrap">
+      <div className="mainSignWrap">
         <MuiThemeProvider >
           <Card className="mainLoginContainer">
             <h2 className="card-heading"> Login </h2>
@@ -47,7 +50,7 @@ class LoginComponent extends Reflux.Component {
                   floatingLabelText="E-mail"
                   value={emailL}
                   errorText={errorEmL}
-                  errorStyle =  {{position:'absolute' , marginBottom:'-20px'}}
+                  errorStyle={{ position: 'absolute', marginBottom: '-20px' }}
                   onChange={actions.emailActionL}
                 />
               </div>
@@ -58,20 +61,20 @@ class LoginComponent extends Reflux.Component {
                   floatingLabelText="Password"
                   value={passwordL}
                   errorText={errorPassL}
-                      errorStyle =  {{position:'absolute', marginBottom:'-20px'}}
+                  errorStyle={passwdError}
                   onChange={actions.passwordActionL}
                 />
               </div>
-                <div className="button-line">
-                  <br />
-                  <RaisedButton
-                    onClick={() => actions.submitClickL(emailL, passwordL)}
-                    primary="true"
-                  >
+              <div className="button-line">
+                <br />
+                <RaisedButton
+                  onClick={() => actions.submitClickL(emailL, passwordL)}
+                  primary="true"
+                >
                     Sign in!
                   </RaisedButton>
-                </div>
-                <CardText>{"Don't have an account? "}<Link to={'/register'}>Sign up!</Link></CardText>
+              </div>
+              <CardText>{"Don't have an account? "}<Link to={'/register'}>Sign up!</Link></CardText>
             </form>
           </Card>
         </MuiThemeProvider>

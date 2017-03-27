@@ -22,7 +22,7 @@ class RegisterComponent extends Reflux.Component {
     const { username, email, password, repassword, message, errorEm, errorPass, errorRepass }
     = this.state;
 
-    const passwdError = { position: 'absolute', marginBottom: '-60px', width: '260px', height: '50px', textAlign:'left' };
+    const passwdError = { position: 'absolute', marginBottom: '-60px', width: '260px', height: '40px', textAlign: 'left', wordWrap: 'break-word' };
 
     return (
       <div className="mainSignWrap">
