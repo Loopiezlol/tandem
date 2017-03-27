@@ -2,9 +2,11 @@ npm-debug.log
 yarn-error.log
 node_modules/
 client-web-app/dist/*
+client-web-app/dist/**/*
 **/node_modules/
 .localdb
 client-hybrid/plugins
 client-hybrid/platforms
 client-hybrid/www/client-bundle.js*
 .DS_Store
+backend/newrelic_agent.log

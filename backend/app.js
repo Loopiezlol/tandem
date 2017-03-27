@@ -5,10 +5,50 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const config = require('../common/config.js');
 const jwt = require('jsonwebtoken');
+require('newrelic');
 
-// const Language = require('./models/language');
-// const Level = require('./models/level');
-// const wrap = require('co-express');
+const Language = require('./models/language');
+const Level = require('./models/level');
+
+
+function* createLanguages() {
+  const currentLanguages = yield Language.find({});
+  if (currentLanguages.length === 0) {
+    yield Language.create({
+      name: 'Spanish',
+      abbreviation: 'ES',
+    });
+    yield Language.create({
+      name: 'English',
+      abbreviation: 'EN',
+    });
+    yield Language.create({
+      name: 'Romanian',
+      abbreviation: 'RO',
+    });
+    console.log('done');
+  }
+}
+
+function* createLevels() {
+  const currentLevels = yield Level.find({});
+  if (currentLevels.length === 0) {
+    yield Level.create({
+      name: 'C2',
+      level: 5,
+    });
+    yield Level.create({
+      name: 'C1',
+      level: 4,
+    });
+    yield Level.create({
+      name: 'B2',
+      level: 3,
+    });
+    console.log('done');
+  }
+}
+
 
 const app = express();
 
@@ -17,53 +57,12 @@ if (require.main === module) {
   mongoose.connect(config.db);
   // require('./helpers/usergenerator').populateDBwithLanguages();
 
-  require('./helpers/usergenerator').populateDB(50);
+  // require('./helpers/usergenerator').populateDB(50);
   // UNCOMMENT THIS TO GENERATE SOME LANGUAGES AND LEVELS
-  const wrap = require('co-express');
-  const Language = require('./models/language');
-  const Level = require('./models/level');
+  // const wrap = require('co-express');
 
-  function* createLanguages() {
-    const currentLanguages = yield Language.find({});
-    // console.log(currentLanguages);
-    if (currentLanguages.length === 0) {
-      yield Language.create({
-        name: 'Spanish',
-        abbreviation: 'ES',
-      });
-      yield Language.create({
-        name: 'English',
-        abbreviation: 'EN',
-      });
-      yield Language.create({
-        name: 'Romanian',
-        abbreviation: 'RO',
-      });
-      console.log('done');
-    }
-  }
-
-  function* createLevels() {
-    const currentLevels = yield Level.find({});
-    if (currentLevels.length === 0) {
-      yield Level.create({
-        name: 'C2',
-        level: 5,
-      });
-      yield Level.create({
-        name: 'C1',
-        level: 4,
-      });
-      yield Level.create({
-        name: 'B2',
-        level: 3,
-      });
-      console.log('done');
-    }
-  }
-
-  wrap(createLanguages)();
-  wrap(createLevels)();
+  // wrap(createLanguages)();
+  // wrap(createLevels)();
 } else {
   mongoose.connect('mongodb://localhost/test');
 }
@@ -80,9 +79,9 @@ app.use('/', require('./api/login'));
 app.use('/', require('./api/register'));
 app.use('/', require('./api/verify'));
 
+
 app.get('/', (req, res) => {
-  // res.send('Hello World!');
-  res.redirect('http://localhost:3001/#/login');
+  res.redirect(`${config.client}/#/login`);
 });
 
 
@@ -116,9 +115,14 @@ app.use('/users/', require('./api/users'));
 app.use('/levels', require('./api/levels'));
 app.use('/languages', require('./api/languages'));
 
+
 if (require.main === module) {
-  app.listen(3000, () => {
-    console.log('Server started on port 3000!');
+  const server = app.listen(process.env.PORT || 3000, () => {
+    const port = server.address().port;
+    const host = server.address().address;
+    console.log(host);
+    console.log(port);
+    console.log('App listening at http://%s:%s', host, port);
   });
 } else {
   module.exports = app;
