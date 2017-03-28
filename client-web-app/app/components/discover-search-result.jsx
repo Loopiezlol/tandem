@@ -40,7 +40,7 @@ class UserCard extends Reflux.Component {
         onClick={this.handleExpandChange}
       >
         <CardMedia
-          overlay={<CardTitle title={`${me.userName}, ${me.age}`} className="userName" />}
+          overlay={<CardTitle title={`${(me || {}).username}, ${(me || {}).age}`} className="userName" />}
         >
           <img className="img" src={imgUrl} />
         </CardMedia>]
