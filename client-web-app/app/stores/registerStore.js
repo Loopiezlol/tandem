@@ -17,6 +17,7 @@ class RegisterStore extends Reflux.Store {
       errorEm: '',
       errorPass: '',
       errorRepass: '',
+      errorUn: '',
     };
     this.listenables = actions;
   }
@@ -52,6 +53,7 @@ class RegisterStore extends Reflux.Store {
       errorEm: '',
       errorPass: '',
       errorRepass: '',
+      errorUn: '',
     });
   }
   submitClickFailed(res) {
@@ -60,10 +62,12 @@ class RegisterStore extends Reflux.Store {
       errorEm: res.body.errors.email,
       errorPass: res.body.errors.password,
       errorRepass: res.body.errors.repassword,
+      errorUn: res.body.errors.username,
     });
   }
 
 }
+
 // how to get actual email and password of component!
 actions.submitClick.listen((username, email, password, repassword) => {
   request.put('/register/')
@@ -77,5 +81,4 @@ actions.submitClick.listen((username, email, password, repassword) => {
     }
   });
 });
-
 export default RegisterStore;

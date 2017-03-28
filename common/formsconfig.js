@@ -12,4 +12,5 @@ module.exports = {
   verificationEmailError: 'ERROR: sending verification email failed',
   pleaseVerify: 'You have already signed up. Please check your email to verify your account',
   confirmUserError: 'ERROR: confirming temp user failed',
+  usernameError: 'Username must be at least one character',
 };
