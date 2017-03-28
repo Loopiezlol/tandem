@@ -16,7 +16,7 @@ nev.configure({
   persistentUserModel: User,
   tempUserModel: TempUser,
   // eslint-disable-next-line
-  verificationURL: 'http://localhost:3000/email-verification/${URL}',
+  verificationURL: config.server + '/email-verification/${URL}',
   transportOptions: {
     service: 'Gmail',
     auth: {

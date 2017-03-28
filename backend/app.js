@@ -82,7 +82,7 @@ app.use('/', require('./api/verify'));
 
 app.get('/', (req, res) => {
   // res.send('Hello World!');
-  res.redirect('http://localhost:3001/#/login');
+  res.redirect(`${config.client}/#/login`);
 });
 
 
@@ -117,7 +117,7 @@ app.use('/levels', require('./api/levels'));
 app.use('/languages', require('./api/languages'));
 
 if (require.main === module) {
-  app.listen(3000, () => {
+  app.listen(process.env.PORT || 3000, () => {
     console.log('Server started on port 3000!');
   });
 } else {
