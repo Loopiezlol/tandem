@@ -5,11 +5,17 @@ const languages = require('./languages');
 const levels = require('./levels');
 
 function* _generateLanguages() {
-  yield Language.insertMany(languages);
+  const currentLanguages = yield Language.find({});
+  if (!currentLanguages.length) {
+    yield Language.insertMany(languages);
+  }
 }
 
 function* _generateLevels() {
-  yield Level.insertMany(levels);
+  const currentLevels = yield Level.find({});
+  if (!currentLevels.length) {
+    yield Level.insertMany(levels);
+  }
 }
 
 module.exports = {
