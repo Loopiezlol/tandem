@@ -50,6 +50,7 @@ class messaging extends Reflux.Component {
           <AppBar
             title="Tandem Messenger"
             className="appbar"
+            style={{ backgroundColor: 'rgb(136, 201, 179)', color: 'black' }}
             iconElementLeft={<IconButton><ActionHome /></IconButton>}
             iconElementRight={this.state.loggedIn ? <Logged /> : <FlatButton label="Log in" onClick={() => this.openLogin()} />}
           />
