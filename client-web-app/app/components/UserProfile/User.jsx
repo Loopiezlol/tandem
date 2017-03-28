@@ -98,6 +98,7 @@ class User extends Reflux.Component {
     this.setState({ addNotes: null, visibilityHeader: 'visibleHeader' });
   }
 
+  // Add a new familiar language to the user profile
   addNewFamLang = () => {
     // TODO: check if newFamLang is valid language
     const { newFamLang, newFamLangLevel, tempUser } = this.state;
@@ -108,6 +109,7 @@ class User extends Reflux.Component {
     this.setState({ addNewFamLangBtnLabel: 'Added', tempUser });
   }
 
+  // Update new familiar language
   updateNewFamLanguage = (v) => {
     if (this.state.addNewFamLangBtnLabel !== 'Add') {
       this.setState({
@@ -121,6 +123,7 @@ class User extends Reflux.Component {
     }
   }
 
+  // Update level of new familiar language
   updateNewFamLangLevel = (e, i, v) => {
     this.setState({
       newFamLangLevel: v,
@@ -147,11 +150,12 @@ class User extends Reflux.Component {
     });
   }
 
-
+  // Show pop up to add new languages user is familiar with
   showFamLangPopUp = () => {
     this.setState({ addNewFamLang: true, famLangBoxAppear: 'popUpBewFamLangBox-appear', isBlurred: 'selector-blurred' });
   }
 
+  // Close languages pop up box
   closeNewFamLangPopUp = () => {
     if (this.state.addNewFamLang) {
       this.setState({ addNewFamLang: false, famLangBoxAppear: '', isBlurred: '' });
@@ -162,6 +166,7 @@ class User extends Reflux.Component {
     actions.updateTempUser(this.state.tempUser);
   }
 
+  // Updates the notes for a selected interest
   saveNotes = () => {
     const { addNotes, tempUser, updatingNotes } = this.state;
     addNotes.notes = updatingNotes;
@@ -176,17 +181,19 @@ class User extends Reflux.Component {
     }, 2000);
   }
 
-
+  // Shows list with all the interests that can be added
   showInterestsList = () => {
     this.setState({ showList: true, isBlurred: 'selector-blurred' });
   }
 
+  // Closes the pop up interests list
   closeInterestsList = () => {
     if (this.state.showList) {
       this.setState({ showList: false, isBlurred: '' });
     }
   }
 
+  // Changes the familiar languages with the respective levels
   changeCurrentLanguageLevel = (e, i, v) => {
     const currentLangaugeIndex = this.state.tempUser.wantsToLearn.findIndex(l =>
       this.state.currentSelectedLanguage === l.name);
@@ -198,6 +205,7 @@ class User extends Reflux.Component {
     });
   }
 
+  // Add and remove interests to user profile
   addInterest = (interest) => {
     const interestsState = this.state.tempUser.interests;
 
@@ -217,8 +225,6 @@ class User extends Reflux.Component {
       interestsState.push(interest);
     }
     this.setState({ ...this.state.tempUser, interests: interestsState });
-    console.log(`Interest to be added is : ${interest.icon}`);
-    console.log(`Temp user interests are ${this.state.tempUser.interests}`);
   }
 
 

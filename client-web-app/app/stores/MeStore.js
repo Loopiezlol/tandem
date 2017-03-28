@@ -13,16 +13,19 @@ class MeStore extends Reflux.Store {
     this.state = {};
   }
 
+  // Update mother language
   updateMotherLanguage(e) {
     this.setState({ updatingMotherLang: e.target.value });
   }
 
+  // Update new language user has added as familiar
   updateNewFamLanguage(input) {
     this.setState({
       newFamLangInput: input, famLangToAdd: { ...this.state.famLangToAdd, name: input },
     });
   }
 
+  // Update level of new language user has added as familiar
   updateNewFamLangLevel(event, index, value) {
     console.log(value);
     if (value !== 'Level') {
@@ -32,20 +35,24 @@ class MeStore extends Reflux.Store {
     }
   }
 
+  // Add new language user is familiar with
   addNewFamLang() {
     const userLangs = this.state.userInfo.familiarLanguages;
     userLangs.push(this.state.famLangToAdd);
     this.setState({ userInfo: { ...this.state.userInfo, familiarLanguages: userLangs }, famLangToAdd: null, newFamLangLevel: 'Level', newFamLangInput: '' });
   }
 
+  // Select hobby, to which user wants to add notes
   selectHobby(hobby) {
     this.setState({ selectedHobby: hobby, updatingNotes: hobby.notes });
   }
 
+  // Update notes as user is typing
   updateNotesField(e) {
     this.setState({ updatingNotes: e.target.value });
   }
 
+  // Save updated notes
   saveNotes() {
     this.state.selectedHobby.notes = this.state.updatingNotes;
   }

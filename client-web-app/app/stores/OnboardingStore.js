@@ -32,7 +32,7 @@ class OnboardingStore extends Reflux.Store {
   }
 
 
-    // Events for updating the input values for the user's first and last name, and age
+  // Events for updating the input values for the user's first and last name, and age
   getDetails(e) {
     const inputValue = e.target.value;
     switch (e.target.id) {
@@ -67,13 +67,13 @@ class OnboardingStore extends Reflux.Store {
   }
 
 
-     // Click event for updating the user's sex
+   // Click event for updating the user's sex
   selectSex = (name) => {
     this.setState({ userInfo: { ...this.state.userInfo, sex: name } });
     console.log(this.state.userInfo);
   }
 
-    // Check if all user information is provided
+  // Check if all user information is provided
   isInfoComplete() {
     const user = this.state.userInfo;
     const userInfoProps = ['firstName', 'lastName', 'age', 'sex'];
@@ -86,18 +86,18 @@ class OnboardingStore extends Reflux.Store {
     return userInfoProps.every(prop => user[prop] != null && user[prop] !== '');
   }
 
-    // ------------- Languages stage ------------- //
+  // ------------- Languages stage ------------- //
 
-    // Handle change in input text field
+  // Handle change in input text field
   updateLanguage = (input) => {
     this.setState({ currLang: input });
   }
 
 
-    // Handle change in language level
+  // Handle change in language level
   changeLangLevel = (event, index, value) => this.setState({ langLevel: value });
 
-    // Add a language the user is familiar with the list
+  // Add a language the user is familiar with the list
   addLanguage = (languages, levels) => {
     const { userInfo: userInfoState, currLang: newLang,
       langLevel: level } = this.state;
@@ -118,9 +118,9 @@ class OnboardingStore extends Reflux.Store {
   }
 
 
-    // ------------- Interests stage ------------- //
+  // ------------- Interests stage ------------- //
 
-    // Select interest and add it to the list of user's interests
+  // Select interest and add it to the list of user's interests
   selectInterest = (hobby) => {
     const userInfoState = this.state.userInfo;
     const interestsState = userInfoState.interests;

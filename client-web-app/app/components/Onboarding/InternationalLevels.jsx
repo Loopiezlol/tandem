@@ -10,9 +10,9 @@ class InternationalLevels extends React.Component {
     this.state = { selectLevel: null };
   }
 
-
+  // Click event, which is triggered when more information is requested
+  // about a certain level of language proficiency
   selectLevel = (level) => {
-    console.log(level);
     this.setState({ selectedLevel: level, descAnimation: '' }, () => {
       setTimeout(() => { this.setState({ descAnimation: 'descAnimation' }); }, 0);
     });
