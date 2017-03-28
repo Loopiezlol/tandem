@@ -50,20 +50,6 @@ class MeStore extends Reflux.Store {
     this.state.selectedHobby.notes = this.state.updatingNotes;
   }
 
-  addInterest(interest) {
-    const interestsState = this.state.userInfo.interests;
-    if (interest.state === 'selected') {
-      interest.state = 'unselected';    //eslint-disable-line
-        // TODO This is not working now as the interest objects are not the same
-      const idx = interestsState.indexOf(interest);
-      interestsState.splice(idx, 1);
-    } else {
-      interest.state = 'selected';  //eslint-disable-line
-      interestsState.push(interest);
-    }
-    this.setState({ userInfo: { ...this.state.userInfo, interests: interestsState } });
-  }
-
 
 }
 

@@ -198,6 +198,30 @@ class User extends Reflux.Component {
     });
   }
 
+  addInterest = (interest) => {
+    const interestsState = this.state.tempUser.interests;
+
+    let isAdded = false;
+
+
+    interestsState.forEach((hobby) => {
+      if (hobby.name === interest.label) {
+        const idx = interestsState.indexOf(hobby);
+        interestsState.splice(idx, 1);
+        isAdded = true;
+      }
+    });
+
+    if (!isAdded) {
+      interest.name = interest.label;
+      interestsState.push(interest);
+    }
+    this.setState({ ...this.state.tempUser, interests: interestsState });
+    console.log(`Interest to be added is : ${interest.icon}`);
+    console.log(`Temp user interests are ${this.state.tempUser.interests}`);
+  }
+
+
   render() {
     const selectors = ['info', 'chatting', 'heart'].map((selector, index) => {
       const source = `${selector}.png`;
@@ -264,7 +288,7 @@ class User extends Reflux.Component {
         />
         <span className="newFamLangLangLevel">
           <DropDownMenu
-            className="famLangLevel"
+            className="newFamLangLevelDropdown"
             value={this.state.newFamLangLevel}
             onChange={this.updateNewFamLangLevel}
           >
@@ -291,9 +315,9 @@ class User extends Reflux.Component {
         <div id={this.state.isBlurred} onClick={this.closeNewFamLangPopUp}>
           <h1 className="selectorHeader">Languages</h1>
           <div className="motherLanguageWrap" >
-            <p className="propLabel" id="motherLangLabel">Mother language</p>
-            <p className="dataLabel" id="motherLangDataLabel">{(this.state.tempUser.mainLanguage || {}).name}</p>
-{/* =======
+            <p className="propLabel" >Mother language</p>
+            <p className="dataLabel" >{(this.state.tempUser.mainLanguage || {}).name}</p>
+            {/* =======
             {
               this.state.enableEdit ? <div id="motherLanguaeEdit">
                 <TextField
@@ -415,9 +439,10 @@ class User extends Reflux.Component {
     const listContent = interestsData.map((interest) => {
       const source = `/png/${interest.icon}.png`;
       const checked = [];
+
       (this.state.tempUser.interests || []).forEach((userInterest) => {
         if (!checked.includes(interest)) {
-          if (userInterest.label === interest.label) {
+          if (userInterest.name === interest.label) {
             interest.state = 'selected';    //eslint-disable-line
             checked.push(interest);
           } else {
@@ -426,10 +451,9 @@ class User extends Reflux.Component {
         }
       });
       return (
-        <ListItem id="singleInterestContainer" onClick={() => MeActions.addInterest(interest)}>
+        <ListItem id="singleInterestContainer" onClick={() => this.addInterest(interest)}>
           <Avatar id="interestAvatarIcon" src={interest.icon ? require(`../../../public${source}`) : null} />
           <p id="interestListLabel">{interest.label}</p>
-
           <p className="heartIcon" id={`interest-${interest.state}`} >❤</p>
 
         </ListItem>
@@ -497,11 +521,12 @@ class User extends Reflux.Component {
                 </Paper>
               </MuiThemeProvider>
             </div>
-            <FlatButton
-            className="saveButton"
-            onClick={this.saveTempUser}>
+            {/* <FlatButton
+              className="saveButton"
+              onClick={this.saveTempUser}
+            >
               Save user
-            </FlatButton>
+            </FlatButton> */}
           </Paper>
         </MuiThemeProvider>
       </div>
