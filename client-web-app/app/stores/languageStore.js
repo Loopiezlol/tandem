@@ -29,7 +29,7 @@ class LanguagesStore extends Reflux.Store {
 }
 
 actions.fetchLanguages.listen(() => {
-  request.get('http://localhost:3000/languages')
+  request.get('/languages')
   .use(prefix)
   .set('x-access-token', localStorage.getItem('jwt'))
   .end((err, res) => {
