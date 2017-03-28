@@ -1,6 +1,9 @@
 import Reflux from 'reflux';
 import request from 'superagent';
 import actions from '../actions/actions';
+import config from '../../../common/config';
+
+const prefix = require('superagent-prefix')(config.server);
 
 class DiscoverStore extends Reflux.Store {
   constructor() {
@@ -26,7 +29,8 @@ class DiscoverStore extends Reflux.Store {
 }
 
 actions.getResults.listen((options, id) => {
-  request.get('http://0.0.0.0:3000/users/')
+  request.get('/users/')
+  .use(prefix)
   .set('x-access-token', localStorage.getItem('jwt'))
   .set('id', id)
   .query(options)

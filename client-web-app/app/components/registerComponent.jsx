@@ -19,10 +19,11 @@ class RegisterComponent extends Reflux.Component {
 
 
   render() {
-    const { username, email, password, repassword, message, errorEm, errorPass, errorRepass }
+    const { username, email, password, repassword, message,
+      errorUn, errorEm, errorPass, errorRepass }
     = this.state;
 
-    const passwdError = { position: 'absolute', marginBottom: '-50px', width: '260px', height: '40px', textAlign: 'left', wordWrap: 'break-word' };
+    const passwdError = { position: 'absolute', marginBottom: '-60px', width: '260px', height: '50px', textAlign: 'left' };
 
     return (
       <div className="mainSignWrap">
@@ -36,6 +37,8 @@ class RegisterComponent extends Reflux.Component {
                   hintText="Your Username"
                   floatingLabelText="Username"
                   value={username}
+                  errorText={errorUn}
+                  errorStyle={{ position: 'absolute', marginBottom: '-20px' }}
                   onChange={actions.usernameAction}
                 />
               </div>

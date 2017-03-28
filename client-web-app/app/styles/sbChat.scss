@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:200');
+
 .content-wrapper {
   display:block !important;
   text-align:center !important;
@@ -113,6 +115,8 @@ min-height: 30px;
 .paperStyle{
   width: 30pc;
   margin: 15px;
+  // height: 50pc;
+  // overflow: scroll;
   text-align:center;
   display: inline-block;
   color: gray;
@@ -154,4 +158,60 @@ position: relative;
 }
 .avatarFrom {
   margin-left: -620px;
+}
+
+.tipsCarousel  {
+  margin-top:25%;
+}
+
+#tipsLabel {
+  font-family: 'Oswald', sans-serif;
+  font-size: 30px;
+}
+
+.questionLabel {
+  font-family: 'Josefin Sans', sans-serif;
+  margin-top:15%;
+  font-size: 20px;
+  color: #e47a5f;
+}
+
+#tipsDesc {
+  font-family: 'News Cycle', sans-serif;
+  font-size: 18px;
+  margin-top: -20px;
+}
+
+.importantLabel {
+  font-family: 'Oswald', sans-serif;
+  color: #9e609b;
+  font-size: 18px;
+  margin-bottom: -12%;
+}
+
+.nextTipBtn {
+  font-family: 'Raleway', sans-serif !important;
+  background-color: #4e5c72 !important;
+}
+
+.nextTipBtn:hover {
+  background-color: #5b6e8c !important;
+}
+
+#nextTipLabel {
+  color:white !important;
+}
+
+.tipWrap {
+  animation: componentAppear 5s linear both;
+}
+
+#tipsSelected {
+  color: #946c94 !important;
+}
+
+.appbar {
+  position: -webkit-sticky;
+  top: 0;
+  z-index: 1;
 }

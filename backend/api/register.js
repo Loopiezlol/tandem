@@ -39,6 +39,7 @@ function registerUser(req, res) {
           return res.status(404).json({
             message: fconfig.verificationEmailError,
             errors,
+            err1,
           });
         }
         return res.json({
@@ -57,6 +58,7 @@ function registerUser(req, res) {
 
 function validateSignupForm(req) {
   const errors = {};
+  const username = req.body.username;
   const email = req.body.email;
   const password = req.body.password;
   const repassword = req.body.repassword;
@@ -77,6 +79,11 @@ function validateSignupForm(req) {
   if (!(password === repassword)) {
     isFormValid = false;
     errors.repassword = fconfig.repasswordError;
+  }
+
+  if (username === '') {
+    isFormValid = false;
+    errors.username = fconfig.usernameError;
   }
 
   if (!isFormValid) {

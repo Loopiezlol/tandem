@@ -38,8 +38,8 @@ class LanguagesForm extends Reflux.Component {
   // Event listener to show button if mother language is provided
   showOkBtn(input) {
     if (input && this.state.languages.map(l => l.name).indexOf(input) !== -1) {
-    OnboardingActions.updateLanguage(input);
-    this.setState({ okBtn: 'okBtn okBtn-show' });
+      OnboardingActions.updateLanguage(input);
+      this.setState({ okBtn: 'okBtn okBtn-show' });
     } else if (this.state.okBtn === 'okBtn okBtn-show') {
       this.setState({ okBtn: 'okBtn' });
     }
@@ -132,7 +132,6 @@ class LanguagesForm extends Reflux.Component {
       }
     }
   }
-
 
 
   render() {
@@ -252,8 +251,10 @@ class LanguagesForm extends Reflux.Component {
 
     return (
       <div>
-        {this.state.langsDesc && <div className = "intLevelsPopUp" ><InternationalLevels /></div>}
-        <div className="transitionComponent" id={this.state.wrapBlur} onClick = {() => this.closeLangLevelDesc()}>
+        <div>
+          {this.state.langsDesc && <div className="intLevelsPopUp"><InternationalLevels /></div>}
+        </div>
+        <div className="transitionComponent" id={this.state.wrapBlur} onClick={() => this.closeLangLevelDesc()}>
           <div style={label}>Let&#39;s connect!</div>
           <div>
             <i
