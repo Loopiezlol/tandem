@@ -2,6 +2,9 @@ const router = require('express').Router();
 const nev = require('../mailer/index');
 const fconfig = require('../../common/formsconfig');
 
+/* Vertification mail
+to send in user inbox
+*/
 function verifyUrl(req, res) {
   const url = req.params.URL;
   nev.confirmTempUser(url, (err, user) => {

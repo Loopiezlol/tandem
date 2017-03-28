@@ -10,8 +10,7 @@ import './styles/main.scss';
 
 import AuthHandler from './components/authHandler';
 import actions from './actions/actions';
-//eslint-disable-next-line
-import injectTapEventPlugin from "react-tap-event-plugin";
+import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
 function redirectIfLoggedIn() {
@@ -21,7 +20,10 @@ function redirectIfLoggedIn() {
     hashHistory.push('/');
   }
 }
-
+/*
+The routing part which connects
+and link each web-part to one fix page
+*/
 ReactDOM.render(
   <Router history={hashHistory}>
     <Route path="/" component={AuthHandler} >

@@ -25,7 +25,7 @@ class abuseComponent extends Reflux.Component {
     };
     this.store = SBStore;
   }
-
+// Cast the text on screen
   render() {
     return (
       <div>

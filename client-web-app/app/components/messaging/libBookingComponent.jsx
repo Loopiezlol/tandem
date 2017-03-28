@@ -12,6 +12,8 @@ class libBookComponent extends Reflux.Component {
     this.state = { testthing: 1, label: 'Hello' };
   }
 
+// the function cast library book rooming page
+// to the screen
   render() {
     return (
       <Paper style={{ boxShadow: 'none' }}>

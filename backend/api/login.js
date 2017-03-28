@@ -7,6 +7,10 @@ const jwt = require('jsonwebtoken');
 const config = require('../../common/config');
 const fconfig = require('../../common/formsconfig');
 
+/*
+Login if the token exist for user
+otherwise handle it class
+*/
 function logIn(req, res) {
   const errors = {};
 

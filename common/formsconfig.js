@@ -1,3 +1,5 @@
+// Vertification email checker in sign-up
+// Login sections
 module.exports = {
   emailError: 'Please provide a valid KCL e-mail',
   passwordError: 'Password must have at least 8 characters',

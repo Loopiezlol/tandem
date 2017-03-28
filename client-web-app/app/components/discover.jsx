@@ -13,6 +13,10 @@ import actions from '../actions/actions';
 
 import '../styles/discover.scss';
 
+/* A loader for
+discover subcomponent to
+time out the actual action
+*/
 class Discover extends Reflux.Component {
   constructor(props) {
     super(props);

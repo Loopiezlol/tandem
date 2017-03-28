@@ -13,12 +13,14 @@ import LibBookComponent from '../messaging/libBookingComponent';
 import SBStore from '../../stores/sbStore';
 import '../../styles/sbChat.scss';
 import SBActions from '../../actions/sbActions';
-// /* eslint-disable*/
 
+// Global variebles defines below :
 const messageIcon = <FontIcon className="material-icons">message</FontIcon>;
 const meetIcon = <FontIcon className="material-icons">people</FontIcon>;
 const nearbyIcon = <IconLocationOn />;
 
+   /* This class is the chat component which is responsible for
+   the 1 - 1 chatting between clients */
 class sbChat extends Reflux.Component {
   constructor(props) {
     super(props);
@@ -30,7 +32,8 @@ class sbChat extends Reflux.Component {
     };
     this.store = SBStore;
   }
-
+// The function which triggers when clicking on each message
+// Show @timeStamp and userNick
   showUserName(e) {
     console.log(e);
     if (this.state.usernameLabel === 'username-show') {
@@ -45,7 +48,7 @@ class sbChat extends Reflux.Component {
       console.log(`Chat index selected: ${this.state.selectedIndex}`);
     });
   }
-
+// The part which render the chat component
   render() {
     const { chatOpen } = this.state;
 

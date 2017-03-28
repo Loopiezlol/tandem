@@ -1,5 +1,8 @@
 import Reflux from 'reflux';
 
+/* Very first component of messaging
+which made complicated in other classes
+*/
 const SBActions = Reflux.createActions({
   createUser: { asyncResult: true },
   loadOnlineUsersList: { asyncResult: true },

@@ -1,5 +1,5 @@
 const router = require('express').Router();
-//const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 const config = require('../../common/config');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
@@ -8,14 +8,14 @@ const Language = require('../models/language');
 const wrap = require('co-express');
 const helpers = require('../common/helpers');
 
-// eslint-disable-next-line
+/* user Token callers
+class
+*/
 function getUserFromToken(req, res) {
   const token = req.body.token || req.query.token;
   if (token) {
-    // eslint-disable-next-line
     jwt.verify(token, config.secret, (err, user) => {
       if (!err) {
-        //eslint-disable-next-line
         User.findOne({ _id: user._doc._id }).populate('mainLanguage wantsToLearn.languageId wantsToLearn.levelId')
         .exec((err1, found) => {
           if (err) {

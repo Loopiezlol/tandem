@@ -6,6 +6,10 @@ import User from './UserProfile/User';
 import Messaging from './messaging/messaging';
 import '../styles/appStyles.scss';
 
+/*
+The page which contain all the discover, messaging
+, and profile component after registeration done
+*/
 const MainComponent = (props) => {
   switch (props.opened) {
     case 'messaging':

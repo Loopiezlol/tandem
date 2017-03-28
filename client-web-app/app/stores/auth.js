@@ -5,6 +5,9 @@ import config from '../../../common/config';
 
 const prefix = require('superagent-prefix')(config.server);
 
+
+/* To control the authentication
+*/
 class Auth extends Reflux.Store {
   constructor() {
     super();

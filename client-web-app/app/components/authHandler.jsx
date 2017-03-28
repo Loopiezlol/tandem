@@ -6,6 +6,9 @@ import Auth from '../stores/auth';
 import sbactions from '../actions/sbActions';
 import sbStore from '../stores/sbStore';
 
+
+/* authhandeler main component
+*/
 class AuthHandler extends Reflux.Component {
   constructor(props) {
     super(props);

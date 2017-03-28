@@ -5,6 +5,10 @@ import config from '../../../common/config';
 
 const prefix = require('superagent-prefix')(config.server);
 
+
+/* class to hold language levels
+when seleted in interest part
+*/
 class LevelsStore extends Reflux.Store {
   constructor() {
     super();

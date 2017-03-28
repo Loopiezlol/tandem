@@ -9,6 +9,9 @@ import ChatIcon from 'material-ui/svg-icons/communication/chat-bubble';
 import SBStore from '../../stores/sbStore';
 import SBActions from '../../actions/sbActions';
 
+/* This class is holding the users component
+who is online, and the users client to have match to
+*/
 class sbUserList extends Reflux.Component {
   constructor(props) {
     super(props);
@@ -45,12 +48,14 @@ class sbUserList extends Reflux.Component {
       </div>
     );
   }
+  // The method to show who is online
   static isOnlineIcon(isOnline) {
     if (isOnline) {
       return <Avatar icon={<ChatIcon />} backgroundColor="#00bcd4" />;
     }
     return <Avatar icon={<ChatIcon />} backgroundColor="#bdbdbd" />;
   }
+  // By clicking client redirect to chat sub component
   openChat(userid, nick) {
     const { loggedIn, userID } = this.state;
     if (loggedIn && (userID === userid)) {

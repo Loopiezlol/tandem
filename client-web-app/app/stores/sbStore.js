@@ -7,10 +7,15 @@ import sbactions from '../actions/sbActions';
 const APP_ID = '78A3DDF9-3396-4088-95C3-A5E8CBDF9AD3';
 const API_TOKEN = 'ff8bf5060352c01ce575287f25def5be4b02fd6d';
 const sb = new SendBird({ appId: APP_ID });
-/* eslint-disable*/
+
+/* The main controler class
+for messaging in terms of MVC*/
+
 class sbStore extends Reflux.Store {
   constructor() {
     super();
+
+    // All neccesary states
     this.state = {
       userID: '',
       userNick: '',
@@ -103,7 +108,8 @@ class sbStore extends Reflux.Store {
       alert('Not logged in! Please log in before trying to chat.');
     }
   }
-
+// Function to make channel and handle it
+// Between 1-1 users
   createChannel(userID, otherUserID) {
     console.log(`trying to make a new channel between ${userID} and ${otherUserID}`);
     // TODO: Implement channelhandler for each one here.
@@ -201,12 +207,11 @@ class sbStore extends Reflux.Store {
     const x = this;
 
     this.state.currentChannel.onMessageReceived = function (channel, message) {
-
       console.log('CHANNEL HANDLER: Got a message!! Here: ');
       console.log(channel, message);
 
       try {
-          if (message.channelUrl === this.state.channelInView) {
+        if (message.channelUrl === this.state.channelInView) {
           const messagesState = x.state.messages;
           messagesState.push(message);
           x.setState({
@@ -258,16 +263,16 @@ class sbStore extends Reflux.Store {
   blockUser() {
     const { otherUser, userID } = this.state;
     const userid = userID;
-    const uri = 'https://api.sendbird.com/v3/users/' + userid + '/block';
+    const uri = `https://api.sendbird.com/v3/users/${userid}/block`;
     request.post(uri)
          .set('Content-Type', 'application/json', 'charset=utf8')
          .set('Api-Token', API_TOKEN)
          .send({
-           target_id: otherUser
-          })
+           target_id: otherUser,
+         })
        .end((err, res) => {
          if (err || !res.ok) {
-           console.log(`Error Blocking the user: ` + otherUser );
+           console.log(`Error Blocking the user: ${otherUser}`);
          } else {
            console.log(`User Blocked Successfully: ${JSON.stringify(res.body)}`);
            console.log(res.body);
@@ -278,14 +283,14 @@ class sbStore extends Reflux.Store {
   unBlockUser() {
     const { otherUser, userID } = this.state;
     const userid = userID;
-    const uri = 'https://api.sendbird.com/v3/users/' + userID + '/block/' + otherUser;
+    const uri = `https://api.sendbird.com/v3/users/${userID}/block/${otherUser}`;
     request.delete(uri)
          .set('Content-Type', 'application/json', 'charset=utf8 ')
          .set('Api-Token', API_TOKEN)
          .send({})
        .end((err, res) => {
          if (err || !res.ok) {
-           console.log(`Error Unblocking the user: ` + otherUser );
+           console.log(`Error Unblocking the user: ${otherUser}`);
          } else {
            console.log(`User Unblocked Successfully: ${JSON.stringify(res.body)}`);
          }
@@ -353,7 +358,7 @@ class sbStore extends Reflux.Store {
   }
 
   fireNewNotification(mess) {
-    const messageString = mess.message + " - " + mess.sender.nickname;
+    const messageString = `${mess.message} - ${mess.sender.nickname}`;
     console.log('Firing a notification action');
     this.setState({
       snackbarOpen: true,
@@ -381,6 +386,9 @@ class sbStore extends Reflux.Store {
   // }
 }
 
+/* Function to creat new user
+if it isn't exists
+*/
 sbactions.createUser.listen((userid, nick) => {
   request.post('https://api.sendbird.com/v3/users')
     .set('Content-Type', 'application/json', 'charset=utf8')
@@ -415,7 +423,6 @@ sbactions.loadOnlineUsersList.listen(() => {
       }
     });
 });
-
 
 
 // sbactions.createChannel.listen((userID, otherUserID) => {

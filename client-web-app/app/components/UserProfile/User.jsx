@@ -23,6 +23,10 @@ import actions from '../../actions/actions';
 import MeActions from '../../actions/MeActions';
 import '../../styles/User/User.scss';
 
+
+/* The main usercard
+component which holds all the data for each user
+*/
 class User extends Reflux.Component {
 
   constructor(props) {

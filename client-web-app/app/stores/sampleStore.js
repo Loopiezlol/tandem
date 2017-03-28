@@ -2,6 +2,10 @@ import Reflux from 'reflux';
 import request from 'superagent';
 import actions from '../actions/actions';
 
+
+/* This class is only
+a sample to follow for react.js
+*/
 class SampleStore extends Reflux.Store {
   constructor() {
     super();

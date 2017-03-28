@@ -9,7 +9,8 @@ import SBStore from '../../stores/sbStore';
 import SBActions from '../../actions/sbActions';
 import SBUserList from '../messaging/sbUserList';
 
-/*eslint-disable*/
+/* This class is the component which holds
+all the components require for messaging part */
 class sbMessaging extends Reflux.Component {
   constructor(props) {
     super(props);
@@ -38,13 +39,13 @@ class sbMessaging extends Reflux.Component {
           />
 
           <div className="content-wrapper">
-            <Paper className="paperStyle" style = {{ backgroundColor : 'lightblue'}} zDepth={4}>
+            <Paper className="paperStyle" style={{ backgroundColor: 'lightblue' }} zDepth={4}>
 
               <p>Currently logged in as: </p>
               { this.logInCheck() }
             </Paper>
-
-            <Paper className="paperStyle" style = {{ backgroundColor : 'lightblue'}} zDepth={4}>
+            // Paper works as wrapper to hold the fields and maintain the styles
+            <Paper className="paperStyle" style={{ backgroundColor: 'lightblue' }} zDepth={4}>
               <p>Select a unique User ID and nickname:</p>
               <TextField
                 hintText="User ID"
@@ -62,11 +63,11 @@ class sbMessaging extends Reflux.Component {
                 label="Create SendBird User"
                 onClick={() => this.handleCreate()}
                 onTap={() => this.handleCreate()}
-                primary style={{margin: '12px'}}
+                primary style={{ margin: '12px' }}
               />
             </Paper>
 
-            <Paper className="paperStyle"style = {{ backgroundColor : 'lightblue'}} zDepth={4}>
+            <Paper className="paperStyle"style={{ backgroundColor: 'lightblue' }} zDepth={4}>
               <p>Or, log in to an existing user ID: </p>
               <TextField
                 hintText="Existing User ID"
@@ -78,7 +79,7 @@ class sbMessaging extends Reflux.Component {
                 label="Log in as SendBird User"
                 onClick={() => this.handleLogIn()}
                 onTap={() => this.handleLogIn()}
-                primary style={{margin: '12px'}}
+                primary style={{ margin: '12px' }}
               />
             </Paper>
 
@@ -88,6 +89,8 @@ class sbMessaging extends Reflux.Component {
       </MuiThemeProvider>
     );
   }
+
+  // Handlers are created to trigger and handle the functions on each section
   handleCreate() {
     const { sbUser, sbNick } = this.state;
     if (!sbUser.length || !sbNick.length) {

@@ -5,6 +5,11 @@ import config from '../../../common/config';
 
 const prefix = require('superagent-prefix')(config.server);
 
+
+/* Discove subsection
+which allows you to get the users list according to filtering
+selection
+*/
 class DiscoverStore extends Reflux.Store {
   constructor() {
     super();

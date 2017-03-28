@@ -9,7 +9,9 @@ const generators = require('./helpers/db-data-generator');
 
 const app = express();
 
-
+/* Another port to run
+the app on 3000 localhost
+*/
 if (require.main === module) {
   mongoose.connect(config.db);
 
@@ -38,11 +40,10 @@ app.get('/', (req, res) => {
 
 
 // auth middleware
-//eslint-disable-next-line
+
 app.use((req, res, next) => {
   const token = req.body.token || req.query.token || req.headers['x-access-token'];
   if (token) {
-    //eslint-disable-next-line
     jwt.verify(token, config.secret, (err, user) => {
       if (err) {
         return res.status(401).json({

@@ -15,7 +15,7 @@ import SBStore from '../../stores/sbStore';
 import '../../styles/sbChat.scss';
 import SBActions from '../../actions/sbActions';
 
-/* eslint-disable */
+/* Local variable to access in this class */
 const reportIcon = <FontIcon className="material-icons">mood_bad</FontIcon>;
 /* {const profileIcon = <FontIcon className="material-icons">account_circle</FontIcon>;}*/
 const styles = {
@@ -95,6 +95,10 @@ class chatComponent extends Reflux.Component {
     if (!(lastMessage == null)) {
       lastTimeStamp = moment(lastMessage.createdAt).fromNow();
     }
+
+    /* The blocking component and view profile section
+    and what they holds inside
+    */
     return (
       <div>
         <h3 style={{ margin: 14, fontSize: '0.93em', fontWeight: 'normal' }}>Chat with {otherUserNick} ({otherUser})</h3>
@@ -150,7 +154,7 @@ class chatComponent extends Reflux.Component {
             onclick={e => this._handleChange(e)}
             onchange={e => this._openFileDialog(e)}
           >
-            <input type="file" style={styles.uploadInput}  />
+            <input type="file" style={styles.uploadInput} />
           </FlatButton>
           <RaisedButton
             primary style={{ margin: 5 }}
@@ -162,7 +166,9 @@ class chatComponent extends Reflux.Component {
       </div>
     );
   }
-
+/* handler to trigger functions like
+input files, sending button
+blocking user and so on */
   handleChange(e) {
     console.log(e.target.value);
   }
@@ -223,7 +229,7 @@ class chatComponent extends Reflux.Component {
   handleBlockClose() {
     this.setState({ blockDialogOpen: false });
   }
-
+// The section to show each message from each user seperatly on right and left hand side
   renderMessage(message) {
     const timeStamp = moment(message.createdAt).fromNow();
     if (message.sender.userId === this.store.state.userID) {

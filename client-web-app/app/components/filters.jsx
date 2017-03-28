@@ -10,6 +10,9 @@ import Auth from '../stores/auth';
 
 import iconsWithLabels from '../interests';
 
+/* The filtering subsection
+which let users to filter interests,languages and see the users according to that
+*/
 class Filters extends Reflux.Component {
   constructor(props) {
     super(props);
@@ -86,6 +89,7 @@ class Filters extends Reflux.Component {
     );
   }
 
+// Handleres for each filter selecting
   handleInterest(index) {
     const { interests } = this.state;
     interests[index] = !interests[index];

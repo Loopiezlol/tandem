@@ -9,6 +9,11 @@ import {
 } from 'material-ui/styles/colors';
 import SBStore from '../../stores/sbStore';
 import SBActions from '../../actions/sbActions';
+
+/*
+This class is rendering the loggin
+part for messaging only
+*/
 class loginComponents extends Reflux.Component {
   constructor(props) {
     super(props);
@@ -18,6 +23,7 @@ class loginComponents extends Reflux.Component {
     };
     this.stores = SBStore;
   }
+  // cast on screen the details of each user
   render() {
     const { sbUser, sbNick, userID, userNick } = this.state;
     const style = {
@@ -80,6 +86,9 @@ class loginComponents extends Reflux.Component {
       </div>
     );
   }
+
+  // The handlers to handle
+  the input texts 
   handleCreate() {
     const { sbUser, sbNick } = this.state;
     if (!sbUser.length || !sbNick.length) {

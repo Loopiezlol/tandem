@@ -15,12 +15,13 @@ import Carousel from 'nuka-carousel';
 import SBStore from '../../stores/sbStore';
 import '../../styles/sbChat.scss';
 
-// The component rendered to show guided meeting tips in chat
 
+// Localy access variable for styling purpose in meeting componant
 const meetIcon = <FontIcon className="material-icons">people</FontIcon>;
 const tipsIcon = <FontIcon className="material-icons">&#xE8DC;</FontIcon>;
 const nextIcon = <FontIcon className="material-icons" id="nextTipLabel">&#xE409;</FontIcon>;
 
+// The component rendered to show guided meeting tips in chat
 class meetingComponent extends Reflux.Component {
 
 
@@ -41,7 +42,7 @@ class meetingComponent extends Reflux.Component {
       this.setState({ stepIndex: stepIndex - 1 });
     }
   };
-
+// Where the tips render on screen
   constructor(props) {
     super(props);
     const meetingInfo = [
@@ -110,7 +111,7 @@ class meetingComponent extends Reflux.Component {
       </div>
     );
   }
-
+// Shows tips as stepper
   renderMeetingStepper() {
     const { stepIndex } = this.state;
     return (
@@ -175,9 +176,9 @@ class meetingComponent extends Reflux.Component {
   }
 
   openTips() {
-    this.setState({ tipsSelected: true, showMeetingStepper: false, selectedTip : 'tipsSelected'});
+    this.setState({ tipsSelected: true, showMeetingStepper: false, selectedTip: 'tipsSelected' });
   }
-
+// Navigate to next tips
   goNextTip() {
     let nextTip;
     if (this.state.tipsIdx === this.state.tips.length - 1) {
@@ -193,29 +194,27 @@ class meetingComponent extends Reflux.Component {
   }
 
   render() {
-    const tipsInfo = this.state.tips.map((tip) => {
-      return (
-        <div>
-          <div className={this.state.tipAnimation}>
-            <p id="tipsLabel" style={{ color: `${tip.color}` }}>{tip.label}</p>
-            <p className="questionLabel">{(tip || {}).question1}</p>
-            <p id="tipsDesc" >{tip.part1 || tip.desc}</p>
-            <p className="importantLabel">{(tip || {}).important}</p>
-            <p className="questionLabel">{(tip || {}).question2}</p>
-            <p id="tipsDesc" >{(tip || {}).part2 }</p>
-          </div>
-          <RaisedButton
-            icon={nextIcon}
-            backgroundColor=" #4e5c72 "
-            className="nextTipBtn"
-            onClick={() => this.goNextTip()}
-          >
-            <span id="nextTipLabel">next tip</span>
-          </RaisedButton>
+    const tipsInfo = this.state.tips.map(tip => (
+      <div>
+        <div className={this.state.tipAnimation}>
+          <p id="tipsLabel" style={{ color: `${tip.color}` }}>{tip.label}</p>
+          <p className="questionLabel">{(tip || {}).question1}</p>
+          <p id="tipsDesc" >{tip.part1 || tip.desc}</p>
+          <p className="importantLabel">{(tip || {}).important}</p>
+          <p className="questionLabel">{(tip || {}).question2}</p>
+          <p id="tipsDesc" >{(tip || {}).part2 }</p>
         </div>
+        <RaisedButton
+          icon={nextIcon}
+          backgroundColor=" #4e5c72 "
+          className="nextTipBtn"
+          onClick={() => this.goNextTip()}
+        >
+          <span id="nextTipLabel">next tip</span>
+        </RaisedButton>
+      </div>
 
-      );
-    });
+      ));
 
 
     const tips = (

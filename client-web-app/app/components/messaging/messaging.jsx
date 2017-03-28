@@ -70,6 +70,9 @@ class messaging extends Reflux.Component {
     );
   }
 
+/* Handlers to trigger actions for
+Showing notification
+and userlist*/
   handleRequestClose = () => {
     this.setState({
       snackbarOpen: false,

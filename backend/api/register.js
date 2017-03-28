@@ -4,6 +4,9 @@ const User = require('../models/user');
 const nev = require('../mailer/index');
 const fconfig = require('../../common/formsconfig');
 
+/* User registeration API
+call
+*/
 function registerUser(req, res) {
   const user = new User({
     email: req.body.email,

@@ -5,6 +5,8 @@ import config from '../../../common/config';
 
 const prefix = require('superagent-prefix')(config.server);
 
+
+// Actual controller for language selection
 class LanguagesStore extends Reflux.Store {
   constructor() {
     super();

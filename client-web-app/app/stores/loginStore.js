@@ -6,6 +6,10 @@ import config from '../../../common/config';
 const prefix = require('superagent-prefix')(config.server);
 // import SBActions from '../actions/sbActions';
 
+
+/* Class to holds
+the loging form
+*/
 class LoginStore extends Reflux.Store {
   constructor() {
     super();

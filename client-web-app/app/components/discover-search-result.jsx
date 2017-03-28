@@ -28,7 +28,6 @@ class UserCard extends Reflux.Component {
     } else {
       this.setState({ expanded: true });
     }
-    //eslint-disable-next-line
   };
   render() {
     const { me } = this.props;

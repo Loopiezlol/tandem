@@ -3,6 +3,11 @@ import Dropzone from 'react-dropzone';
 import Paper from 'material-ui/Paper';
 import '../styles/AvatarUploader.scss';
 
+
+/* Avatar uploader component
+and positioning
+and url, dropping, or selecting function for it
+*/
 class AvatarUploader extends React.Component {
   constructor(props) {
     super(props);

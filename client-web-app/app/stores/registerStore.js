@@ -6,6 +6,9 @@ import config from '../../../common/config';
 
 const prefix = require('superagent-prefix')(config.server);
 
+/*
+Class holds registeration form
+*/
 class RegisterStore extends Reflux.Store {
   constructor() {
     super();
@@ -56,6 +59,7 @@ class RegisterStore extends Reflux.Store {
       errorUn: '',
     });
   }
+  // Error handler
   submitClickFailed(res) {
     this.setState({
       message: res.body.message,

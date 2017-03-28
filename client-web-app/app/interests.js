@@ -1,3 +1,4 @@
+// All interest items in regestreation part
 export default [
   {
     icon: 'airplane',
