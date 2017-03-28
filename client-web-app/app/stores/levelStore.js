@@ -1,6 +1,9 @@
 import Reflux from 'reflux';
 import request from 'superagent';
 import actions from '../actions/actions';
+import config from '../../../common/config';
+
+const prefix = require('superagent-prefix')(config.server);
 
 class LevelsStore extends Reflux.Store {
   constructor() {
@@ -26,7 +29,8 @@ class LevelsStore extends Reflux.Store {
 }
 
 actions.fetchLevels.listen(() => {
-  request.get('http://localhost:3000/levels')
+  request.get('/levels')
+  .use(prefix)
   .set('x-access-token', localStorage.getItem('jwt'))
   .end((err, res) => {
     if (err) {

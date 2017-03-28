@@ -1,6 +1,9 @@
 import Reflux from 'reflux';
 import request from 'superagent';
 import actions from '../actions/actions';
+import config from '../../../common/config';
+
+const prefix = require('superagent-prefix')(config.server);
 
 class LanguagesStore extends Reflux.Store {
   constructor() {
@@ -27,6 +30,7 @@ class LanguagesStore extends Reflux.Store {
 
 actions.fetchLanguages.listen(() => {
   request.get('http://localhost:3000/languages')
+  .use(prefix)
   .set('x-access-token', localStorage.getItem('jwt'))
   .end((err, res) => {
     if (err) {
