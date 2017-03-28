@@ -186,33 +186,20 @@
   margin-left: -110px;
 }
 
-#motherLangLabel {
-  margin-left: 133px;
-}
-
-#motherLangDataLabel {
-  margin-left: 101px;
-}
-
-#motherLanguageEdit {
-  margin-left: 121px;
-  margin-top: -8px;
-}
-
-.motherLangInputEdit {
-  width: 110px !important;
-}
-
 .motherLanguageWrap {
   position: absolute;
+  margin-left: 32%;
+  text-align: left;
 }
 
 .famLangWrapper {
   margin-top: 120px;
+  margin-left: 32%;
+  width: 360px;
+  text-align: left;
 }
 
 .famLangList {
-  margin-left: 65px;
   margin-top: -10px;
   width: 200px !important;
 }
@@ -225,13 +212,20 @@
   margin-top: -18px;
 }
 
+.newFamLangLevelDropdown{
+  position: absolute !important;
+  font-size: 25px !important;
+  font-family: 'Oswald', sans-serif !important;
+  margin-left: -10px;
+  margin-top: 10%;
+}
+
 #addNewFamLangBtn {
   position: absolute !important;
   font-family: 'Dosis', sans-serif !important;
   transform: scale(0.8);
   margin-top: -45px !important;
-  margin-left: 220px !important;
-
+  margin-left: 72% !important;
 }
 
 .famLangListWrap {
@@ -294,12 +288,11 @@
 #langLabel {
   display: inline-block;
   margin-right: 50px;
-  margin-left: 110px;
 }
 
 #levelLabel {
   display: inline-block;
-  margin-left: 110px;
+  margin-left: 30%;
 }
 
 #popupList {

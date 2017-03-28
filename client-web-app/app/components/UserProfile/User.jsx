@@ -288,7 +288,7 @@ class User extends Reflux.Component {
         />
         <span className="newFamLangLangLevel">
           <DropDownMenu
-            className="famLangLevel"
+            className="newFamLangLevelDropdown"
             value={this.state.newFamLangLevel}
             onChange={this.updateNewFamLangLevel}
           >
@@ -315,8 +315,8 @@ class User extends Reflux.Component {
         <div id={this.state.isBlurred} onClick={this.closeNewFamLangPopUp}>
           <h1 className="selectorHeader">Languages</h1>
           <div className="motherLanguageWrap" >
-            <p className="propLabel" id="motherLangLabel">Mother language</p>
-            <p className="dataLabel" id="motherLangDataLabel">{(this.state.tempUser.mainLanguage || {}).name}</p>
+            <p className="propLabel" >Mother language</p>
+            <p className="dataLabel" >{(this.state.tempUser.mainLanguage || {}).name}</p>
             {/* =======
             {
               this.state.enableEdit ? <div id="motherLanguaeEdit">
