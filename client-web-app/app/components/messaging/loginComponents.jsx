@@ -25,7 +25,7 @@ class loginComponents extends Reflux.Component {
   }
   // cast on screen the details of each user
   render() {
-    const { sbUser, sbNick, userID, userNick } = this.state;
+    const { sbUser, sbNick, userID } = this.state;
     const style = {
       width: '30pc',
       margin: 15,
@@ -88,7 +88,6 @@ class loginComponents extends Reflux.Component {
   }
 
   // The handlers to handle
-  the input texts 
   handleCreate() {
     const { sbUser, sbNick } = this.state;
     if (!sbUser.length || !sbNick.length) {

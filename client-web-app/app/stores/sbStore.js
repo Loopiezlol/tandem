@@ -34,7 +34,6 @@ class sbStore extends Reflux.Store {
       isTyping: false,
       newMsgContent: '',
       snackbarOpen: false,
-      otherUserProfileUrl: '',
       lastMessage: null,
     };
     this.listenables = sbactions;
@@ -282,7 +281,6 @@ class sbStore extends Reflux.Store {
 
   unBlockUser() {
     const { otherUser, userID } = this.state;
-    const userid = userID;
     const uri = `https://api.sendbird.com/v3/users/${userID}/block/${otherUser}`;
     request.delete(uri)
          .set('Content-Type', 'application/json', 'charset=utf8 ')
