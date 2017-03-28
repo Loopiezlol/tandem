@@ -25,7 +25,7 @@ export default {
         exclude: [/node_modules/, /dist/],
       },
       {
-        test: /\.scss$/,
+        test: /\.(scss|css)$/,
         loader: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: 'css-loader?sourceMap!sass-loader?sourceMap',
@@ -38,6 +38,7 @@ export default {
           'file-loader?hash=sha512&digest=hex&name=[hash].[ext]',
           'image-webpack-loader?bypassOnDebug',
         ],
+        exclude: [/node_modules/, /dist/],
       },
     ],
   },
