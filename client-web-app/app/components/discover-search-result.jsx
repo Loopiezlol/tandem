@@ -104,7 +104,7 @@ class UserCard extends Reflux.Component {
                   expandable={true}
                   className="tooltip"
                     //eslint-disable-next-line
-                  tooltip={me.wantsToLearn.splice(1).map(l => <div> {l.languageId.name.toString()} Level: {me.mainLanguage.level} </div>)}
+                  tooltip={me.wantsToLearn.length > 0 ? me.wantsToLearn.splice(1).map(l => <div> {l.languageId.name.toString()} Level: {me.mainLanguage.level} </div>) : 'default'}
                 >
                   <Avatar
                     src={require('../../public/add-button.svg')}
