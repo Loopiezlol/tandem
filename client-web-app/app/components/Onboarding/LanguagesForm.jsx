@@ -69,10 +69,13 @@ class LanguagesForm extends Reflux.Component {
     });
   }
 
+  // Event, which triggers the pop up box with the description of
+  // the international levels to show
   openLangLevelDesc() {
     this.setState({ langsDesc: true, wrapBlur: 'langsWrapBlur' });
   }
 
+  // Event, which triggers international level pop up box to close
   closeLangLevelDesc() {
     if (this.state.langsDesc) {
       this.setState({ langsDesc: false, wrapBlur: '' });

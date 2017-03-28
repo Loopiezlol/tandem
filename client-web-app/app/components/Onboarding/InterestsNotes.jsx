@@ -20,6 +20,7 @@ class IneterestsNotes extends Reflux.Component {
   }
 
 
+  // Event that triggers a button to open when notes are updated
   showBtn(e) {
     this.setState({ notesInputValue: e.target.value });
     if (e.target.value.length > 1) {
@@ -29,10 +30,12 @@ class IneterestsNotes extends Reflux.Component {
     }
   }
 
+  // Click event when an interest has been selected to have notes added to it
   selectInterest(hobby) {
     this.setState({toAddNotes:hobby});
   }
 
+  // Click event to save notes and indicate change
   saveNotes() {
     OnboardingActions.saveNotes();
     this.setState({ notesSavedLabel: 'Notes saved', notesSavedIcon: 'done', notesSavedBtnColor: '#1f9b4e', notesInputValue: '' });
@@ -53,7 +56,6 @@ class IneterestsNotes extends Reflux.Component {
     // Container for all the interests that the user has chosen
     const chosenInterests = this.state.userInfo.interests.map((hobby) => {
       const source = `/png/${hobby.icon}.png`;
-      console.log(`${hobby.label} === ${this.state.toAddNotes.label}`);
       return (
         <span>
           <Avatar src={require(`../../../public${source}`)} className={hobby.label === this.state.toAddNotes.label ? 'singleInterest singleInterest-selected' : 'singleInterest'} onClick={() => this.selectInterest(hobby)} />
@@ -61,6 +63,7 @@ class IneterestsNotes extends Reflux.Component {
       );
     });
 
+    // Save notes button, which is used to save changes to updated notes
     const saveNotesBtn = (
       <RaisedButton
         label={this.state.notesSavedLabel}

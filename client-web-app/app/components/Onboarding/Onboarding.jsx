@@ -57,6 +57,8 @@ class Onboarding extends Reflux.Component {
   }
 
   render() {
+
+    // Error, which shows, if there are empty fields on the user input form
     const userInfoError = (
       <div className={this.state.langErrorWrap}>
         <img src={require('../../../public/errorMsgBubble.png')} id="errorUserInfoIcon" />
@@ -64,6 +66,7 @@ class Onboarding extends Reflux.Component {
       </div>
     );
 
+    // Error, which shows, if mother language is not added
     const motherLangError = (
       <div className={this.state.langErrorWrap}>
         <img src={require('../../../public/errorMsgBubble.png')} id="errorMotherLangIcon" />
@@ -71,6 +74,7 @@ class Onboarding extends Reflux.Component {
       </div>
     );
 
+    // Error, which shows, if familiar language field is empty
     const famLangError = (
       <div className={this.state.langErrorWrap}>
         <img src={require('../../../public/errorMsgBubble.png')} id="errorFamLangIcon" />
@@ -78,7 +82,7 @@ class Onboarding extends Reflux.Component {
       </div>
     );
 
-
+    // Error, which shows, if less than 3 interests have been selected
     const interestsError = (
       <div className={this.state.langErrorWrap}>
         <img src={require('../../../public/errorMsgBubble.png')} id="errorInterestsIcon" />
@@ -86,9 +90,9 @@ class Onboarding extends Reflux.Component {
       </div>
     );
 
+    // Animated background images, which change on every 6 seconds
     const bgImages = ['bg1', 'bg2', 'bg3', 'bg4', 'bg5', 'bg6'].map((bg) => {
       const source = `/backgroundImages/${bg}.jpg`;
-      console.log(source);
       return (
         <img className="bgImageSlide" src={require(`../../../public${source}`)} />
       );
