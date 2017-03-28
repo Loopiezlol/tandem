@@ -59,12 +59,13 @@ class UserCard extends Reflux.Component {
           <span className="speaks">Speaks:</span>
           <IconButton
             className="tooltip"
-            tooltip={<div> {me.mainLanguage.name} Level: {me.mainLanguage.level} </div>}
+            tooltip={<div> {(me.mainLanguage || {}).name}
+              Level: {(me.mainLanguage || {}).level} </div>}
           >
             <img
               src={require('../../public/transperant.png')}
-              className={me.mainLanguage.abbreviation ? `flag flag-${me.mainLanguage.abbreviation.toLowerCase()}` : ''}
-              alt={me.mainLanguage.name}
+              className={(me.mainLanguage || {}).abbreviation ? `flag flag-${(me.mainLanguage || {}).abbreviation.toLowerCase()}` : ''}
+              alt={(me.mainLanguage || {}).name}
               style={{ backgroundImage: require('../../public/flags.png') }}
             />
           </IconButton>
@@ -77,8 +78,8 @@ class UserCard extends Reflux.Component {
               >
                 <img
                   src={require('../../public/transperant.png')}
-                  className={me.wantsToLearn[0].languageId.abbreviation.toLowerCase() ? `flag flag-${me.wantsToLearn[0].languageId.abbreviation.toLowerCase()}` : ''}
-                  alt={me.wantsToLearn[0].languageId.name}
+                  className={((me.wantsToLearn || [])[0].languageId || {}).abbreviation.toLowerCase() ? `flag flag-${((me.wantsToLearn || [])[0].languageId || {}).abbreviation.toLowerCase()}` : ''}
+                  alt={((me.wantsToLearn || [])[0].languageId || {}).name.toLowerCase()}
                   style={{ backgroundImage: require('../../public/flags.png') }}
                 />
               </IconButton>
@@ -90,10 +91,11 @@ class UserCard extends Reflux.Component {
                 >
                   <img
                     src={require('../../public/transperant.png')}
-                    className={me.wantsToLearn[0].languageId.abbreviation.toLowerCase() ?
-                      `flag flag-${me.wantsToLearn[0].languageId.abbreviation.toLowerCase()}` :
+                    className={((me.wantsToLearn || [])[0].languageId || {})
+                      .abbreviation.toLowerCase() ?
+                      `flag flag-${((me.wantsToLearn || [])[0].languageId || {}).abbreviation.toLowerCase()}` :
                       ''}
-                    alt={me.wantsToLearn[0].languageId.name}
+                    alt={((me.wantsToLearn || [])[0].languageId || {}).name}
                     style={{ backgroundImage: require('../../public/flags.png') }}
                   />
                 </IconButton>
