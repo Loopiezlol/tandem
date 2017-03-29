@@ -11,15 +11,17 @@ const helpers = require('../common/helpers');
 /* user Token callers
 class
 */
+//eslint-disable-next-line
 function getUserFromToken(req, res) {
   const token = req.body.token || req.query.token;
   if (token) {
+    //eslint-disable-next-line
     jwt.verify(token, config.secret, (err, user) => {
       if (!err) {
-        User.findOne({ _id: user._doc._id }).populate('mainLanguage wantsToLearn.languageId wantsToLearn.levelId')
+        User.findOne({ _id: user._doc._id })
         .exec((err1, found) => {
-          if (err) {
-            return res.json({
+          if (err || found === null) {
+            return res.status(404).json({
               success: false,
               message: 'failed to find user',
             });
@@ -28,18 +30,18 @@ function getUserFromToken(req, res) {
           // const token = helpers.signJWTToken(found)
           return res.json({
             token,
-            user: helpers.getCleanUser(found.populate('wantsToLearn.languageId mainLanguage')),
+            user: helpers.getCleanUser(found.populate('wantsToLearn.languageId mainLanguage wantsToLearn.levelId')),
           });
         });
       } else {
-        return res.json({
+        return res.status(400).json({
           success: false,
           message: 'failed to authentificate token',
         });
       }
     });
   } else {
-    return res.json({
+    return res.status(400).json({
       success: false,
       message: 'must provide token',
     });

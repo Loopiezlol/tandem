@@ -69,7 +69,7 @@ class LoginComponent extends Reflux.Component {
                 <br />
                 <RaisedButton
                   onClick={() => actions.submitClickL(emailL, passwordL)}
-                  primary="true"
+                  primary
                 >
                     Sign in!
                   </RaisedButton>

@@ -40,7 +40,7 @@ class Discover extends Reflux.Component {
       <MuiThemeProvider>
         <div className="control-discover">
           {showLoading ?
-            <RefreshIndicator className="loading-circle" status="loading" />
+            <RefreshIndicator left={0} top={0} className="loading-circle" status="loading" />
             :
             <div className={`control-discover-results ${filtersVisible ? 'blur' : ''}`}>
               {results && results.length ?

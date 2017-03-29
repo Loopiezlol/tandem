@@ -78,7 +78,7 @@ class RegisterComponent extends Reflux.Component {
                 <br />
                 <RaisedButton
                   className="form-button"
-                  primary="true"
+                  primary
                   onClick={() => actions.submitClick(username, email, password, repassword)}
                 >
                   Sign up!

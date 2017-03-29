@@ -94,7 +94,7 @@ class Onboarding extends Reflux.Component {
     const bgImages = ['bg1', 'bg2', 'bg3', 'bg4', 'bg5', 'bg6'].map((bg) => {
       const source = `/backgroundImages/${bg}.jpg`;
       return (
-        <img className="bgImageSlide" src={require(`../../../public${source}`)} />
+        <img key={`slide-${bg}`}className="bgImageSlide" src={require(`../../../public${source}`)} />
       );
     });
 

@@ -48,6 +48,8 @@ class Auth extends Reflux.Store {
   }
 
   meFromTokenFailed() {
+    localStorage.removeItem('jwt');
+    this.jwt = '';
     this.setState({
       status: 'off',
       me: {},
