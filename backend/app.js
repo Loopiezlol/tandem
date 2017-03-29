@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken');
 const generators = require('./helpers/db-data-generator');
 
 const app = express();
+app.use(cors());
 
 /* Another port to run
 the app on 3000 localhost
@@ -20,8 +21,6 @@ if (require.main === module) {
 } else {
   mongoose.connect('mongodb://localhost/test');
 }
-
-app.use(cors());
 
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended: false }));

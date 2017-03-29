@@ -9,7 +9,9 @@ function* getUsers(req, res) {
 
   const users = yield User.find(query)
   .populate('mainLanguage wantsToLearn.languageId wantsToLearn.levelId');
-  res.json(users);
+  if (users) {
+    res.json(users);
+  }
 }
 
 // standard api method, using callbakcs
