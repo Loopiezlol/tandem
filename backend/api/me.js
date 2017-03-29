@@ -18,9 +18,15 @@ function getUserFromToken(req, res) {
     //eslint-disable-next-line
     jwt.verify(token, config.secret, (err, user) => {
       if (!err) {
-        User.findOne({ _id: user._doc._id })
+        if (User.findOne({ _id: user._doc._id }) === null) {
+          return res.status(404).json({
+            success: false,
+            message: 'non-existent-user',
+          });
+        }
+        User.findOne({ _id: user._doc._id }).populate('wantsToLearn.languageId mainLanguage wantsToLearn.levelId')
         .exec((err1, found) => {
-          if (err || found === null) {
+          if (err) {
             return res.status(404).json({
               success: false,
               message: 'failed to find user',
@@ -30,7 +36,7 @@ function getUserFromToken(req, res) {
           // const token = helpers.signJWTToken(found)
           return res.json({
             token,
-            user: helpers.getCleanUser(found.populate('wantsToLearn.languageId mainLanguage wantsToLearn.levelId')),
+            user: helpers.getCleanUser(found),
           });
         });
       } else {
