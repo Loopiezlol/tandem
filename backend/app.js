@@ -8,11 +8,19 @@ const jwt = require('jsonwebtoken');
 const generators = require('./helpers/db-data-generator');
 
 const app = express();
-app.use(cors({
-  origin: 'https://github.kcl.ac.uk',
-  credentials: true,
-}));
-app.options('*', cors());
+
+const whitelist = ['https://tandem-kcl.netlify.com', 'https://github.kcl.ac.uk'];
+const corsOptionsDelegate = (req, callback) => {
+  let corsOptions;
+  if (whitelist.indexOf(req.header('Origin')) !== -1) {
+    corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
+  } else {
+    corsOptions = { origin: false }; // disable CORS for this request
+  }
+  callback(null, corsOptions); // callback expects two parameters: error and options
+};
+app.use(cors(corsOptionsDelegate));
+// app.options('*', cors());
 // app.use((req, res, next) => {
 //   const origin = req.get('origin');
 //   res.header('Access-Control-Allow-Origin', origin);
