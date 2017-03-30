@@ -36,7 +36,6 @@ class DiscoverStore extends Reflux.Store {
 actions.getResults.listen((options, id) => {
   request.get('/users/')
   .use(prefix)
-  .withCredentials()
   .set('x-access-token', localStorage.getItem('jwt'))
   .set('id', id)
   .query(options)
