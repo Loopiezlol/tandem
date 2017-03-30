@@ -66,17 +66,21 @@ app.get('/', (req, res) => {
 app.use((req, res, next) => {
   const token = req.body.token || req.query.token || req.headers['x-access-token'];
   if (token) {
+    console.log('got token');
     jwt.verify(token, config.secret, (err, user) => {
       if (err) {
+        console.log('error in token');
         return res.status(401).json({
           success: false,
           message: 'Please register Log in using a valid email to submit posts',
         });
       }
+      console.log('user here');
       req.user = user; //eslint-disable-line
       return next();
     });
   } else {
+    console.log('no token');
     return res.status(403).send({
       success: false,
       message: 'No token provided.',
