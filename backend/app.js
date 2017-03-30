@@ -64,6 +64,8 @@ app.get('/', (req, res) => {
 // auth middleware
 
 app.use((req, res, next) => {
+  console.log('received request');
+  console.log('headers: ', req.headers);
   const token = req.body.token || req.query.token || req.headers['x-access-token'];
   if (token) {
     console.log('got token');

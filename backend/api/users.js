@@ -26,7 +26,10 @@ function createUser(req, res) {
   User.create({
     username,
   }, (err, doc) => {
-    res.json(doc);
+    if (err) {
+      return res.status(400).json(err);
+    }
+    return res.json(doc);
   });
 }
 
