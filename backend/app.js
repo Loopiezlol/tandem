@@ -9,6 +9,7 @@ const generators = require('./helpers/db-data-generator');
 
 const app = express();
 app.use(cors({
+  origin: 'https://github.kcl.ac.uk',
   credentials: true,
 }));
 app.options('*', cors());
