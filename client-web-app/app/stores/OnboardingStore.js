@@ -191,6 +191,7 @@ class OnboardingStore extends Reflux.Store {
     });
   }
   finishFailed(err) {
+    console.log(err);
     this.setState({
       onboardingFinishStatus: 'fail',
     });
