@@ -8,7 +8,9 @@ const jwt = require('jsonwebtoken');
 const generators = require('./helpers/db-data-generator');
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  credentials: true,
+}));
 app.options('*', cors());
 // app.use((req, res, next) => {
 //   const origin = req.get('origin');
