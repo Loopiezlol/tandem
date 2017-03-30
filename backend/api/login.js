@@ -24,7 +24,7 @@ function logIn(req, res) {
     }
 
     if (bcrypt.compareSync(req.body.password, user.password)) {
-      const token = jwt.sign(user, config.secret, {
+      const token = jwt.sign({ username: user.username, id: user._id }, config.secret, {
         expiresIn: '1440m', // expires in 24 hours
       });
       return res.json({

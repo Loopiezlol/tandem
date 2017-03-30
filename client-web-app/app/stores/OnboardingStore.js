@@ -63,7 +63,6 @@ class OnboardingStore extends Reflux.Store {
         break;
       default:
     }
-    console.log(this.state.userInfo);
   }
 
 
@@ -133,12 +132,10 @@ class OnboardingStore extends Reflux.Store {
       interestsState.splice(idx, 1);
     }
     this.setState({ userInfo: { ...this.state.userInfo, interests: interestsState } });
-    console.log(this.state.userInfo.interests);
   }
 
   expandNotes = (hobby) => {
     this.setState({ toAddNotes: hobby });
-    console.log(`Hobby is : ${this.state.toAddNotes.label}`);
   }
 
   updateNotes = (e) => {
@@ -147,7 +144,6 @@ class OnboardingStore extends Reflux.Store {
         hobby.notes += `${e.target.value}\n`;   //eslint-disable-line
       }
     });
-    console.log(this.state.userInfo.interests);
   }
 
 
@@ -164,17 +160,14 @@ class OnboardingStore extends Reflux.Store {
         }
         break;
       case 'languagesStage':
-        console.log(`Languages are complete : ${this.isLanguagesComplete()}`);
         if (this.state.userInfo.motherLanguage == null || this.state.userInfo.motherLanguage === '') {
           this.setState({ motherLangError: true });
           setTimeout(() => { x.setState({ langErrorWrap: 'languagesErrorWrap-leave' }); }, 3000);
           setTimeout(() => { x.setState({ langErrorWrap: 'languagesErrorWrap-appear', motherLangError: false }); }, 3400);
-          console.log('Please enter your mother language');
         } else if (this.state.userInfo.familiarLanguages.length === 0) {
           this.setState({ famLangError: true });
           setTimeout(() => { x.setState({ langErrorWrap: 'languagesErrorWrap-leave' }); }, 3000);
           setTimeout(() => { x.setState({ langErrorWrap: 'languagesErrorWrap-appear', famLangError: false }); }, 3400);
-          console.log('Please add the languages you want to practice');
         } else {
           this.setState({ stage: 'interestsStage' });
         }
@@ -186,7 +179,6 @@ class OnboardingStore extends Reflux.Store {
           setTimeout(() => { x.setState({ langErrorWrap: 'languagesErrorWrap-appear', interestsError: false }); }, 3400);
         } else {
           this.setState({ toAddNotes: this.state.userInfo.interests[0], stage: 'interestsNotesStage' });
-          console.log(this.state.userInfo);
         }
         break;
       default:
@@ -199,7 +191,6 @@ class OnboardingStore extends Reflux.Store {
     });
   }
   finishFailed(err) {
-    console.log(err);
     this.setState({
       onboardingFinishStatus: 'fail',
     });

@@ -34,7 +34,6 @@ function* _dbQuery(options, id) {
     query['wantsToLearn.languageId'] = user.mainLanguage;
   }
 
-  console.log('query: ', query);
   return query;
 }
 
